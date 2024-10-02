@@ -1,0 +1,24 @@
+.auth-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;    
+    background: linear-gradient(to right, #990033 50%, #999999 50%); 
+}
+
+.static-text {
+    position: absolute;
+    top: 10%; 
+    font-size: 60px; 
+    background: linear-gradient(to right, #999999 50%, #990033 50%);    
+    /* I got this shi from chatgpt so...*/
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    transition: transform 1s;
+}
+.rotate{
+    transform: rotate(360deg);
+}
