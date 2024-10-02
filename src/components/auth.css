@@ -19,6 +19,7 @@
     color: transparent;
     transition: transform 1s;
 }
+
 .rotate{
     transform: rotate(360deg);
 }
