@@ -1,7 +1,7 @@
 // src/Home.jsx
 import React from 'react';
 
-const Home = ({ user }) => {
+const Home = ({user, setUser}) => {
   return (
     <div>
       <h1>Welcome, {user.email}</h1>

@@ -1,6 +1,6 @@
 // src/Signup.jsx
 import React, { useState } from 'react';
-import { auth, db } from '../config/firebase';
+import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
