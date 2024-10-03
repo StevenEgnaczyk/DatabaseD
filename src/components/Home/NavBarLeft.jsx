@@ -30,6 +30,8 @@ const NavBarLeft = () => {
                 </button>
             </div>
 
+            <span className={"span-rest"}></span>
+
 
         </nav>
     )
