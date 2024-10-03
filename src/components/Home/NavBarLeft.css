@@ -1,0 +1,20 @@
+
+.navbarleft {
+    background: black;
+    display: flex;
+    flex-direction: column;
+    margin-right: 75%;
+    padding: 10px;
+    gap: 1rem;
+}
+
+.file-upload-button {
+}
+
+.file-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
