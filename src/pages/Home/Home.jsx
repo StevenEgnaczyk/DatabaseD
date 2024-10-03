@@ -2,17 +2,14 @@
 // src/Home.jsx
 import React from 'react';
 import "./Home.css"
+import NavBar from './../../components/Home/NavBar';
 
-function returnToLogin(){
-    window.location.href = "./pages/Login.jsx";
-}
 const Home = ({ user }) => {
     return (
+
         <div>
+            <NavBar />
             <h1>Welcome, {user.email}</h1>
-            <div>
-                <button onClick={returnToLogin}>Log out</button>
-            </div>
         </div>
     );
 };
