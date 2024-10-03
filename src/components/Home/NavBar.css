@@ -1,7 +1,7 @@
 /* NavBar.css */
 
 .navbar {
-    background-color: #000000;
+    background-color: #f9f9f9;
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
