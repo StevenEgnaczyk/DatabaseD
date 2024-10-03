@@ -18,8 +18,13 @@ const Signup = ({ setUser }) => {
         timeStamp: serverTimestamp(),
       });
       setUser(userCredential.user);
+      setError(''); // Clear error on successful signup
     } catch (err) {
-      setError(err.message);
+      if (err.message !== error) { // Check if the error message is different
+        setError(err.message);
+        alert(err.message); // Show alert only for new errors
+      }
+      setError(''); // Clear error message
     }
   };
 
@@ -29,7 +34,6 @@ const Signup = ({ setUser }) => {
       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
       <button type="submit">Signup</button>
-      {error && <p>{error}</p>}
     </form>
   );
 };
