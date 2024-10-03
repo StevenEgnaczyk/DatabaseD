@@ -27,8 +27,8 @@ const Startup = ({user, setUser}) => {
 
   return (
       <div>
-        <div className="main-container" onClick={handleTextRotation}>
-          <div className="static-text" ref={textRef}>DataBaseD</div>
+        <div className="main-container">
+          <div className="static-text" ref={textRef} onClick={handleTextRotation}>DataBaseD </div>
           <div className="auth-container">
             {isSigningUp ? (
                 <Signup setUser={setUser} />
