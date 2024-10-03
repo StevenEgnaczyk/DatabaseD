@@ -9,13 +9,13 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   return (
-    <div>
-      {!user ? (
-        <Startup user={user} setUser ={setUser}/>
-      ) : (
-        <Home user={user} setUser={setUser} />
-      )}
-    </div>
+      <div>
+        {!user ? (
+            <Startup user={user} setUser ={setUser}/>
+        ) : (
+            <Home user={user} setUser={setUser} />
+        )}
+      </div>
   );
 };
 

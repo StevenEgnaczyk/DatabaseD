@@ -1,0 +1,13 @@
+* {
+
+}
+
+body {
+    background: #333;
+}
+
+.navBar {
+    display: flex;
+    background: #999999;
+    padding: 10px;
+}
