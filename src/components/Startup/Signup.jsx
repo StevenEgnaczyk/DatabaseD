@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 
 const Signup = ({ setUser }) => {
@@ -14,6 +15,7 @@ const Signup = ({ setUser }) => {
     e.preventDefault();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
       await setDoc(doc(db, "users", userCredential.user.uid), {
         email,
         timeStamp: serverTimestamp(),
@@ -23,19 +25,36 @@ const Signup = ({ setUser }) => {
     } catch (err) {
       if (err.message !== error) { // Check if the error message is different
         setError(err.message);
-        alert(err.message); // Show alert only for new errors
+        let error_message;
+        switch(err.code){
+          case 'auth/email-already-in-use':
+            error_message="The email address is already in use by another account.";
+            break;
+          case 'auth/invalid-email':
+            error_message="The email address is not valid.";
+            break;
+          case 'auth/weak-password':
+            error_message="The password must contain a minimum of 6 characters";
+            break;
+          default:
+            error_message=err.message;
+        }
+        toast.error(error_message,{position:'top-center'});
       }
       setError(''); // Clear error message
     }
   };
 
   return (
+
     <form className={"form-container"} onSubmit={handleSignup}>
       <h2>Signup</h2>
       <input className={"custom-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
       <input className={"custom-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
       <button className={"submit-button"} type="submit">Signup</button>
     </form>
+
+ 
   );
 };
 
