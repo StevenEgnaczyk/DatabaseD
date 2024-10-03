@@ -13,19 +13,23 @@ const Login = ({ setUser }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
+      setError(''); // Clear error on successful login
     } catch (err) {
-      setError(err.message);
+      if (err.message !== error) { // Check if the error message is different
+        setError(err.message);
+        alert(err.message); // Show alert only for new errors
+      }
+      setError(''); // Clear error message
     }
   };
 
   return (
-      <form onSubmit={handleLogin}>
-        <h2>Log-in</h2>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-        <button type="submit">Login</button>
-        {error && <p>{error}</p>}
-      </form>
+    <form onSubmit={handleLogin}>
+      <h2>Log-in</h2>
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
