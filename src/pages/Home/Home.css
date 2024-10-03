@@ -1,13 +1,18 @@
-* {
-
-}
 
 body {
-    background: #333;
+    background: black;
 }
 
 .navBar {
     display: flex;
     background: #999999;
     padding: 10px;
+}
+
+.page-container {
+    display: flex;
+}
+
+.file-view {
+    flex-grow: 1;
 }
