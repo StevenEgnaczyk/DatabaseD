@@ -4,6 +4,7 @@ import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
+
 const Signup = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,9 +32,9 @@ const Signup = ({ setUser }) => {
   return (
     <form className={"form-container"} onSubmit={handleSignup}>
       <h2>Signup</h2>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-      <button type="submit">Signup</button>
+      <input className={"custom-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+      <input className={"custom-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+      <button className={"submit-button"} type="submit">Signup</button>
     </form>
   );
 };
