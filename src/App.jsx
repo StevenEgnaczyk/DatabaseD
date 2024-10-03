@@ -1,6 +1,8 @@
 // src/App.jsx
 import Startup from './pages/StartupScreen/Startup';
 import Home from './pages/Home/Home';
+import { ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 import React, { useState } from 'react';
 
@@ -15,6 +17,7 @@ const App = () => {
         ) : (
             <Home user={user} setUser={setUser} />
         )}
+        <ToastContainer/>
       </div>
   );
 };

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');
@@ -17,7 +18,17 @@ const Login = ({ setUser }) => {
     } catch (err) {
       if (err.message !== error) { // Check if the error message is different
         setError(err.message);
-        alert(err.message); // Show alert only for new errors
+        let error_message;
+        switch(err.code){
+          case 'auth/invalid-credential':
+            error_message = "Invalid password or email.";
+            break;
+          default:
+            error_message=err.message;
+
+        }
+        toast.error(error_message,{position:"top-center"})
+        
       }
       setError(''); // Clear error message
     }
