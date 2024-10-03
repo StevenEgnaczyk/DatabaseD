@@ -1,0 +1,22 @@
+
+.filter-container {
+    background-color: #555;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-bar {
+    margin: auto;
+    padding: 10px;
+}
+
+.filter-dropdowns {
+    margin: auto;
+    padding: 10px;
+}
+
+.filter-dropdowns button {
+    margin: 10px;
+    padding: 5px;
+}
