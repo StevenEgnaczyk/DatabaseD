@@ -1,18 +1,38 @@
-
-body {
-    background: black;
+/* Holds the side-bar and main-bar */
+.page-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
-.navBar {
+/* Style for the side-bar */
+.side-bar {
     display: flex;
-    background: #999999;
+    width: 15%;
+}
+
+/* Style for the main-bar */
+.main-bar {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    padding: 10px;
+    background-color: #990033;
+}
+
+/* Style for the query-bar */
+.file-query {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
 }
 
-.page-container {
-    display: flex;
-}
-
-.file-view {
-    flex-grow: 1;
+/* Style for the file-display section */
+.file-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 5px; /* Space between grid items */
+    padding: 3rem;
+    background-color: aliceblue;
+    border-radius: 5%;
 }
