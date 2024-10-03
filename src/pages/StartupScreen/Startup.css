@@ -1,17 +1,65 @@
-.auth-container {
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center; 
-    height: 100vh;    
-    background: linear-gradient(to right, #990033 50%, #999999 50%); 
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate{
+    transform: rotate(360deg);
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #990033 50%, #999999 50%);
 }
 
 .static-text {
     position: absolute;
-    top: 10%; 
-    font-size: 60px; 
-    background: linear-gradient(to right, #999999 50%, #990033 50%);    
+    top: 10%;
+    font-size: 60px;
+    background: linear-gradient(to right, #999999 50%, #990033 50%);
     /* I got this shi from chatgpt so...*/
     -webkit-background-clip: text;
     background-clip: text;
@@ -20,6 +68,67 @@
     transition: transform 1s;
 }
 
-.rotate{
-    transform: rotate(360deg);
+.auth-container {
+    background-color: #282c34;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    max-width: 500px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
+
+h2 {
+    padding-bottom: 10px;
+}
+
+.custom-input {
+    width: 100%; /* Full width */
+    padding: 12px 20px; /* Padding inside the input */
+    margin: 8px 0; /* Space above and below the input */
+    display: inline-block; /* Default display for inline form elements */
+    border: 2px solid #ccc; /* Light grey border */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    font-size: 16px; /* Larger text */
+    transition: border-color 0.3s ease; /* Smooth transition for focus */
+}
+
+.custom-input:focus {
+    border-color: darkred; /* Green border on focus */
+    outline: none; /* Remove default outline */
+}
+
+.submit-button {
+    background-color: darkred; /* Green background */
+    color: white; /* White text */
+    padding: 12px 20px; /* Some padding */
+    border: none; /* Remove borders */
+    margin-top: 5px;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Larger text */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.swap-button {
+    user-focus: none;
+    border: none;
+    background: transparent;
+    padding-inline: 10px;
+}
+
+.swap-button span{
+    user-focus: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: white;
+}
+
+
+
+
+

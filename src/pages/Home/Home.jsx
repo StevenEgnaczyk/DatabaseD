@@ -1,9 +1,10 @@
 // src/Home.jsx
 import React from 'react';
+import "./Home.css"
 
 const Home = ({user, setUser}) => {
   return (
-    <div>
+    <div className={"navBar"}>
       <h1>Welcome, {user.email}</h1>
     </div>
   );
