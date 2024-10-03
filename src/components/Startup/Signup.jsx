@@ -24,11 +24,11 @@ const Signup = ({ setUser }) => {
   };
 
   return (
-    <form onSubmit={handleSignup}>
+    <form className={"form-container"} onSubmit={handleSignup}>
       <h2>Signup</h2>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-      <button type="submit">Signup</button>
+      <input className={"custom-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+      <input className={"custom-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+      <button className={"submit-button"} type="submit">Signup</button>
       {error && <p>{error}</p>}
     </form>
   );
