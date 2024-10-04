@@ -20,19 +20,41 @@
     background-color: #990033;
 }
 
-/* Style for the query-bar */
+
 .file-query {
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
 
-/* Style for the file-display section */
+
 .file-display {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 15px; /* Space between grid items */
+    gap: 15px; 
     padding: 3rem;
     background-color: aliceblue;
     border-radius: 5%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #999999;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.pagination button:disabled {
+    background-color: #333333;
+    cursor: not-allowed;
 }
