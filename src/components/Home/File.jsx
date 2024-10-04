@@ -16,9 +16,9 @@ const File = ({ file }) => { // Accept file as a prop
             </iframe>
             
             <h3>{file.className}</h3>
-            <p>Year: {file.year}</p>
-            <p>Type: {file.fileType}</p>
-            <p>Professor: {file.professor}</p>
+            {file.year && <p>Year: {file.year}</p>}
+            {file.fileType && <p>Type: {file.fileType}</p>}
+            {file.professor && <p>Professor: {file.professor}</p>}
         </div>
     );
 };
