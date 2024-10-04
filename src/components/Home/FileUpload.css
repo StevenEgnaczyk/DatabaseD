@@ -1,0 +1,45 @@
+/* Lightbox.css */
+* {
+}
+
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent backdrop */
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    z-index: 1000; /* Ensure it appears on top */
+}
+
+.lightbox-content {
+    background: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px; /* Optional: limit the width of the lightbox */
+    width: 100%; /* Ensure it takes full width up to the max width */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.upload-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.upload-header h2 {
+    margin: auto;
+}
+
+.upload-header .close-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: white;
+    font-size: 1.5rem;
+}
