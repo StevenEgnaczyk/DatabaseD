@@ -5,7 +5,8 @@ import NavBarLeft from './../../components/Home/NavBarLeft';
 import FileQueryBar from './../../components/Home/FileQueryBar';
 import File from './../../components/Home/File';
 
-const Home = ({ user }) => {
+const Home = ({user, setUser}) => {
+
     const [files] = useState([
         { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
         { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },

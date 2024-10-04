@@ -27,7 +27,6 @@ const Signup = ({ setUser }) => {
       // Add user to Firestore
       await setDoc(doc(db, "users", userCredential.user.uid), {
         email,
-        verified: false,
         approved: false,
         timeStamp: serverTimestamp(),
         role: "user",

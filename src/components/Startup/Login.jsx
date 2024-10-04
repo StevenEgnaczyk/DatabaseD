@@ -26,6 +26,7 @@ const Login = ({ setUser }) => {
       const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
       if (!userDoc.exists() || !userDoc.data().approved) {
         toast.error("Your account is not approved yet.", { position: "top-center" });
+        return;
       }
 
       setUser(userCredential.user); // ALlow login only if email is verified
