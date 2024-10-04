@@ -31,7 +31,7 @@
 .file-display {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 5px; /* Space between grid items */
+    gap: 15px; /* Space between grid items */
     padding: 3rem;
     background-color: aliceblue;
     border-radius: 5%;

@@ -34,6 +34,7 @@
 }
 
 .navbar-dropdown {
+    position: relative; /* Position relative for absolute positioning of dropdown */
     justify-self: flex-end;
 }
 
@@ -49,4 +50,76 @@
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+}
+
+.dropdown-toggle {
+    background-color: #f9f9f9;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.dropdown-toggle:hover {
+    background-color: #e0e0e0; /* Change background on hover */
+}
+
+.dropdown-menu {
+    position: absolute; /* Position the dropdown menu */
+    top: 100%; /* Position below the button */
+    left: 0;
+    background-color: white; /* Background color of the dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    border-radius: 5px; /* Rounded corners */
+    opacity: 0; /* Start hidden */
+    visibility: visible; 
+    transform: translateY(-10px); /* Start slightly above */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    z-index: 1; /* Ensure it appears above other elements */
+    margin-top: 5px; /* Add space between the menu button and dropdown */
+}
+
+.navbar-dropdown .dropdown-menu {
+    animation: slideDown 0.3s ease forwards; /* Add slide down animation */
+}
+
+.dropdown-menu.closing {
+    animation: slideUp 0.3s ease forwards; /* Smooth transition */
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.dropdown-menu button {
+    background: none; /* No background */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding for the button */
+    width: 100%; /* Full width */
+    text-align: left; /* Align text to the left */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+    margin: 5px 0; /* Add space between dropdown buttons */
+}
+
+.dropdown-menu button:hover {
+    background-color: #f0f0f0; /* Change background on hover */
 }
