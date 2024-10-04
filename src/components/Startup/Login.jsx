@@ -8,9 +8,11 @@ const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // New loading state
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
@@ -24,13 +26,16 @@ const Login = ({ setUser }) => {
             error_message = "Invalid password or email.";
             break;
           default:
-            error_message=err.message;
-
+            error_message = err.message;
         }
-        toast.error(error_message,{position:"top-center"})
-        
+        toast.error(error_message, { position: "top-center" });
+
+        // Asynchronous wait before clearing the error
+        await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
+        setError(''); // Clear the error after the wait
       }
-      setError(''); // Clear error message
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -39,7 +44,7 @@ const Login = ({ setUser }) => {
         <h2>Log-in</h2>
         <input className={"custom-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
         <input className={"custom-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-        <button className={"submit-button"} type="submit">Login</button>
+        <button className={"submit-button"} type="submit" disabled={loading}>Login</button>
       </form>
   );
 };
