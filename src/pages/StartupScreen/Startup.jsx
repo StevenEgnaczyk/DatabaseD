@@ -30,7 +30,7 @@ const Startup = ({user, setUser}) => {
   return (
       <div>
         <div className="main-container">
-          <img className="logo-img" src={logo} alt="Logo"  />
+          <img className="logo-login-img" src={logo} alt="Logo"  />
           <div className="auth-container">
             {isSigningUp ? (
                 <Signup setUser={setUser} />
