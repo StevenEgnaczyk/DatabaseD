@@ -1,13 +1,16 @@
 import React, {useState} from "react";
 
 import './FileQueryBar.css'
+import { toast } from 'react-toastify';
 
 
 const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
 
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(false); // New loading state
 
-    function handleSearch(event) {
+    async function handleSearch(event) {
+        setLoading(true); // Set loading to true
         event.preventDefault();
 
         if (!files) {
@@ -31,8 +34,14 @@ const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
                 (file.fileType && new RegExp(`\\b${term}\\b`, 'i').test(file.fileType))
             )
         );
-        setFilteredFiles(results); // Update the state in Home with filtered results
-
+        if(results.length === 0){
+            toast.info("No results found", { position: "top-center", autoClose: 1000});
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 5 seconds
+            setFilteredFiles(files); // Reset filteredFiles state to full list
+        }else{
+            setFilteredFiles(results); // Update the state in Home with filtered results
+        }
+        setLoading(false); // Reset loading state to false when search is finished
     }
 
     function handleInputChange(event) {
@@ -45,10 +54,9 @@ const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
                 <input 
                     className={"search-bar"} 
                     type="text" 
-
+                    disabled={loading} // Disable input when loading
                     value={search}
                     onChange={handleInputChange}
-
                 />
             </form>
             <div className={"filter-dropdowns"}>
