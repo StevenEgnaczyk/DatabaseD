@@ -52,6 +52,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100vw;
     background: linear-gradient(to right, #990033 50%, #999999 50%);
 }
 
@@ -59,13 +60,20 @@
     position: absolute;
     top: 10%;
     font-size: 60px;
-    background: linear-gradient(to right, #999999 50%, #990033 50%);
-    /* I got this shi from chatgpt so...*/
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    color: black;
     transition: transform 1s;
+}
+
+
+.logo-img {
+    position: absolute;
+    top: 50%;
+    width: 250px !important;  /* Ensure this is not overridden */
+    height: auto !important;  /* Ensure proportional scaling */
+    border-radius: 0% !important;
+    object-fit: contain;
+    transform: translateY(-170%);
+
 }
 
 .auth-container {
@@ -114,14 +122,12 @@ h2 {
 }
 
 .swap-button {
-    user-focus: none;
     border: none;
     background: transparent;
     padding-inline: 10px;
 }
 
-.swap-button span{
-    user-focus: none;
+.swap-button span{ 
     border: none;
     background: transparent;
     cursor: pointer;

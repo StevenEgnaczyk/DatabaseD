@@ -2,6 +2,8 @@
 import React, { useRef, useState } from 'react';
 import Login from '../../components/Startup/Login';
 import Signup from '../../components/Startup/Signup';
+import logo from '../../assets/Logo.jpeg';
+
 
 import './Startup.css';
 
@@ -28,7 +30,7 @@ const Startup = ({user, setUser}) => {
   return (
       <div>
         <div className="main-container">
-          <div className="static-text" ref={textRef} onClick={handleTextRotation}>DataBaseD </div>
+          <img className="logo-img" src={logo} alt="Logo"  />
           <div className="auth-container">
             {isSigningUp ? (
                 <Signup setUser={setUser} />
@@ -40,6 +42,7 @@ const Startup = ({user, setUser}) => {
             </button>
           </div>
         </div>
+
       </div>
   )};
 
