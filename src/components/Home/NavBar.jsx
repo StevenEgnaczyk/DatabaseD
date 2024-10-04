@@ -45,7 +45,7 @@ const NavBar = () => {
                 </button>
                 {dropdownOpen && (
                     <div className={`dropdown-menu ${closing ? 'closing' : ''}`}>
-                        <button onClick={returnToLogin}>Log out</button>
+                        <button className={"test-button"} onClick={returnToLogin}>Log out</button>
                     </div>
                 )}
             </div>
