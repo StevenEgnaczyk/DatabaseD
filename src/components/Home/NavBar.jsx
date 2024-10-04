@@ -3,6 +3,8 @@ import './NavBar.css';
 import logo from '../../assets/Logo.jpeg';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom'; // Import Link
+
 
 const NavBar = () => {
 
@@ -76,8 +78,9 @@ const NavBar = () => {
                 {dropdownOpen && (
                     <div className={`dropdown-menu ${closing ? 'closing' : ''}`}>
                         {/* Conditionally render the Admin Panel Link for admin users */}
-                        {userRole && userRole === "admin" && (
-                            <button onClick={() => window.location.href = "/admin"}>Admin Panel</button>
+                        {/* Conditionally render the Admin Panel Link for admin users */}
+                        {userRole === "admin" && (
+                            <Link to="/admin" className="dropdown-link">Admin Panel</Link> // Use Link for Admin Panel
                         )}
                         <button onClick={returnToLogin}>Log out</button>
 

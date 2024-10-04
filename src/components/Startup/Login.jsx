@@ -4,12 +4,14 @@ import { auth, db } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { getDoc, doc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false); // New loading state
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleLogin = async (e) => {
 
@@ -31,6 +33,7 @@ const Login = ({ setUser }) => {
 
       setUser(userCredential.user); // ALlow login only if email is verified
       setError('');
+      navigate('/home');
     } catch (err) {
       if (err.message !== error) { // Check if the error message is different
         setError(err.message);

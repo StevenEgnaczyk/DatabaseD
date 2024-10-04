@@ -4,7 +4,7 @@ import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { toast } from 'react-toastify';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Signup = ({ setUser }) => {
 
@@ -12,6 +12,7 @@ const Signup = ({ setUser }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSignup = async (e) => {
     
@@ -36,6 +37,7 @@ const Signup = ({ setUser }) => {
       toast.success("A verification email has been sent to your email address", { position: 'top-center' });
       setUser(null);
       setError('');
+      navigate('/');
 
     } catch (err) {
       if (err.message !== error) {
