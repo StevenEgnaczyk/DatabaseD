@@ -1,0 +1,12 @@
+:root {
+    --color-bg: #232323;
+    --color-gray: #666666;
+    --color-dark-gray: #333;
+
+    --color-button-red: #800000;
+    --color-lite-red: #A72229FF;
+
+    --color-white: #FBEBECFF;
+
+    --color-lightbox: rgba(0, 0, 0, 0.8);
+}
