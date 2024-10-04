@@ -1,24 +1,34 @@
 // src/App.jsx
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom'; // Import Routes and Route
 import Startup from './pages/StartupScreen/Startup';
 import Home from './pages/Home/Home';
-import { ToastContainer} from 'react-toastify';
+import Admin from './pages/Admin/Admin'; // Import Admin component
+
+import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-import React, { useState } from 'react';
-
 const App = () => {
-
   const [user, setUser] = useState(null);
 
   return (
-      <div>
-        {!user ? (
-            <Startup user={user} setUser ={setUser}/>
-        ) : (
-            <Home user={user} setUser={setUser} />
-        )}
-        <ToastContainer/>
-      </div>
+    <div>
+      <Routes>
+        <Route 
+          path="/" 
+          element={<Startup user={user} setUser={setUser} />} 
+        />
+        <Route 
+          path="/home" 
+          element={<Home user={user} setUser={setUser} />} 
+        />
+        <Route 
+          path="/admin" 
+          element={<Admin />} // Render the Admin component
+        />
+      </Routes>
+      <ToastContainer />
+    </div>
   );
 };
 

@@ -1,31 +1,46 @@
 // src/Signup.jsx
 import React, { useState } from 'react';
 import { auth, db } from '../../config/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { toast } from 'react-toastify';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Signup = ({ setUser }) => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSignup = async (e) => {
+    
     e.preventDefault();
-    setLoading(true); // Set loading to true
+    setLoading(true);
     try {
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
+      // Send verification email
+      await sendEmailVerification(userCredential.user);
+
+      // Add user to Firestore
       await setDoc(doc(db, "users", userCredential.user.uid), {
         email,
+        approved: false,
         timeStamp: serverTimestamp(),
+        role: "user",
       });
-      setUser(userCredential.user);
-      setError(''); // Clear error on successful signup
+
+      /* Pop up with success and verification notice */
+      toast.success("A verification email has been sent to your email address", { position: 'top-center' });
+      setUser(null);
+      setError('');
+      navigate('/');
+
     } catch (err) {
-      if (err.message !== error) { // Check if the error message is different
+      if (err.message !== error) {
         setError(err.message);
         let error_message;
         switch (err.code) {

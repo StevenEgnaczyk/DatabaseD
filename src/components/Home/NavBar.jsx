@@ -1,10 +1,42 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './NavBar.css';
 import logo from '../../assets/Logo.jpeg';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom'; // Import Link
+
 
 const NavBar = () => {
+
+    const [userRole, setUserRole] = useState(null);
+    const db = getFirestore();
+    const auth = getAuth();
+
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await(getDoc(docRef));
+
+                    if (docSnap.exists()) {
+                        setUserRole(docSnap.data().role);
+                    } else {
+                        console.log("No such document!");
+                    }
+                } catch (e) {
+                    console.error("Error getting document:", e);
+                }
+            }
+        };
+        fetchUserRole();
+    }, [auth]);
+
+    console.log(userRole);
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [closing, setClosing] = useState(false); // New state for closing animation
+    const [closing, setClosing] = useState(false);
     const textRef = useRef(null);
 
     const toggleDropdown = () => {
@@ -45,7 +77,14 @@ const NavBar = () => {
                 </button>
                 {dropdownOpen && (
                     <div className={`dropdown-menu ${closing ? 'closing' : ''}`}>
-                        <button className={"test-button"} onClick={returnToLogin}>Log out</button>
+                        {/* Conditionally render the Admin Panel Link for admin users */}
+                        {/* Conditionally render the Admin Panel Link for admin users */}
+                        {userRole === "admin" && (
+                            <Link to="/admin" className="dropdown-link">Admin Panel</Link> // Use Link for Admin Panel
+                        )}
+                        <button onClick={returnToLogin}>Log out</button>
+
+
                     </div>
                 )}
             </div>
