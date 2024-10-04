@@ -4,11 +4,39 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Space between elements */
+    align-items: center;
 }
 
 .search-bar {
+    display: flex; /* Use flexbox to align items horizontally */
+    align-items: center; /* Center items vertically */
     margin: auto;
     padding: 10px;
+    flex-direction: row; /* Change to row to align items in a line */
+}
+
+.search-bar input {
+    padding: 10px 40px 10px 10px; /* Add padding for text and icon */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    width: 300px; /* Set a width for the input */
+}
+
+.search-button {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for button */
+    margin-left: 5px; /* Space between input and button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.search-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
 }
 
 .filter-dropdowns {
