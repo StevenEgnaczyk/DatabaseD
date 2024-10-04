@@ -2,11 +2,14 @@ import React, {useState} from "react";
 
 import './FileQueryBar.css'
 
+
 const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
+
     const [search, setSearch] = useState('');
 
     function handleSearch(event) {
         event.preventDefault();
+
         if (!files) {
             console.error("Files prop is undefined");
             return; // Exit the function if files is undefined
@@ -29,6 +32,7 @@ const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
             )
         );
         setFilteredFiles(results); // Update the state in Home with filtered results
+
     }
 
     function handleInputChange(event) {
@@ -36,14 +40,15 @@ const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
     }
 
     return (
-
         <div className={"filter-container"}>
             <form className={"search-bar"} onSubmit={handleSearch}>
                 <input 
                     className={"search-bar"} 
                     type="text" 
+
                     value={search}
                     onChange={handleInputChange}
+
                 />
             </form>
             <div className={"filter-dropdowns"}>
@@ -54,7 +59,6 @@ const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
                 <button>File Type</button>
             </div>
         </div>
-
     )
 }
 
