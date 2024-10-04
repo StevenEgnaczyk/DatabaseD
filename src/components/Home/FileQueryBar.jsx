@@ -45,11 +45,13 @@ const FileQueryBar = ({ files, setFilteredFiles }) => { // Accept files as props
                 <input 
                     className={"search-bar"} 
                     type="text" 
-
                     value={search}
                     onChange={handleInputChange}
-
+                    placeholder="search documents -- Software 1 Egnacyk" // Added placeholder
+                    onFocus={(e) => e.target.placeholder = ''} // Clear placeholder on focus
+                    onBlur={(e) => e.target.placeholder = 'search documents'} // Restore placeholder on blur
                 />
+                <button type="button"  className={"search-button"} onClick={handleSearch}>🔍</button>
             </form>
             <div className={"filter-dropdowns"}>
                 <button>Class</button>
