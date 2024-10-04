@@ -47,7 +47,7 @@ const Home = ({ user }) => {
 
     return (
         <div>
-            <NavBar />
+            <NavBar user={user}/>
             <div className={"page-container"}>
                 <div className={"side-bar"}>
                     <NavBarLeft />

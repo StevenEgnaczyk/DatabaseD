@@ -1,6 +1,7 @@
 // src/App.jsx
 import Startup from './pages/StartupScreen/Startup';
 import Home from './pages/Home/Home';
+
 import { ToastContainer} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
