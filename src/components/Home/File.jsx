@@ -8,7 +8,7 @@ const File = ({ file }) => { // Accept file as a prop
             
             {/* PDF Preview */}
             <iframe 
-                src={file.preview} 
+                src={'../.' + file.preview}
                 className="pdf-preview" 
                 title="PDF Preview" 
                 width="100%" 
