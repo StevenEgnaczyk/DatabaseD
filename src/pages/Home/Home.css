@@ -28,7 +28,6 @@
     padding: 10px;
 }
 
-
 .file-display {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -36,6 +35,9 @@
     padding: 3rem;
     background-color: aliceblue;
     border-radius: 5%;
+    height: 1200px; /* Adjust this height as needed */
+    overflow-y: auto;
+    
 }
 
 .pagination {
@@ -59,3 +61,65 @@
     background-color: #333333;
     cursor: not-allowed;
 }
+
+
+.dropdown{
+    position: absolute;
+    display:  inline-block;
+}
+
+.dropdown-button{
+    background-color: var(--color-button-red);
+    color: var(--color-white);
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--color-bg); 
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px var(--color-lightbox);
+    z-index: 1;
+    border-radius: 5px;
+  }
+
+  .dropdown-content a {
+    color: var(--color-gray); 
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center; 
+  }
+  
+  .dropdown-content a:hover {
+    background-color: var(--color-dark-gray); 
+  }
+  
+  
+  .dropdown-button:focus {
+    background-color: var(--color-lite-red); 
+  }
+
+  .files-per-page-dropdown {
+    margin-bottom: 20px;
+}
+
+.files-per-page-dropdown label {
+    margin-right: 10px;
+    font-size: 16px;
+    color: var(--color-white);
+}
+
+.files-per-page-dropdown select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid var(--color-gray);
+    background-color: var(--color-bg);
+    color: var(--color-white);
+}
+  
