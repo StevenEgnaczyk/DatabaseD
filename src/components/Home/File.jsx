@@ -1,16 +1,7 @@
 import React from 'react';
 import './File.css'; // Assuming you have some CSS for styling
 
-const File = () => {
-    const file = { 
-        name: 'CSE 2221 Study Guide', 
-        className: 'Math 101', 
-        year: '2021', 
-        fileType: 'PDF', 
-        professor: 'Dr. Smith',
-        preview: './Anime.pdf' // Path to the PDF preview
-    };
-
+const File = ({ file }) => { // Accept file as a prop
     return (
         <div className="file-card">
             <h1>{file.name}</h1>
