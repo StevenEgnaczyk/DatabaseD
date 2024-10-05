@@ -20,19 +20,15 @@ const Home = ({ user }) => {
         { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' }
         // Add more file objects as needed
     ]);
-    
-    const [filteredFiles, setFilteredFiles] = useState(files); 
-    const [currentPage, setCurrentPage] = useState(1); 
 
-    const filesPerPage = 8; //how many files do we want
+    const [filesPerPage, setFilesPerPage] = useState(8);
+    const [filteredFiles, setFilteredFiles] = useState(files);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const totalPages = Math.ceil(filteredFiles.length / filesPerPage)
     const indexOfLastFile = currentPage * filesPerPage;
     const indexOfFirstFile = indexOfLastFile - filesPerPage;
-
-
     const currentFiles = filteredFiles.slice(indexOfFirstFile, indexOfLastFile);
-
 
     const nextPage = () => {
         if (currentPage < totalPages) {
@@ -46,6 +42,19 @@ const Home = ({ user }) => {
         }
     };
 
+    const handleFilesPerPageChange = (e) => {
+        setFilesPerPage(Number(e.target.value));
+        setCurrentPage(1);
+    };
+
+    /*
+function toggleDropdown() {
+    const dropdown = document.getElementById("dropdown-content");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
+*/
+
+
     return (
         <div className={"full-screen"}>
             <NavBar />
@@ -56,7 +65,21 @@ const Home = ({ user }) => {
                 <div className={"main-bar"}>
                     <div className={"file-query"}>
                         <FileQueryBar files={files} setFilteredFiles={setFilteredFiles} />
+                        {/* Dropdown to select files per page */}
+                        <div className="files-per-page-dropdown">
+                            <label htmlFor="files-per-page">Files per page:</label>
+                            <select id="files-per-page" value={filesPerPage} onChange={handleFilesPerPageChange}>
+                                <option value="4">4</option>
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="12">12</option>
+                                <option value="16">16</option>
+                            </select>
+                        </div>
                     </div>
+
+
+
                     <div className={"file-display-container"}>
                         <div className={"file-display"}>
                         {currentFiles.length > 0 ? (
