@@ -1,8 +1,12 @@
+/* File.jsx Imports */
 import React from 'react';
-import './File.css'; // Assuming you have some CSS for styling
+import './File.css';
 
-const File = ({ file }) => { // Accept file as a prop
+/* Component for individual files
+    file - object containing file information */
+const File = ({ file }) => {
     return (
+
         <div className="file-card">
             <h1>{file.name}</h1>
             
@@ -15,6 +19,7 @@ const File = ({ file }) => { // Accept file as a prop
                 height="400px">
             </iframe>
             
+            {/* File Information */}
             <h3>{file.className}</h3>
             {file.year && <p>Year: {file.year}</p>}
             {file.fileType && <p>Type: {file.fileType}</p>}
@@ -22,5 +27,4 @@ const File = ({ file }) => { // Accept file as a prop
         </div>
     );
 };
-
 export default File;

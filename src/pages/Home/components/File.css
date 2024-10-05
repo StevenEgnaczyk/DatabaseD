@@ -1,3 +1,5 @@
+/* Styling for File.jsx */
+
 /* Style for the file card */
 .file-card {
     display: flex;
@@ -10,35 +12,36 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
-    transition: transform 0.3s ease; /* Smooth transition */
+    transition: transform 0.3s ease;
 }
 
+/* When hovering over the file car */
 .file-card:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    transform: scale(1.025);
 }
 
-/* Title styling */
+/* File Title styling */
 .file-card h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 10px;
 }
 
-/* Subtitle styling */
+/* File Subtitle styling */
 .file-card h3 {
     font-size: 18px;
     color: #666;
     margin-top: 10px;
 }
 
-/* Text paragraph styling */
+/* File paragraph styling */
 .file-card p {
     font-size: 16px;
     color: #444;
     margin: 5px 0;
 }
 
-/* PDF preview iframe styling */
+/* PDF preview styling */
 .pdf-preview {
     margin: 20px 0;
     border: none;

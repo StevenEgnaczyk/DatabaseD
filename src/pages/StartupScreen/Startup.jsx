@@ -1,7 +1,7 @@
 // src/Home.jsx
-import React, { useRef, useState } from 'react';
-import Login from '../../components/Startup/Login';
-import Signup from '../../components/Startup/Signup';
+import React, { useState } from 'react';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import logo from '../../assets/Logo.jpeg';
 
 
@@ -9,18 +9,6 @@ import './Startup.css';
 
 const Startup = ({user, setUser}) => {
 
-  const handleTextRotation = () => {
-    const textElement = textRef.current;
-    if(textElement){
-      textElement.classList.add("rotate");
-
-      setTimeout(() => {
-        textElement.classList.remove("rotate");
-      }, 2000);
-    }
-  };
-
-  const textRef = useRef(null);
   const [isSigningUp, setIsSigningUp] = useState(false); // State to toggle between Login and Signup
 
   const toggleAuthMode = () => {

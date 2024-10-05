@@ -1,34 +1,42 @@
+/* FileUpload.jsx Imports */
 import React, { useRef, useState } from "react";
 import './FileUpload.css';
 import './FileQueryBar.css';
 
+/* Component for uploading files 
+    onClose - function to close the file upload modal */
 const FileUpload = ({ onClose }) => {
+
     const [filePreview, setFilePreview] = useState(null);
-    const [fileName, setFileName] = useState(""); // New state for file name
+    const [fileName, setFileName] = useState("");
     const fileInputRef = useRef(null);
 
+    /* Open file dialog when button is clicked */
     const handleButtonClick = (e) => {
         e.preventDefault();
         fileInputRef.current.click();
     };
-
+    
+    /* Display file preview when file is selected */
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             const fileURL = URL.createObjectURL(file);
             setFilePreview({ path: fileURL });
-            setFileName(file.name); // Set the file name
+            setFileName(file.name);
         }
     }
 
+    /* Handle File upload */
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add your submission logic here
     }
 
+    /* Render the file upload modal */
     return (
         <div className="lightbox">
             <div className="lightbox-content">
+
                 <div className="upload-header">
                     <h2>Upload a file</h2>
                     <button className="close-button" onClick={onClose}> X </button>
@@ -53,9 +61,7 @@ const FileUpload = ({ onClose }) => {
                                 {fileName ? fileName : "File name"}
                             </p>
                         </div>
-
-
-
+                        
                         <div className="filter-dropdowns">
                             <button type="button">Class</button>
                             <button type="button">Professor</button>

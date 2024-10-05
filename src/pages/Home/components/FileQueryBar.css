@@ -1,29 +1,32 @@
+/* Styling for FileQueryBar.jsx */
 
+/* Styling for the entire search and filter container */
 .filter-container {
-    background-color: #555;
+    background-color: var(--color-bg);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Space between elements */
+    justify-content: space-between;
     align-items: center;
 }
 
+/* Styling for the search bar */
 .search-bar {
-    display: flex; /* Use flexbox to align items horizontally */
-    align-items: center; /* Center items vertically */
+    display: flex;
+    align-items: center;
     margin: auto;
     padding: 10px;
-    flex-direction: row; /* Change to row to align items in a line */
+    flex-direction: row;
 }
-
 .search-bar input {
-    padding: 10px 40px 10px 10px; /* Add padding for text and icon */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    width: 300px; /* Set a width for the input */
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 300px;
 }
 
+/* Styling for the search button */
 .search-button {
     background-color: #007bff; /* Bootstrap primary color */
     color: white; /* Text color */
