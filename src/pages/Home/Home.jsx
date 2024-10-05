@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import "./Home.css"
-import NavBar from './../../components/Home/NavBar';
-import NavBarLeft from './../../components/Home/NavBarLeft';
-import FileQueryBar from './../../components/Home/FileQueryBar';
-import File from './../../components/Home/File';
+import NavBar from './components/NavBar';
+import NavBarLeft from './components/NavBarLeft';
+import FileQueryBar from './components/FileQueryBar';
+import File from './components/File';
 
 const Home = ({user, setUser}) => {
 
@@ -29,7 +29,7 @@ const Home = ({user, setUser}) => {
     const totalPages = Math.ceil(filteredFiles.length / filesPerPage)
     const indexOfLastFile = currentPage * filesPerPage;
     const indexOfFirstFile = indexOfLastFile - filesPerPage;
-     const currentFiles = filteredFiles.slice(indexOfFirstFile, indexOfLastFile);
+    const currentFiles = filteredFiles.slice(indexOfFirstFile, indexOfLastFile);
 
     const nextPage = () => {
         if (currentPage < totalPages) {
@@ -48,10 +48,12 @@ const Home = ({user, setUser}) => {
         setCurrentPage(1); 
     };
 
+    /*
     function toggleDropdown() {
         const dropdown = document.getElementById("dropdown-content");
         dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
       }
+    */
 
     return (
         <div>

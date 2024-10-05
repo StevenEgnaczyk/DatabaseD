@@ -1,19 +1,22 @@
-// src/Signup.jsx
+/* Signup.jsx imports */
 import React, { useState } from 'react';
-import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../../../config/firebase';
 
+/* Component for the signup page 
+  setUser - Function to set the user state */
 const Signup = ({ setUser }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
+  /* Handle the signup form submission */
   const handleSignup = async (e) => {
     
     e.preventDefault();
@@ -22,10 +25,10 @@ const Signup = ({ setUser }) => {
 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Send verification email
+      /* Send email verification */
       await sendEmailVerification(userCredential.user);
 
-      // Add user to Firestore
+      /* Add user to the database */
       await setDoc(doc(db, "users", userCredential.user.uid), {
         email,
         approved: false,
@@ -57,15 +60,15 @@ const Signup = ({ setUser }) => {
             error_message = err.message;
         }
         toast.error(error_message, { position: 'top-center' });
-        // Asynchronous wait before clearing the error
         await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
-        setError(''); // Clear the error after the wait
+        setError('');
       }
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   }
   
+  /* Render the signup form */
   return (
     <form className={"form-container"} onSubmit={handleSignup}>
       <h2>Signup</h2>
@@ -75,5 +78,4 @@ const Signup = ({ setUser }) => {
     </form>
   );
 };
-
 export default Signup;

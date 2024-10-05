@@ -1,41 +1,50 @@
-// src/Login.jsx
+/* Login.jsx Imports */
 import React, { useState } from 'react';
-import { auth, db } from '../../config/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { getDoc, doc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../../../config/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
+/* Component for the login page */
 const Login = ({ setUser }) => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false); // New loading state
-  const navigate = useNavigate(); // Initialize navigate
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  /* Handle the login form submission */
   const handleLogin = async (e) => {
 
     e.preventDefault();
     setLoading(true);
+
     try {
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
+      /* Check if the user's email is verified */
       if (!userCredential.user.emailVerified) {
         toast.error("Please verify your email address.", { position: "top-center" });
         return;
       }
 
+      /* Check if the user is approved */
       const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
       if (!userDoc.exists() || !userDoc.data().approved) {
         toast.error("Your account is not approved yet.", { position: "top-center" });
         return;
       }
 
-      setUser(userCredential.user); // ALlow login only if email is verified
+      /* Set the user state and navigate to the home page */
+      setUser(userCredential.user);
       setError('');
       navigate('/home');
+      
     } catch (err) {
-      if (err.message !== error) { // Check if the error message is different
+      if (err.message !== error) {
         setError(err.message);
         let error_message;
         switch(err.code){
@@ -46,16 +55,15 @@ const Login = ({ setUser }) => {
             error_message = err.message;
         }
         toast.error(error_message, { position: "top-center" });
-
-        // Asynchronous wait before clearing the error
-        await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
-        setError(''); // Clear the error after the wait
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        setError('');
       }
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
+  /* Render the login form */
   return (
       <form className={"form-container"} onSubmit={handleLogin}>
         <h2>Log-in</h2>
@@ -65,5 +73,4 @@ const Login = ({ setUser }) => {
       </form>
   );
 };
-
 export default Login;

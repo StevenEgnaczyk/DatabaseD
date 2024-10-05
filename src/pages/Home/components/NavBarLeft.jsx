@@ -1,22 +1,27 @@
+/* NavBar.jsx imports */
 import React, {useState} from 'react';
-import './NavBarLeft.css';
 import FileUpload from "./FileUpload";
+import './NavBarLeft.css';
 
+/* Component for the left navigation bar */
 const NavBarLeft = () => {
+
     const [isFileUploadOpen, setIsFileUploadOpen] = useState(false);
 
+    /* Toggle the file upload modal */
     const swapFileUploadState = () => {
         setIsFileUploadOpen(!isFileUploadOpen);
     }
 
+    /* Display saved files */
     function displaySavedFiles() {
-        //Displays the users saved files.
     }
 
+    /* Display user's files */
     function displayUsersFiles() {
-        //Displays the users files in the main screen?
     }
 
+    /* Render the left navigation bar */
     return(
         <nav className="navbarleft">
             <button className={"file-upload-button"} onClick={swapFileUploadState}>
@@ -38,5 +43,4 @@ const NavBarLeft = () => {
     )
 
 }
-
 export default NavBarLeft;

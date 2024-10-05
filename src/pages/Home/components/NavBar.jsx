@@ -1,17 +1,25 @@
+/* NavBar.jsx imports */
 import React, { useEffect, useState, useRef } from 'react';
-import './NavBar.css';
-import logo from '../../assets/Logo.jpeg';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
+import logo from '../../../assets/Logo.jpeg';
+import './NavBar.css';
 
-
+/* Component for the navigation bar */
 const NavBar = () => {
 
+    /* User role states */
     const [userRole, setUserRole] = useState(null);
     const db = getFirestore();
     const auth = getAuth();
 
+    /* Dropdown states */
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [closing, setClosing] = useState(false);
+    const textRef = useRef(null);
+
+    /* Fetch the user's role from the database */
     useEffect(() => {
         const fetchUserRole = async () => {
             const user = auth.currentUser;
@@ -31,30 +39,27 @@ const NavBar = () => {
             }
         };
         fetchUserRole();
-    }, [auth]);
+    }, [auth, db]);
 
-    console.log(userRole);
-
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [closing, setClosing] = useState(false);
-    const textRef = useRef(null);
-
+    /* Toggle the dropdown menu */
     const toggleDropdown = () => {
         if (dropdownOpen) {
-            setClosing(true); // Set closing state to true
+            setClosing(true);
             setTimeout(() => {
-                setDropdownOpen(false); // Close dropdown after animation
-                setClosing(false); // Reset closing state
-            }, 300); // Match this duration with the CSS transition duration
+                setDropdownOpen(false);
+                setClosing(false); 
+            }, 300);
         } else {
-            setDropdownOpen(true); // Open dropdown
+            setDropdownOpen(true);
         }
     };
 
+    /* Return to the login page */
     function returnToLogin() {
         window.location.href = "./pages/Login.jsx";
     }
 
+    /* Rotate the logo text */
     const handleTextRotation = () => {
         const textElement = textRef.current;
         if (textElement) {
@@ -65,6 +70,7 @@ const NavBar = () => {
         }
     };
 
+    /* Render the navigation bar */
     return (
         <nav className="navbar">
             <div className="navbar-logo" onClick={handleTextRotation}>
@@ -75,16 +81,17 @@ const NavBar = () => {
                 <button className="dropdown-toggle" onClick={toggleDropdown}>
                     Menu
                 </button>
+
+                {/* Conditionally render the dropdown menu */}
                 {dropdownOpen && (
                     <div className={`dropdown-menu ${closing ? 'closing' : ''}`}>
-                        {/* Conditionally render the Admin Panel Link for admin users */}
+
                         {/* Conditionally render the Admin Panel Link for admin users */}
                         {userRole === "admin" && (
                             <Link to="/admin" className="dropdown-link">Admin Panel</Link> // Use Link for Admin Panel
                         )}
+
                         <button onClick={returnToLogin}>Log out</button>
-
-
                     </div>
                 )}
             </div>
