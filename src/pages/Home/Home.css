@@ -1,5 +1,11 @@
 /* Holds the side-bar and main-bar */
 
+@import url("../../Global.css");
+
+.full-screen {
+    max-height: 100vh;
+    overflow-y: hidden;
+}
 .page-container {
     display: flex;
     flex-direction: row;
@@ -18,26 +24,30 @@
     flex-direction: column;
     width: 85%;
     padding: 10px;
-    background-color: #990033;
+    background-color: var(--color-dark-gray);
 }
 
 
 .file-query {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    max-height: 15vh;
+    padding: 1rem;
 }
+
+.file-display-container {
+    overflow-y: auto;
+    height: 63vh; /* Adjust this height as needed */
+    padding: 2rem;
+}
+
 
 .file-display {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 15px; 
-    padding: 3rem;
-    background-color: aliceblue;
+    gap: 15px;
     border-radius: 5%;
-    height: 1200px; /* Adjust this height as needed */
-    overflow-y: auto;
-    
+
 }
 
 .pagination {
@@ -58,7 +68,7 @@
 }
 
 .pagination button:disabled {
-    background-color: #333333;
+    background-color: var(--color-button-red);
     cursor: not-allowed;
 }
 

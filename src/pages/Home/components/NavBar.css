@@ -1,7 +1,10 @@
 /* NavBar.css */
 
+@import url("../../../Global.css");
+
+
 .navbar {
-    background-color: #f9f9f9;
+    background-color: var(--color-bg);
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
