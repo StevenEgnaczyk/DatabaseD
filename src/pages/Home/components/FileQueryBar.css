@@ -9,6 +9,8 @@
     justify-content: space-between;
     align-items: center;
     height: 15vh;
+    padding: 1rem;
+    gap: 1rem;
 }
 
 /* Styling for the search bar */
@@ -43,6 +45,8 @@
 }
 
 .filter-dropdowns {
+    display: flex;
+    gap: 1rem;
     margin: auto;
 }
 

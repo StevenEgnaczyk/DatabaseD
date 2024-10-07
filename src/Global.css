@@ -1,5 +1,6 @@
 :root {
     --color-bg: #232323;
+    --color-light-gray: #999999;
     --color-gray: #666666;
     --color-dark-gray: #333;
 
@@ -9,4 +10,6 @@
     --color-white: #FBEBECFF;
 
     --color-lightbox: rgba(0, 0, 0, 0.8);
+
+    --color-hover-blue: #007BFF;
 }

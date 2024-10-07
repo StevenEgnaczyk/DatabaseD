@@ -4,6 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/Logo.jpeg';
+import { useNavigate } from 'react-router-dom';
 import './NavBar.css';
 
 /* Component for the navigation bar */
@@ -18,6 +19,7 @@ const NavBar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [closing, setClosing] = useState(false);
     const textRef = useRef(null);
+    const navigate = useNavigate();
 
     /* Fetch the user's role from the database */
     useEffect(() => {
@@ -56,7 +58,7 @@ const NavBar = () => {
 
     /* Return to the login page */
     function returnToLogin() {
-        window.location.href = "./pages/Login.jsx";
+        navigate('/');
     }
 
     /* Rotate the logo text */

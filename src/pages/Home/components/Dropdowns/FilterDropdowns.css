@@ -1,0 +1,32 @@
+/* Filter Dropdowns styling */
+
+@import url("../../../../Global.css");
+
+/* Main button styling */
+select {
+    max-width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid var(--color-white);
+    border-radius: 5px;
+    background-color: var(--color-button-red);
+    color: var(--color-white);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out;
+}
+select:hover {
+    border-color: var(--color-hover-blue);
+    box-shadow: 0 0 5px var(--color-hover-blue);
+}
+
+/* Dropdown elements styling */
+option {
+    padding: 10px;
+    background-color: var(--color-white);
+    color: var(--color-dark-gray);
+}
+select option[disabled] {
+    color: var(--color-light-gray);
+}
