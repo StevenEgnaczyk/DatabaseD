@@ -4,13 +4,13 @@
 
 
 .navbar {
+    z-index: 1000;
     background-color: var(--color-bg);
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     padding: 14px 20px;
-    z-index: 1000;
     position: relative;
 }
 
@@ -71,8 +71,7 @@
 
 .dropdown-menu {
 
-    z-index: 1100; /* Ensure it appears above other elements */
-    position: absolute; /* Position the dropdown menu */
+    position: relative; /* Position the dropdown menu */
     top: 100%; /* Position below the button */
     left: 0;
     background-color: white; /* Background color of the dropdown */
@@ -117,6 +116,8 @@
 }
 
 .dropdown-menu button {
+    position: inherit;
+    z-index: inherit;
     background: none; /* No background */
     border: none; /* No border */
     padding: 10px 20px; /* Padding for the button */
