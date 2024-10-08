@@ -6,8 +6,8 @@
 select {
     max-width: 300px;
     padding: 10px;
-    font-size: 16px;
-    border: 2px solid var(--color-white);
+    font-size: 12px;
+    /*border: 1px solid var(--color-white);*/
     border-radius: 5px;
     background-color: var(--color-button-red);
     color: var(--color-white);
@@ -24,7 +24,7 @@ select:hover {
 /* Dropdown elements styling */
 option {
     padding: 10px;
-    background-color: var(--color-white);
+    /*background-color: var(--color-white);*/
     color: var(--color-dark-gray);
 }
 select option[disabled] {

@@ -3,6 +3,16 @@ import React, {useState} from 'react';
 import FileUpload from "./FileUpload";
 import './NavBarLeft.css';
 
+import { BsPlusLg } from "react-icons/bs";
+
+import { BsFileEarmarkCheckFill } from "react-icons/bs";
+
+import { BsFillFileEarmarkLockFill } from "react-icons/bs";
+
+import { BsFillHouseFill } from "react-icons/bs";
+
+
+
 /* Component for the left navigation bar */
 const NavBarLeft = () => {
 
@@ -24,20 +34,32 @@ const NavBarLeft = () => {
     /* Render the left navigation bar */
     return(
         <nav className="navbarleft">
-            <button className={"file-upload-button"} onClick={swapFileUploadState}>
-                Upload File +
-            </button>
+            <div className={"file-upload button"} onClick={swapFileUploadState}>
+                <BsPlusLg className={"upload-svg"} />
+                <p>Upload File</p>
+            </div>
             {isFileUploadOpen && <FileUpload onClose={swapFileUploadState} />}
 
-            <div className={"file-filters"}>
-                <button className={"saved-files-button"} onClick={displaySavedFiles}>
-                    Saved Files
-                </button>
+            <div className={"line"}></div>
 
-                <button className={"users-files-button"} onClick={displayUsersFiles}>
-                    Your Files
-                </button>
+            <div className={"file-filters"}>
+                <div className={"home button"}>
+                    <BsFillHouseFill className={"home-svg"} />
+                    <p>Home</p>
+                </div>
+                <div className={"saved-files button"} onClick={displaySavedFiles}>
+                    <BsFileEarmarkCheckFill className={"saved-svg"}/>
+                    <p>Saved Files</p>
+                </div>
+
+                <div className={"users-files button"} onClick={displayUsersFiles}>
+                    <BsFillFileEarmarkLockFill className={"user-svg"}/>
+                    <p>Your Files</p>
+                </div>
             </div>
+
+            <div className={"line"}></div>
+
             <span className={"span-rest"}></span>
         </nav>
     )

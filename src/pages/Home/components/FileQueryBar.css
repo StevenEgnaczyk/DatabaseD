@@ -1,5 +1,5 @@
 /* Styling for FileQueryBar.jsx */
-
+@import "./../../../Global.css";
 /* Styling for the entire search and filter container */
 .filter-container {
     background-color: var(--color-bg);
@@ -10,7 +10,6 @@
     align-items: center;
     height: 15vh;
     padding: 1rem;
-    gap: 1rem;
 }
 
 /* Styling for the search bar */
@@ -22,7 +21,7 @@
 }
 .search-bar input {
     padding: 10px 40px 10px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white);
     border-radius: 4px;
     font-size: 16px;
     width: 300px;
@@ -30,18 +29,18 @@
 
 /* Styling for the search button */
 .search-button {
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white; /* Text color */
-    border: none; /* Remove border */
+    background-color: transparent; /* Bootstrap primary color */
+    border: 1px solid var(--color-white);
+    color: var(--color-white); /* Text color */
     border-radius: 4px; /* Rounded corners */
-    padding: 10px 15px; /* Padding for button */
+    padding: 8px 12px; /* Padding for button */
     margin-left: 5px; /* Space between input and button */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
 }
 
 .search-button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: var(--color-button-red); /* Darker shade on hover */
 }
 
 .filter-dropdowns {
