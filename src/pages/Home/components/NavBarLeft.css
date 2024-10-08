@@ -11,13 +11,93 @@
     padding: 0.5rem;
 }
 
-.file-upload-button {
+.line {
+    padding: 0;
+    margin-inline: -0.5rem;
+    border-top: 1px solid var(--color-white);
+}
+
+.button {
+    color: var(--color-white);
+    border-radius: 5px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+/* Apply the keyframes to hide the text when the viewport reaches a certain size */
+@media (max-width: 800px) {
+    .button p{
+        animation: hideText 0.1s forwards; /* Adjust timing as needed */
+    }
+}
+
+@keyframes hideText {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.file-upload {
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+}
+
+.upload-svg {
+    scale: 1.4;
+    padding-inline: 10px;
+    color: white;
+    min-width: 25px;
+
+}
+
+.button:hover {
+    background-color: var(--color-gray);
 }
 
 .file-filters {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    font-size: 14px;
+}
+
+.home {
+    padding: 0.5rem;
+}
+
+.home-svg {
+    scale: 1.5;
+    padding-inline: 0.5rem;
+    min-width: 25px;
+}
+
+.saved-files {
+    padding: 0.5rem;
+}
+
+.saved-svg {
+    scale: 1.5;
+    padding-inline: 0.5rem;
+    min-width: 25px;
+
+}
+
+.users-files {
+    padding: 0.5rem;
+}
+
+.user-svg {
+    scale: 1.6;
+    padding-inline: 0.5rem;
+    min-width: 25px;
+
 }
 
 .span-rest {
