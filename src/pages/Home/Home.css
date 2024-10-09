@@ -5,6 +5,7 @@
 .full-screen {
     max-height: 100vh;
     overflow-y: hidden;
+    user-select: none;
 }
 .page-container {
     display: flex;
@@ -41,8 +42,8 @@
 
 .file-display-container {
     overflow-y: auto;
-    height: 70vh; /* Adjust this height as needed */
-    padding-inline: 2rem;
+    height: 66vh;
+    padding-inline: 2.5rem;
     padding-bottom: 1rem;
 }
 
