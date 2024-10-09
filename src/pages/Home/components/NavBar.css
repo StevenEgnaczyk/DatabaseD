@@ -2,9 +2,7 @@
 
 @import url("../../../Global.css");
 
-
 .navbar {
-    z-index: 1000;
     background-color: var(--color-bg);
     overflow: hidden;
     display: grid;
@@ -14,19 +12,20 @@
     position: relative;
 }
 
+/* Navbar logo */
 .navbar-logo {
     display: flex;
     align-items: center;
 }
 
+/* Logo components */
 .logo-img {
     width: 5rem;
     height: 5rem;
     border-radius: 75%;
     object-fit: cover;
-    margin-right: 10px;
+    margin-right: 20px;
 }
-
 .logo-text {
     top: 10%;
     font-size: 60px;
@@ -39,50 +38,42 @@
 }
 
 .navbar-dropdown {
-    position: relative; /* Position relative for absolute positioning of dropdown */
+    position: relative;
     justify-self: flex-end;
 }
 
-.navbar .menu {
-    margin-left: auto; 
-    margin-right: 0;
-    display: flex;
-    gap: 10px;
-}
-
-.navbar-dropdown button {
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1000;
-}
-
 .dropdown-toggle {
-    background-color: #f9f9f9;
-    border: none;
-    padding: 10px 15px;
+    min-width: 150px;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 24px;
+    border: 1px solid var(--color-white);
+    border-radius: 5px;
+    background-color: var(--color-button-red);
+    color: var(--color-white);
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth background transition */
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out;
 }
-
 .dropdown-toggle:hover {
-    background-color: #e0e0e0; /* Change background on hover */
+    border-color: var(--color-hover-blue);
+    box-shadow: 0 0 5px var(--color-hover-blue);
 }
 
 .dropdown-menu {
-
-    position: relative; /* Position the dropdown menu */
-    top: 100%; /* Position below the button */
+    position: relative;
+    z-index: 1;
+    top: 100%;
     left: 0;
-    background-color: white; /* Background color of the dropdown */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    border-radius: 5px; /* Rounded corners */
-    opacity: 0; /* Start hidden */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    opacity: 0;
     visibility: visible;
-    transform: translateY(-10px); /* Start slightly above */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
-    margin-top: 5px; /* Add space between the menu button and dropdown */
-
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    margin-top: 5px;
 }
 
 .navbar-dropdown .dropdown-menu {

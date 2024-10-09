@@ -5,6 +5,8 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/Logo.jpeg';
 import { useNavigate } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import './NavBar.css';
 
 /* Component for the navigation bar */
@@ -74,12 +76,14 @@ const NavBar = () => {
 
     /* Render the navigation bar */
     return (
+        
         <nav className="navbar">
             <div className="navbar-logo" onClick={handleTextRotation}>
                 <img className="logo-img" src={logo} alt="Logo" />
                 <div className="logo-text" ref={textRef}>DataBaseD</div>
             </div>
             <div className="navbar-dropdown">
+
                 <button className="dropdown-toggle" onClick={toggleDropdown}>
                     Menu
                 </button>
@@ -90,7 +94,7 @@ const NavBar = () => {
 
                         {/* Conditionally render the Admin Panel Link for admin users */}
                         {userRole === "admin" && (
-                            <Link to="/admin" className="dropdown-link">Admin Panel</Link> // Use Link for Admin Panel
+                            <button onClick={() => navigate('/admin')}>Admin Panel</button>
                         )}
 
                         <button onClick={returnToLogin}>Log out</button>
