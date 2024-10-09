@@ -12,6 +12,7 @@ import { BsFillGridFill } from "react-icons/bs";
 import { BsFillCaretUpFill } from "react-icons/bs";
 import FileLine from "./components/FileLine";
 import TableHeader from "./components/TableHeader";
+import NoFilesFound from "./components/NoFilesFound";
 
 const Home = ({ user }) => {
     const [files] = useState([
@@ -129,19 +130,23 @@ function toggleDropdown() {
                                         </div>
                                 ))
                             ) : (
-                                <p>No files available.</p>
+                                <NoFilesFound />
                             )}
                         </div>
-                        <div className="pagination">
-                            <button onClick={prevPage} disabled={currentPage === 1}>
-                                Previous
-                            </button>
-                            <span> Page {currentPage} of {totalPages} </span>
-                            <button onClick={nextPage} disabled={currentPage === totalPages}>
-                                Next
-                            </button>
+                        {currentFiles.length > 0 ? (
+                            <div className="pagination">
+                                <button onClick={prevPage} disabled={currentPage === 1}>
+                                    Previous
+                                </button>
+                                <span> Page {currentPage} of {totalPages} </span>
+                                <button onClick={nextPage} disabled={currentPage === totalPages}>
+                                    Next
+                                </button>
+                            </div>
+                        ) : (
+                            <span/>
+                        )}
 
-                        </div>
                     </div>
                 </div>
             </div>
