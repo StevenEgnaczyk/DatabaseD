@@ -6,6 +6,8 @@ import NavBarLeft from './components/NavBarLeft';
 import FileQueryBar from './components/FileQueryBar';
 import File from './components/File';
 
+import { BsGrid } from "react-icons/bs";
+
 const Home = ({ user }) => {
     const [files] = useState([
         { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
@@ -21,7 +23,7 @@ const Home = ({ user }) => {
         // Add more file objects as needed
     ]);
 
-    const [filesPerPage, setFilesPerPage] = useState(8);
+    const [filesPerPage, setFilesPerPage] = useState(12);
     const [filteredFiles, setFilteredFiles] = useState(files);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -63,23 +65,24 @@ function toggleDropdown() {
                     <NavBarLeft />
                 </div>
                 <div className={"main-bar"}>
+
+
+                    <BsGrid className={"grid-svg"}/>
+
                     <div className={"file-query"}>
                         <FileQueryBar files={files} setFilteredFiles={setFilteredFiles} />
                         {/* Dropdown to select files per page */}
-                        <div className="files-per-page-dropdown">
-                            <label htmlFor="files-per-page">Files per page:</label>
-                            <select id="files-per-page" value={filesPerPage} onChange={handleFilesPerPageChange}>
-                                <option value="4">4</option>
-                                <option value="6">6</option>
-                                <option value="8">8</option>
-                                <option value="12">12</option>
-                                <option value="16">16</option>
-                            </select>
-                        </div>
+                        {/*<div className="files-per-page-dropdown">*/}
+                        {/*    <label htmlFor="files-per-page">Files per page:</label>*/}
+                        {/*    <select id="files-per-page" value={filesPerPage} onChange={handleFilesPerPageChange}>*/}
+                        {/*        <option value="4">4</option>*/}
+                        {/*        <option value="6">6</option>*/}
+                        {/*        <option value="8">8</option>*/}
+                        {/*        <option value="12">12</option>*/}
+                        {/*        <option value="16">16</option>*/}
+                        {/*    </select>*/}
+                        {/*</div>*/}
                     </div>
-
-
-
                     <div className={"file-display-container"}>
                         <div className={"file-display"}>
                         {currentFiles.length > 0 ? (
@@ -99,10 +102,9 @@ function toggleDropdown() {
                             <button onClick={nextPage} disabled={currentPage === totalPages}>
                                 Next
                             </button>
+
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
