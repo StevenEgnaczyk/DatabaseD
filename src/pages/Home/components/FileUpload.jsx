@@ -8,6 +8,8 @@ import ClassNameDropdown from './Dropdowns/ClassName';
 import ProfessorNameDropdown from './Dropdowns/ProfessorName';
 import YearDropdown from './Dropdowns/Year';
 
+import { BsXCircle } from "react-icons/bs";
+
 /* Component for uploading files 
     onClose - function to close the file upload modal */
 const FileUpload = ({ onClose }) => {
@@ -44,7 +46,7 @@ const FileUpload = ({ onClose }) => {
 
                 <div className="upload-header">
                     <h2>Upload a file</h2>
-                    <button className="close-button" onClick={onClose}> X </button>
+                    <BsXCircle onClick={onClose}/>
                 </div>
 
                 <div className="file-attributes">

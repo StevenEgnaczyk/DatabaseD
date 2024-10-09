@@ -7,6 +7,11 @@ import FileQueryBar from './components/FileQueryBar';
 import File from './components/File';
 
 import { BsGrid } from "react-icons/bs";
+import { BsViewStacked } from "react-icons/bs";
+import { BsFillGridFill } from "react-icons/bs";
+import { BsFillCaretUpFill } from "react-icons/bs";
+import FileLine from "./components/FileLine";
+import TableHeader from "./components/TableHeader";
 
 const Home = ({ user }) => {
     const [files] = useState([
@@ -19,11 +24,19 @@ const Home = ({ user }) => {
         { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
         { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
         { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
+        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
+        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
+        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
+        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
+        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
+        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
+        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
+        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
         { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' }
         // Add more file objects as needed
     ]);
 
-    const [filesPerPage, setFilesPerPage] = useState(12);
+    const [filesPerPage, setFilesPerPage] = useState(8);
     const [filteredFiles, setFilteredFiles] = useState(files);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -56,6 +69,17 @@ function toggleDropdown() {
   }
 */
 
+    const [layoutButtonsOpen, setButtonsOpen] = useState(false);
+    const [isGridView, setGridView] = useState(true);
+
+    const showLayoutButtons = () => {
+        setButtonsOpen(!layoutButtonsOpen);
+    }
+
+    const setFileView = () => {
+        setGridView(!isGridView);
+        isGridView ? setFilesPerPage(20) : setFilesPerPage(16);
+    }
 
     return (
         <div className={"full-screen"}>
@@ -66,8 +90,16 @@ function toggleDropdown() {
                 </div>
                 <div className={"main-bar"}>
 
-
-                    <BsGrid className={"grid-svg"}/>
+                    <div className="layout-buttons">
+                        <div className={`layout-toggle-icon ${isGridView ? 'grid' : 'list'}`} onClick={setFileView}>
+                            <div className="icon-wrapper grid-icon">
+                                <BsGrid className="icon" />
+                            </div>
+                            <div className="icon-wrapper list-icon">
+                                <BsViewStacked className="icon" />
+                            </div>
+                        </div>
+                    </div>
 
                     <div className={"file-query"}>
                         <FileQueryBar files={files} setFilteredFiles={setFilteredFiles} />
@@ -84,15 +116,21 @@ function toggleDropdown() {
                         {/*</div>*/}
                     </div>
                     <div className={"file-display-container"}>
-                        <div className={"file-display"}>
-                        {currentFiles.length > 0 ? (
+                        <div className={`file-display ${isGridView ? 'grid-layout' : 'stacked-layout'}`}>
+
+                            {!isGridView && <TableHeader />}
+
+                            {currentFiles.length > 0 ? (
                                 currentFiles.map((file, index) => (
-                                    <File key={index} file={file} />
+                                    isGridView ?
+                                        <File key={index} file={file} /> :
+                                        <div>
+                                            <FileLine key={index} file={file} />
+                                        </div>
                                 ))
                             ) : (
                                 <p>No files available.</p>
                             )}
-
                         </div>
                         <div className="pagination">
                             <button onClick={prevPage} disabled={currentPage === 1}>

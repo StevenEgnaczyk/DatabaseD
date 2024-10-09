@@ -14,13 +14,11 @@
     background-color: var(--color-bg);
 }
 
-/* Style for the side-bar */
 .side-bar {
     display: flex;
     width: 15%;
 }
 
-/* Style for the main-bar */
 .main-bar {
     display: flex;
     flex-direction: column;
@@ -30,7 +28,7 @@
     border-radius: 10px;
     margin-right: 1rem;
     overflow-y: auto;
-    height: 84vh;
+    height: 86vh;
 }
 
 
@@ -42,18 +40,15 @@
 }
 
 .file-display-container {
-
     padding-inline: 2.5rem;
     padding-bottom: 1rem;
 }
 
-
-.file-display {
+.grid-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 15px;
     border-radius: 5%;
-
 }
 
 .pagination {
@@ -156,12 +151,74 @@
     border-radius: 10px;
 }
 
-.grid-svg {
+.layout-buttons {
+    bottom: 3%;
+    left: 96%;
+    padding-right: 2px;
+    padding-bottom: 2px;
     position: absolute;
-    scale: 1.5;
-    top: 94%;
-    left: 97%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    scale: 1.2;
+    cursor: pointer;
+}
+
+.layout-toggle-button {
+    position: relative;
+    color: white;
+    padding: 1rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.layout-toggle-icon {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+}
+
+.icon-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-in-out;
+    border-radius: 50%;
     color: white;
 }
 
+.grid-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.list-icon {
+    opacity: 0;
+    transform: scale(0.5) rotate(-180deg);
+}
+
+.layout-toggle-icon.list .grid-icon {
+    opacity: 0;
+    transform: scale(0.5) rotate(180deg);
+}
+
+.layout-toggle-icon.list .list-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
 
