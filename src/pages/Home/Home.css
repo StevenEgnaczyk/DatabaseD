@@ -29,7 +29,8 @@
     background-color: var(--color-dark-gray);
     border-radius: 10px;
     margin-right: 1rem;
-    height: fit-content;
+    overflow-y: auto;
+    height: 84vh;
 }
 
 
@@ -41,8 +42,7 @@
 }
 
 .file-display-container {
-    overflow-y: auto;
-    height: 66vh;
+
     padding-inline: 2.5rem;
     padding-bottom: 1rem;
 }
@@ -154,6 +154,14 @@
 ::-webkit-scrollbar-thumb {
     background-color: #555;
     border-radius: 10px;
+}
+
+.grid-svg {
+    position: absolute;
+    scale: 1.5;
+    top: 94%;
+    left: 97%;
+    color: white;
 }
 
 
