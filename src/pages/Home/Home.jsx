@@ -6,6 +6,8 @@ import NavBarLeft from './components/NavBarLeft';
 import FileQueryBar from './components/FileQueryBar';
 import File from './components/File';
 
+import { BsGrid } from "react-icons/bs";
+
 const Home = ({ user }) => {
     const [files] = useState([
         { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
@@ -63,6 +65,10 @@ function toggleDropdown() {
                     <NavBarLeft />
                 </div>
                 <div className={"main-bar"}>
+
+
+                    <BsGrid className={"grid-svg"}/>
+
                     <div className={"file-query"}>
                         <FileQueryBar files={files} setFilteredFiles={setFilteredFiles} />
                         {/* Dropdown to select files per page */}
@@ -77,9 +83,6 @@ function toggleDropdown() {
                         {/*    </select>*/}
                         {/*</div>*/}
                     </div>
-
-
-
                     <div className={"file-display-container"}>
                         <div className={"file-display"}>
                         {currentFiles.length > 0 ? (
@@ -99,10 +102,9 @@ function toggleDropdown() {
                             <button onClick={nextPage} disabled={currentPage === totalPages}>
                                 Next
                             </button>
+
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

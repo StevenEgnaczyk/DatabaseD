@@ -3,6 +3,11 @@ import React, { useRef, useState } from "react";
 import './FileUpload.css';
 import './FileQueryBar.css';
 
+import AssignmentTypeDropdown from './Dropdowns/AssignmentType';
+import ClassNameDropdown from './Dropdowns/ClassName';
+import ProfessorNameDropdown from './Dropdowns/ProfessorName';
+import YearDropdown from './Dropdowns/Year';
+
 /* Component for uploading files 
     onClose - function to close the file upload modal */
 const FileUpload = ({ onClose }) => {
@@ -62,28 +67,33 @@ const FileUpload = ({ onClose }) => {
                             </p>
                         </div>
                         
-                        <div className="filter-dropdowns">
-                            <button type="button">Class</button>
-                            <button type="button">Professor</button>
-                            <button type="button">Year</button>
-                            <button type="button">Assignment</button>
-                            <button type="button">File Type</button>
+                        <div className="filter-input">
+                            <ClassNameDropdown />
+                            <ProfessorNameDropdown />
+                            <YearDropdown />
+                            <AssignmentTypeDropdown />
                         </div>
 
                         <div className="file-preview">
                             {filePreview ? (
                                 <iframe
                                     src={filePreview.path}
-                                    className="pdf-preview"
+                                    className="pdf-preview-2"
                                     title="PDF Preview"
                                     width="100%"
-                                    height="500px">
+                                    >
                                 </iframe>
                             ) : (
-                                <p>No file selected</p>
+                                <p></p>
                             )}
                         </div>
-                        <button className="submit-button" type="submit">Submit</button>
+
+                        {filePreview ? (
+                            <button className="submit-button" type="submit">Submit</button>
+                        ) : (
+                            <p></p>
+                        )}
+
                     </form>
                 </div>
             </div>
