@@ -21,7 +21,7 @@ const Home = ({ user }) => {
         // Add more file objects as needed
     ]);
 
-    const [filesPerPage, setFilesPerPage] = useState(8);
+    const [filesPerPage, setFilesPerPage] = useState(12);
     const [filteredFiles, setFilteredFiles] = useState(files);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -66,16 +66,16 @@ function toggleDropdown() {
                     <div className={"file-query"}>
                         <FileQueryBar files={files} setFilteredFiles={setFilteredFiles} />
                         {/* Dropdown to select files per page */}
-                        <div className="files-per-page-dropdown">
-                            <label htmlFor="files-per-page">Files per page:</label>
-                            <select id="files-per-page" value={filesPerPage} onChange={handleFilesPerPageChange}>
-                                <option value="4">4</option>
-                                <option value="6">6</option>
-                                <option value="8">8</option>
-                                <option value="12">12</option>
-                                <option value="16">16</option>
-                            </select>
-                        </div>
+                        {/*<div className="files-per-page-dropdown">*/}
+                        {/*    <label htmlFor="files-per-page">Files per page:</label>*/}
+                        {/*    <select id="files-per-page" value={filesPerPage} onChange={handleFilesPerPageChange}>*/}
+                        {/*        <option value="4">4</option>*/}
+                        {/*        <option value="6">6</option>*/}
+                        {/*        <option value="8">8</option>*/}
+                        {/*        <option value="12">12</option>*/}
+                        {/*        <option value="16">16</option>*/}
+                        {/*    </select>*/}
+                        {/*</div>*/}
                     </div>
 
 
