@@ -1,7 +1,7 @@
 /* FileUpload.jsx Imports */
 import React, { useRef, useState } from "react";
 import './FileUpload.css';
-import './FileQueryBar.css';
+import './FileSearchComponents/FileQueryBar.css';
 
 import AssignmentTypeDropdown from './Dropdowns/AssignmentType';
 import ClassNameDropdown from './Dropdowns/ClassName';
