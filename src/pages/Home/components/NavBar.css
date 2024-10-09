@@ -2,33 +2,31 @@
 
 @import url("../../../Global.css");
 
-
 .navbar {
-    z-index: 1000;
     background-color: var(--color-bg);
-    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     padding: 14px 20px;
     position: relative;
+    z-index: 1;
 }
 
+/* Navbar logo */
 .navbar-logo {
     display: flex;
     align-items: center;
 }
 
+/* Logo components */
 .logo-img {
     width: 5rem;
     height: 5rem;
     border-radius: 75%;
     object-fit: cover;
-    margin-right: 10px;
+    margin-right: 20px;
 }
-
 .logo-text {
-    top: 10%;
     font-size: 60px;
     background: linear-gradient(to right, #999999 50%, #990033 50%);
     -webkit-background-clip: text;
@@ -38,96 +36,84 @@
     transition: transform 1s;
 }
 
+/* Dropdown section */
 .navbar-dropdown {
-    position: relative; /* Position relative for absolute positioning of dropdown */
+    position: relative;
     justify-self: flex-end;
 }
 
-.navbar .menu {
-    margin-left: auto; 
-    margin-right: 0;
-    display: flex;
-    gap: 10px;
-}
-
-.navbar-dropdown button {
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1000;
-}
-
 .dropdown-toggle {
-    background-color: #f9f9f9;
-    border: none;
-    padding: 10px 15px;
+    min-width: 150px;
+    padding: 10px;
+    font-size: 24px;
+    border: 1px solid var(--color-white);
+    border-radius: 5px;
+    background-color: var(--color-button-red);
+    color: var(--color-white);
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth background transition */
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-
 .dropdown-toggle:hover {
-    background-color: #e0e0e0; /* Change background on hover */
+    border-color: var(--color-hover-blue);
+    box-shadow: 0 0 5px var(--color-hover-blue);
 }
 
+/* Keyframe for 360 spin */
+@keyframes spinIn {
+    0% {
+        opacity: 0;
+        transform: rotateY(0deg) scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(360deg) scale(1);
+    }
+}
+
+/* Keyframe for spin-out (closing) */
+@keyframes spinOut {
+    0% {
+        opacity: 1;
+        transform: rotateY(360deg) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: rotateY(0deg) scale(0.5);
+    }
+}
+
+/* Dropdown menu */
 .dropdown-menu {
-
-    position: relative; /* Position the dropdown menu */
-    top: 100%; /* Position below the button */
-    left: 0;
-    background-color: white; /* Background color of the dropdown */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    border-radius: 5px; /* Rounded corners */
-    opacity: 0; /* Start hidden */
-    visibility: visible;
-    transform: translateY(-10px); /* Start slightly above */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
-    margin-top: 5px; /* Add space between the menu button and dropdown */
-
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    margin-top: 5px;
 }
-
-.navbar-dropdown .dropdown-menu {
-    animation: slideDown 0.3s ease forwards; /* Add slide down animation */
+.dropdown-menu.open {
+    animation: spinIn 0.5s forwards;
 }
-
 .dropdown-menu.closing {
-    animation: slideUp 0.3s ease forwards; /* Smooth transition */
+    animation: spinOut 0.5s forwards;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-}
-
+/* Dropdown menu items */
 .dropdown-menu button {
-    position: inherit;
-    z-index: inherit;
-    background: none; /* No background */
-    border: none; /* No border */
-    padding: 10px 20px; /* Padding for the button */
-    width: 100%; /* Full width */
-    text-align: left; /* Align text to the left */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s ease; /* Smooth background transition */
-    margin: 5px 0; /* Add space between dropdown buttons */
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .dropdown-menu button:hover {
-    background-color: #f0f0f0; /* Change background on hover */
+    background-color: #f0f0f0;
 }
