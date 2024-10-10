@@ -1,5 +1,5 @@
 /* Styling for FileQueryBar.jsx */
-@import "./../../../Global.css";
+@import "./../../../../Global.css";
 /* Styling for the entire search and filter container */
 .filter-container {
     background-color: var(--color-bg);

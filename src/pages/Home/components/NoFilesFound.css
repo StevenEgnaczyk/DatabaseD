@@ -1,0 +1,16 @@
+
+.none-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    margin: auto;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    gap: 5rem;
+    padding-top: 10%;
+}
+
+.frown-svg {
+    scale: 5;
+}

@@ -2,59 +2,17 @@ import React, { useState } from 'react';
 
 import "./Home.css"
 import NavBar from './components/NavBar';
-import NavBarLeft from './components/NavBarLeft';
-import FileQueryBar from './components/FileQueryBar';
-import File from './components/File';
+import FileSearchPage from "./components/FileSearchComponents/FileSearchPage";
+import NavBarLeft from "./components/NavBarLeft";
+import SavedFilesPage from "./components/SavedFilesComponents/SavedFilesPage";
 
-import { BsGrid } from "react-icons/bs";
 
 const Home = ({ user }) => {
-    const [files] = useState([
-        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' }
-        // Add more file objects as needed
-    ]);
 
-    const [filesPerPage, setFilesPerPage] = useState(12);
-    const [filteredFiles, setFilteredFiles] = useState(files);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [activeScreen, setActiveScreen] = useState('FileSearchPage')
 
-    const totalPages = Math.ceil(filteredFiles.length / filesPerPage)
-    const indexOfLastFile = currentPage * filesPerPage;
-    const indexOfFirstFile = indexOfLastFile - filesPerPage;
-    const currentFiles = filteredFiles.slice(indexOfFirstFile, indexOfLastFile);
-
-    const nextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const handleFilesPerPageChange = (e) => {
-        setFilesPerPage(Number(e.target.value));
-        setCurrentPage(1);
-    };
-
-    /*
-function toggleDropdown() {
-    const dropdown = document.getElementById("dropdown-content");
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-  }
-*/
+    const showFileSearch = () => setActiveScreen('FileSearchPage')
+    const showSavedFiles = () => setActiveScreen('SavedFilesPage.jsx')
 
 
     return (
@@ -62,49 +20,11 @@ function toggleDropdown() {
             <NavBar />
             <div className={"page-container"}>
                 <div className={"side-bar"}>
-                    <NavBarLeft />
+                    <NavBarLeft showFileSearch={showFileSearch} showSavedFiles={showSavedFiles}/>
                 </div>
                 <div className={"main-bar"}>
-
-
-                    <BsGrid className={"grid-svg"}/>
-
-                    <div className={"file-query"}>
-                        <FileQueryBar files={files} setFilteredFiles={setFilteredFiles} />
-                        {/* Dropdown to select files per page */}
-                        {/*<div className="files-per-page-dropdown">*/}
-                        {/*    <label htmlFor="files-per-page">Files per page:</label>*/}
-                        {/*    <select id="files-per-page" value={filesPerPage} onChange={handleFilesPerPageChange}>*/}
-                        {/*        <option value="4">4</option>*/}
-                        {/*        <option value="6">6</option>*/}
-                        {/*        <option value="8">8</option>*/}
-                        {/*        <option value="12">12</option>*/}
-                        {/*        <option value="16">16</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
-                    </div>
-                    <div className={"file-display-container"}>
-                        <div className={"file-display"}>
-                        {currentFiles.length > 0 ? (
-                                currentFiles.map((file, index) => (
-                                    <File key={index} file={file} />
-                                ))
-                            ) : (
-                                <p>No files available.</p>
-                            )}
-
-                        </div>
-                        <div className="pagination">
-                            <button onClick={prevPage} disabled={currentPage === 1}>
-                                Previous
-                            </button>
-                            <span> Page {currentPage} of {totalPages} </span>
-                            <button onClick={nextPage} disabled={currentPage === totalPages}>
-                                Next
-                            </button>
-
-                        </div>
-                    </div>
+                    {activeScreen === 'FileSearchPage' && <FileSearchPage />}
+                    {activeScreen === 'SavedFilesPage.jsx' && <SavedFilesPage />}
                 </div>
             </div>
         </div>
