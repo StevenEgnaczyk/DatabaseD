@@ -1,54 +1,60 @@
+/* Admin.jsx imports */
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../../config/firebase'; // Adjust your import paths
-import { collection, getDocs, query, where, updateDoc, doc, getFirestore, getDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
-import { getAuth } from 'firebase/auth';
-import { toast } from 'react-toastify';
+import { collection, getDocs, query, where, doc, getFirestore, getDoc } from 'firebase/firestore';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
+import './Admin.css';
+
+import NavBar from './../Home/components/NavBar';
+import UnapprovedUsers from './components/UnapprovedUsers';
+import TagsTabInterface from './components/TagsTabInterface';
+
+/* Admin page component */
 const Admin = () => {
 
+    /* State variables */
     const [unapprovedUsers, setUnapprovedUsers] = useState([]);
-
     const [isAdmin, setIsAdmin] = useState(false);
 
+    /* Firebase services */
     const db = getFirestore();
     const auth = getAuth();
 
+    /* Fetch the user's role and unapproved users */
     useEffect(() => {
         const fetchUserRole = async () => {
             const user = auth.currentUser;
-                if (user) {
-                    try {
-                        const docRef = doc(db, "users", user.uid);
-                        const docSnap = await(getDoc(docRef));
+            if (user) {
+                try {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
 
-                        if (docSnap.exists() && docSnap.data().role === "admin") {
-                            setIsAdmin(true);
-                        } 
-                    } catch (e) {
-                        console.error("Error getting document:", e);
+                    if (docSnap.exists() && docSnap.data().role === "admin") {
+                        setIsAdmin(true);
                     }
+                } catch (e) {
+                    console.error("Error getting document:", e);
                 }
-            };
-            fetchUserRole();
-            console.log(isAdmin);
+            }
+        };
+        fetchUserRole();
 
-            const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 fetchUserRole();
             } else {
-                setIsAdmin(false); // No user is signed in
+                setIsAdmin(false);
             }
         });
-        return () => unsubscribe(); // Clean up listener
+        return () => unsubscribe();
     }, []);
-
     useEffect(() => {
         if (isAdmin) {
             fetchUnapprovedUsers();
         }
     }, [isAdmin]);
 
+    /* Fetch the unapproved users */
     const fetchUnapprovedUsers = async () => {
         const q = query(collection(db, "users"), where("approved", "==", false));
         const querySnapshot = await getDocs(q);
@@ -56,48 +62,22 @@ const Admin = () => {
         setUnapprovedUsers(users);
     };
 
-    const approveUser = async (userId) => {
-        try {
-            await updateDoc(doc(db, "users", userId), { approved: true });
-            toast.success("User approved successfully!");
-            fetchUnapprovedUsers(); // Refresh list after approval
-        } catch (err) {
-            console.error("Error approving user:", err);
-            toast.error("Failed to approve user.");
-        }
-    };
-
+    /* Render the admin page */
     if (!isAdmin) {
         return <p>You do not have access to this page.</p>;
     }
-
     return (
         <div>
-        <h2>Admin Panel</h2>
-        {unapprovedUsers.length === 0 ? (
-            <p>No unapproved users.</p>
-        ) : (
-            <table>
-            <thead>
-                <tr>
-                <th>Email</th>
-                <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {unapprovedUsers.map(user => (
-                <tr key={user.id}>
-                    <td>{user.email}</td>
-                    <td>
-                    <button onClick={() => approveUser(user.id)}>Approve</button>
-                    </td>
-                </tr>
-                ))}
-            </tbody>
-            </table>
-        )}
+            <NavBar />
+            <div className="admin-page-container">
+                <div className="left-panel">
+                    <UnapprovedUsers unapprovedUsers={unapprovedUsers} fetchUnapprovedUsers={fetchUnapprovedUsers} db={db} />
+                </div>
+
+                <TagsTabInterface />
+            </div>
         </div>
     );
-    };
+};
 
 export default Admin;

@@ -1,0 +1,14 @@
+/* Admin.css */
+
+@import url("../../Global.css");
+
+.admin-page-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--color-light-gray);
+    height: 100vh;
+}
+
+.left-panel {
+    width: 45%;
+}
