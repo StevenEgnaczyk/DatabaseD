@@ -94,6 +94,11 @@ const NavBar = () => {
     }
 
     /* Navigate to the admin panel */
+    function returnToHome() {
+        navigate('/home');
+    }
+
+    /* Navigate to the admin panel */
     function navigateToAdmin() {
         navigate('/admin');
     }
@@ -123,6 +128,7 @@ const NavBar = () => {
 
                 {dropdownOpen && (
                     <div className={`dropdown-menu ${closing ? 'closing' : 'open'}`}>
+                        <button onClick={returnToHome}>Home</button>
                         {userRole === "admin" && (
                             <button onClick={navigateToAdmin}>Admin Panel</button>
                         )}
