@@ -1,0 +1,40 @@
+/* UnapprovedUsers.css */
+
+/* Admin Table Component */
+.admin-table {
+    padding: 20px;
+    margin: 20px;
+    background-color: var(--color-dark-gray);
+    border-radius: 20px;
+}
+.admin-table h2 {
+    text-align: center;
+    color: var(--color-white);
+}
+
+/* Unapproved Users table */
+.unapproved-users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.unapproved-users-table th {
+    border: 2px solid var(--color-gray);
+    padding: 8px;
+    text-align: left;
+    color: var(--color-white);
+    background-color: var(--color-button-red);
+}
+.unapproved-users-table td {
+    background-color: var(--color-light-gray);
+    border: 2px solid var(--color-gray);
+    padding: 8px;
+    color: black;
+}
+.unapproved-users-table td button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.unapproved-users-table td button:hover {
+    background-color: #007bff;
+    color: white;
+}
