@@ -1,0 +1,45 @@
+/* TagsTabInterface.css */
+
+/* Tags Tab Panel */
+.right-panel {
+    width: 50%;
+    padding: 20px;
+    margin: 20px;
+    background-color: var(--color-dark-gray);
+    border-radius: 20px;
+}
+.right-panel h2 {
+    text-align: center;
+    color: var(--color-white);
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.tabs button {
+    padding: 10px 20px;
+    border: 1px solid var(--color-gray);
+    background-color: var(--color-dark-gray);
+    color: var(--color-white);
+    cursor: pointer;
+    flex-grow: 1;
+    transition: background-color 0.3s ease;
+}
+.tabs button:hover {
+    background-color: var(--color-button-red);
+    color: var(--color-white);
+}
+.tabs button.active {
+    background-color: var(--color-button-red);
+}
+
+/* Tab Content */
+.tab-content {
+    border: 1px solid var(--color-dark-gray);
+    padding: 20px;
+    background-color: var(--color-bg);
+    color: var(--color-white);
+}
