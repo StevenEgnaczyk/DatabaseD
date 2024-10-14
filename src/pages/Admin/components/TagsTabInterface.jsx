@@ -1,7 +1,6 @@
 /* TabbedInterface.jsx imports */
 import React, { useState } from 'react';
-import { collection, getDocs, query, where, doc, getFirestore, getDoc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { collection, getDocs, query, getFirestore } from 'firebase/firestore';
 
 import './TagsTabInterface.css';
 
@@ -11,6 +10,7 @@ const TagsTabInterface = () => {
     /* State variable for the active tab */
     const [activeTab, setActiveTab] = useState('Professors');
 
+    /* State variables for the tags data */
     const [professors, setProfessors] = useState([]);
     const [assignmentTypes, setAssignmentTypes] = useState([]);
     const [classNames, setClassNames] = useState([]);
@@ -18,7 +18,6 @@ const TagsTabInterface = () => {
 
     /* Firebase services */
     const db = getFirestore();
-    const auth = getAuth();
 
     /* Fetch the Professors */
     const fetchProfessors = async () => {

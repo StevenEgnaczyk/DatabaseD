@@ -1,45 +1,83 @@
 /* TagsTabInterface.css */
 
-/* Tags Tab Panel */
+/* Right Panel */
 .right-panel {
-    width: 50%;
+    width: 60%;
     padding: 20px;
-    margin: 20px;
+    margin: 20px auto;
     background-color: var(--color-dark-gray);
     border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .right-panel h2 {
     text-align: center;
     color: var(--color-white);
+    font-size: 1.8em;
+    margin-bottom: 20px;
 }
 
 /* Tabs */
 .tabs {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-bottom: 20px;
+    gap: 10px;
 }
 .tabs button {
-    padding: 10px 20px;
+    padding: 10px 15px;
+    border-radius: 5px;
     border: 1px solid var(--color-gray);
     background-color: var(--color-dark-gray);
     color: var(--color-white);
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     flex-grow: 1;
-    transition: background-color 0.3s ease;
+    text-align: center;
 }
 .tabs button:hover {
     background-color: var(--color-button-red);
-    color: var(--color-white);
+    transform: translateY(-3px);
 }
 .tabs button.active {
     background-color: var(--color-button-red);
+    color: var(--color-white);
+    font-weight: bold;
 }
 
 /* Tab Content */
 .tab-content {
-    border: 1px solid var(--color-dark-gray);
+    border: 1px solid var(--color-gray);
     padding: 20px;
     background-color: var(--color-bg);
     color: var(--color-white);
+    border-radius: 10px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    color: var(--color-white);
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray);
+}
+
+table th {
+    background-color: var(--color-dark-gray);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table td {
+    background-color: var(--color-gray);
+}
+
+table tbody tr:hover {
+    background-color: var(--color-button-red);
+    cursor: pointer;
 }
