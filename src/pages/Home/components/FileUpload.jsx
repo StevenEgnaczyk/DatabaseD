@@ -6,7 +6,7 @@ import './FileQueryBar.css';
 import AssignmentTypeDropdown from './Dropdowns/AssignmentType';
 import ClassNameDropdown from './Dropdowns/ClassName';
 import ProfessorNameDropdown from './Dropdowns/ProfessorName';
-import YearDropdown from './Dropdowns/Year';
+import SemesterDropdown from './Dropdowns/Semester';
 
 /* Component for uploading files 
     onClose - function to close the file upload modal */
@@ -70,7 +70,7 @@ const FileUpload = ({ onClose }) => {
                         <div className="filter-input">
                             <ClassNameDropdown />
                             <ProfessorNameDropdown />
-                            <YearDropdown />
+                            <SemesterDropdown />
                             <AssignmentTypeDropdown />
                         </div>
 
