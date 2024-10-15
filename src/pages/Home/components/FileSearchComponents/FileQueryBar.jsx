@@ -1,10 +1,10 @@
 /* FileQueryBar.jsx Imports */
 import React, {useState} from "react";
 import './FileQueryBar.css'
-import AssignmentTypeDropdown from './../Dropdowns/AssignmentType';
-import ClassNameDropdown from './../Dropdowns/ClassName';
-import ProfessorNameDropdown from './../Dropdowns/ProfessorName';
-import YearDropdown from './../Dropdowns/Year';
+import AssignmentTypeDropdown from './Dropdowns/AssignmentType';
+import ClassNameDropdown from './Dropdowns/ClassName';
+import ProfessorNameDropdown from './Dropdowns/ProfessorName';
+import SemesterDropdown from './Dropdowns/Semester';
 
 /* Component for the search bar and filter dropdowns 
     files - array of file objects
@@ -76,7 +76,7 @@ const FileQueryBar = ({ files, setFilteredFiles }) => {
             <div className={"filter-dropdowns"}>
                 <ClassNameDropdown />
                 <ProfessorNameDropdown />
-                <YearDropdown />
+                <SemesterDropdown />
                 <AssignmentTypeDropdown />
             </div>
         </div>
