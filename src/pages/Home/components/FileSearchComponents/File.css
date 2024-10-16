@@ -4,15 +4,16 @@
 .file-card {
     display: flex;
     flex-direction: column;
-    background-color: #f9f9f9;
     width: 90%;
-    height: 593px;
+    height: 90%;
     padding: 20px;
     margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     transition: transform 0.3s ease;
+    color: white;
+    background-color: var(--color-gray);
 }
 
 /* When hovering over the file car */
@@ -23,21 +24,18 @@
 /* File Title styling */
 .file-card h1 {
     font-size: 24px;
-    color: #333;
     margin-bottom: 10px;
 }
 
 /* File Subtitle styling */
 .file-card h3 {
     font-size: 18px;
-    color: #666;
     margin-top: 10px;
 }
 
 /* File paragraph styling */
 .file-card p {
     font-size: 16px;
-    color: #444;
     margin: 5px 0;
 }
 
@@ -45,12 +43,11 @@
 .pdf-preview {
     margin: 20px 0;
     border: none;
-    background-color: #fff;
+    background-color: var(--color-white);
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 400px;
-    max-height: 75%;
 }
 
 .top-row {
@@ -64,3 +61,39 @@
     scale: 1.5;
 }
 
+.pdf-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.right-info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-left: auto;
+}
+
+.left-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+/*Styles for opened file*/
+.opened-file {
+    background-color: var(--color-gray);
+    color: var(--color-white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 40vw; /* Optional: limit the width of the lightbox */
+    width: 100%; /* Ensure it takes full width up to the max width */
+    height: 80vh;
+    box-sizing: border-box; /* Include padding in width calculation */
+    user-focus: none;
+}
+
+.opened-file .pdf-preview {
+    height: 80%;
+}

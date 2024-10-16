@@ -14,17 +14,13 @@ import { BsFillHouseFill } from "react-icons/bs";
 
 
 /* Component for the left navigation bar */
-const NavBarLeft = () => {
+const NavBarLeft = ({ showFileSearch, showSavedFiles}) => {
 
     const [isFileUploadOpen, setIsFileUploadOpen] = useState(false);
 
     /* Toggle the file upload modal */
     const swapFileUploadState = () => {
         setIsFileUploadOpen(!isFileUploadOpen);
-    }
-
-    /* Display saved files */
-    function displaySavedFiles() {
     }
 
     /* Display user's files */
@@ -43,11 +39,11 @@ const NavBarLeft = () => {
             <div className={"line"}></div>
 
             <div className={"file-filters"}>
-                <div className={"home button"}>
+                <div className={"home button"} onClick={showFileSearch}>
                     <BsFillHouseFill className={"home-svg"} />
                     <p>Home</p>
                 </div>
-                <div className={"saved-files button"} onClick={displaySavedFiles}>
+                <div className={"saved-files button"} onClick={showSavedFiles}>
                     <BsFileEarmarkCheckFill className={"saved-svg"}/>
                     <p>Saved Files</p>
                 </div>
