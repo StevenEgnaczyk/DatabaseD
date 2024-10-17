@@ -1,0 +1,20 @@
+
+.small-filter-container {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-bg);
+    padding-inline: 3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 1.5rem;
+    margin: auto;
+}
+
+.search-bar {
+    margin: 0;
+}
+
+.filter-dropdowns-small {
+    margin: 0 0 0 auto;
+    display: flex;
+    gap: 1rem;
+}
