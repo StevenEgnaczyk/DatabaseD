@@ -1,7 +1,9 @@
 /* TagsTabInterface.css */
 
+@import url('../../../Global.css');
+
 /* Right Panel */
-.right-panel {
+.tags-tab-panel {
     width: 60%;
     padding: 20px;
     margin: 20px auto;
@@ -9,7 +11,7 @@
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.right-panel h2 {
+.tags-tab-panel h2 {
     text-align: center;
     color: var(--color-white);
     font-size: 1.8em;
@@ -17,15 +19,16 @@
 }
 
 /* Tabs */
-.tabs {
+.tabs-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    gap: 10px;
+    gap: 0px;
+    align-items: center;
+    text-align: center;
 }
-.tabs button {
+.tabs-header button {
     padding: 10px 15px;
-    border-radius: 5px;
     border: 1px solid var(--color-gray);
     background-color: var(--color-dark-gray);
     color: var(--color-white);
@@ -34,50 +37,141 @@
     flex-grow: 1;
     text-align: center;
 }
-.tabs button:hover {
+.tabs-header button:hover {
     background-color: var(--color-button-red);
     transform: translateY(-3px);
 }
-.tabs button.active {
+.tabs-header button.active {
     background-color: var(--color-button-red);
     color: var(--color-white);
-    font-weight: bold;
+}
+
+/* Refresh icon styling */
+.refresh-icon {
+    font-size: 24px;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    color: var(--color-white);
+}
+.refresh-icon:hover {
+    transform: rotate(180deg);
 }
 
 /* Tab Content */
 .tab-content {
-    border: 1px solid var(--color-gray);
-    padding: 20px;
+    border: 2px solid var(--color-gray);
+    padding: 10px;
     background-color: var(--color-bg);
     color: var(--color-white);
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 /* Table Styling */
 table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
-    margin-top: 20px;
-    color: var(--color-white);
 }
-
 table th, table td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid var(--color-gray);
-}
-
-table th {
+    border-bottom: 1px solid var(--color-bg);
+    border-left: 1px solid var(--color-bg);
     background-color: var(--color-dark-gray);
     font-weight: bold;
     text-transform: uppercase;
 }
-
+table th:last-child {
+    border-right: 0;
+}
 table td {
     background-color: var(--color-gray);
 }
-
 table tbody tr:hover {
     background-color: var(--color-button-red);
     cursor: pointer;
 }
+td.status-tag, th.status-tag {
+    width: 10%;
+    text-align: center;
+}
+
+.status-label {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.status-active {
+    background-color: #28a745;
+    color: white;
+}
+.status-inactive {
+    background-color: #6c757d;
+    color: white;
+}
+.status-pending {
+    background-color: #6f42c1;
+    color: white;
+}
+
+/* Status tags */
+.tag {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+}
+
+.tag.green {
+    background-color: green;
+}
+
+.tag.gray {
+    background-color: gray;
+}
+
+.tag.purple {
+    background-color: purple;
+}
+
+
+
+/* Loading screen */
+.loading {
+    text-align: center;
+    font-size: 20px;
+    padding: 50px;
+}
+
+/* Styling for the fixed-right column */
+.actions-column {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Icon styling */
+.icon {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.icon.green {
+    color: green;
+}
+
+.icon.gray {
+    color: gray;
+}
+
+.icon.blue {
+    color: blue;
+}
+
+.icon.red {
+    color: red;
+}
+
+
+
