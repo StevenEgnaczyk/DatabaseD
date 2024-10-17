@@ -1,8 +1,10 @@
 /* TabbedInterface.jsx imports */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, getFirestore } from 'firebase/firestore';
+import { FaSyncAlt, FaCheck, FaEdit, FaTrashAlt } from 'react-icons/fa';  // Import icons
 
 import './TagsTabInterface.css';
+import App from './../../../App';
 
 /* Component for the tags tab interface */
 const TagsTabInterface = () => {
@@ -16,55 +18,66 @@ const TagsTabInterface = () => {
     const [classNames, setClassNames] = useState([]);
     const [semesters, setSemesters] = useState([]);
 
+    /* State for loading */
+    const [loading, setLoading] = useState(true);
+
     /* Firebase services */
     const db = getFirestore();
 
-    /* Fetch the Professors */
-    const fetchProfessors = async () => {
-        const q = query(collection(db, "professors"));
-        const querySnapshot = await getDocs(q);
-        let profs = [];
-        querySnapshot.forEach((doc) => {
-            profs.push(doc.data());
-        });
-        setProfessors(profs);
+    /* Fetch all tags */
+    const fetchAllTags = async () => {
+        setLoading(true); // Set loading to true before fetch starts
+        const fetchData = async (collectionName, setState) => {
+            const q = query(collection(db, collectionName));
+            const querySnapshot = await getDocs(q);
+            let data = [];
+            querySnapshot.forEach((doc) => {
+                data.push(doc.data());
+            });
+            setState(data);
+        };
+
+        await Promise.all([
+            fetchData("professors", setProfessors),
+            fetchData("assignment_types", setAssignmentTypes),
+            fetchData("class_names", setClassNames),
+            fetchData("semesters", setSemesters)
+        ]);
+        setLoading(false); // Set loading to false once data is fetched
     };
 
-    /* Fetch the Assignment Types */
-    const fetchAssignmentTypes = async () => {
-        const q = query(collection(db, "assignment_types"));
-        const querySnapshot = await getDocs(q);
-        let types = [];
-        querySnapshot.forEach((doc) => {
-            types.push(doc.data());
-        });
-        setAssignmentTypes(types);
-    };
-
-    /* Fetch the Class Names */
-    const fetchClassNames = async () => {
-        const q = query(collection(db, "class_names"));
-        const querySnapshot = await getDocs(q);
-        let names = [];
-        querySnapshot.forEach((doc) => {
-            names.push(doc.data());
-        });
-        setClassNames(names);
-    };
-
-    /* Fetch the Semesters */
-    const fetchSemesters = async () => {
-        const q = query(collection(db, "semesters"));
-        const querySnapshot = await getDocs(q);
-        let sems = [];
-        querySnapshot.forEach((doc) => {
-            sems.push(doc.data());
-        });
-        setSemesters(sems);
-    };
+    /* useEffect to fetch all tags on component mount */
+    useEffect(() => {
+        fetchAllTags();
+    }, []);
 
     /* Render the content for the active tab */
     const renderTabContent = () => {
+        const renderStatusTag = (status) => {
+            if (status === 'active') {
+                return <span className="tag green">Active</span>;
+            } else if (status === 'inactive') {
+                return <span className="tag gray">Inactive</span>;
+            } else {
+                return <span className="tag purple">Pending</span>;
+            }
+        };
+
+        const renderActions = (status) => {
+            const approveColor = status === 'pending' ? 'green' : 'gray';
+            return (
+                <td className="action-buttons">
+                    <FaCheck className={`icon ${approveColor}`} />
+                    <FaEdit className="icon blue" />
+                    <FaTrashAlt className="icon red" />
+                </td>
+            );
+        };
+
+        if (loading) {
+            return <div className="loading">Loading...</div>;
+        }
+
         switch (activeTab) {
             case 'Professors':
                 return (
@@ -74,19 +87,23 @@ const TagsTabInterface = () => {
                                 <tr>
                                     <th>Name</th>
                                     <th>Documents For</th>
+                                    <th class='status-tag'>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {professors.map(prof => (
                                     <tr key={prof.id}>
-                                        <td>{prof.name}</td>  
-                                        <td>{prof.documents_for}</td>                                  
+                                        <td>{prof.name}</td>
+                                        <td>{prof.documents_for}</td>
+                                        <td class='status-tag'>{renderStatusTag(prof.status)}</td>
+                                        {renderActions(prof.status)}
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                )
+                );
             case 'Assignment Types':
                 return (
                     <div>
@@ -95,6 +112,8 @@ const TagsTabInterface = () => {
                                 <tr>
                                     <th>Assignment Type</th>
                                     <th>Documents For</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,12 +121,14 @@ const TagsTabInterface = () => {
                                     <tr key={type.id}>
                                         <td>{type.type}</td>
                                         <td>{type.documents_for}</td>
+                                        <td>{renderStatusTag(type.status)}</td>
+                                        {renderActions(type.status)}
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                )
+                );
             case 'Class Names':
                 return (
                     <div>
@@ -117,6 +138,8 @@ const TagsTabInterface = () => {
                                     <th>Class ID</th>
                                     <th>Course Name</th>
                                     <th>Documents For</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,12 +148,14 @@ const TagsTabInterface = () => {
                                         <td>{name.department} {name.course_number}</td>
                                         <td>{name.course_name}</td>
                                         <td>{name.documents_for}</td>
+                                        <td>{renderStatusTag(name.status)}</td>
+                                        {renderActions(name.status)}
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                )
+                );
             case 'Semesters':
                 return (
                     <div>
@@ -139,6 +164,8 @@ const TagsTabInterface = () => {
                                 <tr>
                                     <th>Semester</th>
                                     <th>Documents For</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,12 +173,14 @@ const TagsTabInterface = () => {
                                     <tr key={semester.id}>
                                         <td>{semester.semester}</td>
                                         <td>{semester.documents_for}</td>
+                                        <td>{renderStatusTag(semester.status)}</td>
+                                        {renderActions(semester.status)}
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                )
+                );
             default:
                 return null;
         }
@@ -159,13 +188,14 @@ const TagsTabInterface = () => {
 
     /* Render the tags tab interface */
     return (
-        <div className="right-panel">
+        <div className="tags-tab-panel">
             <h2>Manage Tags</h2>
-            <div className="tabs">
-                <button onClick={() => { setActiveTab('Professors'); fetchProfessors(); }} className={activeTab === 'Professors' ? 'active' : ''}>Professors</button>
-                <button onClick={() => { setActiveTab('Assignment Types'); fetchAssignmentTypes(); }} className={activeTab === 'Assignment Types' ? 'active' : ''}>Assignment Types</button>
-                <button onClick={() => { setActiveTab('Class Names'); fetchClassNames(); }} className={activeTab === 'Class Names' ? 'active' : ''}>Class Names</button>
-                <button onClick={() => { setActiveTab('Semesters'); fetchSemesters(); }} className={activeTab === 'Semesters' ? 'active' : ''}>Semesters</button>
+            <div className="tabs-header">
+                <button onClick={() => setActiveTab('Professors')} className={activeTab === 'Professors' ? 'active' : ''}>Professors</button>
+                <button onClick={() => setActiveTab('Assignment Types')} className={activeTab === 'Assignment Types' ? 'active' : ''}>Assignment Types</button>
+                <button onClick={() => setActiveTab('Class Names')} className={activeTab === 'Class Names' ? 'active' : ''}>Class Names</button>
+                <button onClick={() => setActiveTab('Semesters')} className={activeTab === 'Semesters' ? 'active' : ''}>Semesters</button>
+                <FaSyncAlt className="refresh-icon" onClick={fetchAllTags} /> {/* Refresh Icon */}
             </div>
             <div className="tab-content">
                 {renderTabContent()}
