@@ -25,11 +25,10 @@ const Login = ({ setUser }) => {
 
   return (
       <form className={"form-container"} onSubmit={handleLogin}>
-        <h2>Log-in</h2>
+        <h2>Test</h2>
         <input className={"custom-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
         <input className={"custom-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
         <button className={"submit-button"} type="submit">Login</button>
-        <p><a href='src\components\Startup\Forgot.jsx'>Forgot Password?</a></p>
       </form>
   );
 };
