@@ -73,7 +73,7 @@ const FileSearchPage = () => {
     return (
         <div>
             <div className="layout-buttons">
-                <div className={`layout-toggle-icon ${isGridView ? 'grid' : 'list'}`} onClick={setFileView}>
+                <div className={`layout-toggle-icon ${isGridView ? 'grid' : 'list'}`} onClick={() => {setFileView(); setCurrentPage(1); }}>
                     <div className="icon-wrapper grid-icon">
                         <BsGrid className="icon" />
                     </div>
