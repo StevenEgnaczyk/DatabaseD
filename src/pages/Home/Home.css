@@ -23,7 +23,6 @@
     display: flex;
     flex-direction: column;
     width: 85%;
-    padding: 10px;
     background-color: var(--color-dark-gray);
     border-radius: 10px;
     margin-right: 1rem;
