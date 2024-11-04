@@ -73,8 +73,9 @@ const Admin = () => {
                 <div className="left-panel">
                     <UnapprovedUsers unapprovedUsers={unapprovedUsers} fetchUnapprovedUsers={fetchUnapprovedUsers} db={db} />
                 </div>
-
-                <TagsTabInterface />
+                <div className="right-panel">
+                    <TagsTabInterface />
+                </div>
             </div>
         </div>
     );
