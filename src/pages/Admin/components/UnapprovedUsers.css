@@ -3,12 +3,15 @@
 /* Admin Table Component */
 .admin-table {
     padding: 20px;
-    margin: 20px;
+    margin: 1rem;
     background-color: var(--color-dark-gray);
     border-radius: 20px;
 }
 .admin-table h2 {
     text-align: center;
+    color: var(--color-white);
+}
+.admin-table p {
     color: var(--color-white);
 }
 
