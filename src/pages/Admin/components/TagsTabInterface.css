@@ -12,10 +12,30 @@
 }
 
 .tags-tab-panel h2 {
+    position: relative;
     text-align: center;
     color: var(--color-white);
     font-size: 1.8em;
     margin-bottom: 20px;
+}
+
+.open-modal-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--color-button-red);
+    color: var(--color-white);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.open-modal-button:hover {
+    background-color: var(--color-button-hover);
+    transform: translateY(-3px);
 }
 
 /* Tabs */
@@ -72,71 +92,105 @@ table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
+    margin-top: 10px;
 }
-table th, table td {
+
+/* Header cells */
+table th {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid var(--color-bg);
-    border-left: 1px solid var(--color-bg);
     background-color: var(--color-dark-gray);
+    color: var(--color-white);
     font-weight: bold;
     text-transform: uppercase;
+    border: 1px solid var(--color-gray);
 }
-table th:last-child {
-    border-right: 0;
-}
+
+/* Data cells */
 table td {
-    background-color: var(--color-gray);
+    padding: 12px 15px;
+    text-align: left;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-gray);
+    vertical-align: middle;
 }
-table tbody tr:hover {
-    background-color: var(--color-button-red);
-    cursor: pointer;
-}
+
+/* Status column */
 td.status-tag, th.status-tag {
-    width: 10%;
+    width: 120px;
     text-align: center;
 }
 
-.status-label {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-    text-transform: capitalize;
+/* Actions column */
+td:last-child, th:last-child {
+    width: 150px;
+    text-align: center;
 }
-.status-active {
-    background-color: #28a745;
-    color: white;
-}
-.status-inactive {
-    background-color: #6c757d;
-    color: white;
-}
-.status-pending {
-    background-color: #6f42c1;
-    color: white;
+
+/* Row hover effect */
+table tbody tr:hover td {
+    background-color: var(--color-dark-gray);
+    transition: background-color 0.3s ease;
 }
 
 /* Status tags */
 .tag {
+    display: inline-block;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     color: white;
-    font-size: 12px;
+    font-size: 0.85em;
+    font-weight: 500;
+    text-transform: capitalize;
+    min-width: 80px;
 }
 
 .tag.green {
-    background-color: green;
+    background-color: #28a745;
 }
 
 .tag.gray {
-    background-color: gray;
+    background-color: #6c757d;
 }
 
 .tag.purple {
-    background-color: purple;
+    background-color: #6f42c1;
 }
 
+/* Action buttons container */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+}
 
+/* Icon styling */
+.icon {
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.icon.green {
+    color: #28a745;
+}
+
+.icon.gray {
+    color: #6c757d;
+}
+
+.icon.blue {
+    color: #007bff;
+}
+
+.icon.red {
+    color: #dc3545;
+}
 
 /* Loading screen */
 .loading {
@@ -171,6 +225,208 @@ td.status-tag, th.status-tag {
 
 .icon.red {
     color: red;
+}
+
+/* Action buttons styling */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--color-dark-gray);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    color: var(--color-white);
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+form input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--color-gray);
+    background-color: var(--color-bg);
+    color: var(--color-white);
+}
+
+form button {
+    padding: 10px;
+    background-color: var(--color-button-red);
+    color: var(--color-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: var(--color-button-hover);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    /* Adjust table column widths for medium screens */
+    table th:nth-child(1) {
+        width: 25%;
+    }
+    
+    table th:nth-child(2) {
+        width: 25%;
+    }
+    
+    table th.status-tag {
+        width: 25%;
+    }
+    
+    table th:last-child {
+        width: 25%;
+    }
+
+    /* Adjust padding for better fit */
+    table th, table td {
+        padding: 10px 12px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    /* Adjust header text size */
+    .tags-tab-panel h2 {
+        font-size: 1.5em;
+    }
+
+    /* Make tabs stack in two rows */
+    .tabs-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tabs-header button {
+        flex: 1 1 calc(50% - 10px);
+        font-size: 0.9em;
+    }
+
+    /* Adjust refresh icon position */
+    .refresh-icon {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Convert table to cards for better mobile view */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--color-gray);
+        border-radius: 5px;
+    }
+
+    td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid var(--color-gray);
+    }
+
+    td:before {
+        position: absolute;
+        left: 12px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        content: attr(data-label);
+    }
+
+    /* Adjust status tag display */
+    td.status-tag {
+        text-align: left;
+    }
+
+    /* Center action buttons */
+    .action-buttons {
+        justify-content: flex-start;
+        padding-left: 50%;
+    }
+
+    /* Modal adjustments */
+    .modal-content {
+        width: 90%;
+        margin: 20px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    /* Further adjustments for very small screens */
+    .tags-tab-panel {
+        margin: 0.5rem;
+        padding: 15px;
+    }
+
+    .tags-tab-panel h2 {
+        font-size: 1.3em;
+    }
+
+    .open-modal-button {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+        transform: none;
+    }
+
+    /* Stack tabs vertically */
+    .tabs-header button {
+        flex: 1 1 100%;
+    }
+
+    /* Adjust form inputs */
+    form input {
+        font-size: 16px; /* Prevents zoom on mobile */
+    }
+
+    /* Adjust icon sizes */
+    .icon {
+        font-size: 1.1em;
+    }
+
+    .action-buttons {
+        gap: 1rem;
+    }
 }
 
 
