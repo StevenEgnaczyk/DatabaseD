@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './CreateStyling.css';
 
 const CreateClass = ({ onSubmit, onClose }) => {
     const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ const CreateClass = ({ onSubmit, onClose }) => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <h2 className="modal-title">Create New Class</h2>
             <input 
                 name="department" 
                 placeholder="Department" 
@@ -49,13 +51,6 @@ const CreateClass = ({ onSubmit, onClose }) => {
                 name="course_name" 
                 placeholder="Course Name" 
                 value={formData.course_name}
-                onChange={handleInputChange} 
-                required 
-            />
-            <input 
-                name="documents_for" 
-                placeholder="Documents For" 
-                value={formData.documents_for}
                 onChange={handleInputChange} 
                 required 
             />
