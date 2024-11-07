@@ -18,14 +18,14 @@ const Startup = ({user, setUser}) => {
   return (
       <div>
         <div className="main-container">
-          <img className="logo-login-img" src={logo} alt="Logo"  />
+          <img className="logo-login-img" src={logo} alt="Logo" />
           <div className="auth-container">
             {isSigningUp ? (
                 <Signup setUser={setUser} />
             ) : (
                 <Login setUser={setUser} />
             )}
-            <button className={"swap-button"} onClick={toggleAuthMode}>
+            <button className="swap-button" onClick={toggleAuthMode}>
               <span>{isSigningUp ? "Already have an account? Login" : "Need an account? Sign up"}</span>
             </button>
           </div>
