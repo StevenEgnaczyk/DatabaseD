@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-const CreateProfessor = ({ onSubmit, onClose }) => {
+const CreateAssignmentType = ({ onSubmit, onClose }) => {
     const [formData, setFormData] = useState({
-        name: '',
-        documents_for: '',
+        type: '',
+        documents_for: '0',
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
     });
@@ -30,22 +30,15 @@ const CreateProfessor = ({ onSubmit, onClose }) => {
     return (
         <form onSubmit={handleSubmit}>
             <input 
-                name="name" 
-                placeholder="Professor Name" 
-                value={formData.name}
+                name="type" 
+                placeholder="Assignment Type" 
+                value={formData.type}
                 onChange={handleInputChange} 
                 required 
             />
-            <input 
-                name="documents_for" 
-                placeholder="Documents For" 
-                value={formData.documents_for}
-                onChange={handleInputChange} 
-                required 
-            />
-            <button type="submit">Add Professor</button>
+            <button type="submit">Add Assignment Type</button>
         </form>
     );
 };
 
-export default CreateProfessor; 
+export default CreateAssignmentType; 

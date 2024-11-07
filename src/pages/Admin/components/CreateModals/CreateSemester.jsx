@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import './CreateStyling.css';
 
-const CreateAssignmentType = ({ onSubmit, onClose }) => {
+const CreateSemester = ({ onSubmit, onClose }) => {
     const [formData, setFormData] = useState({
-        type: '',
+        semester: '',
         documents_for: '',
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -29,23 +30,17 @@ const CreateAssignmentType = ({ onSubmit, onClose }) => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <h2 className="modal-title">Create New Semester</h2>
             <input 
-                name="type" 
-                placeholder="Assignment Type" 
-                value={formData.type}
+                name="semester" 
+                placeholder="Semester" 
+                value={formData.semester}
                 onChange={handleInputChange} 
                 required 
             />
-            <input 
-                name="documents_for" 
-                placeholder="Documents For" 
-                value={formData.documents_for}
-                onChange={handleInputChange} 
-                required 
-            />
-            <button type="submit">Add Assignment Type</button>
+            <button type="submit">Add Semester</button>
         </form>
     );
 };
 
-export default CreateAssignmentType; 
+export default CreateSemester; 

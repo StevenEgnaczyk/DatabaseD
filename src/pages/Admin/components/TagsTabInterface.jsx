@@ -1,12 +1,15 @@
 /* TabbedInterface.jsx imports */
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, getFirestore, addDoc } from 'firebase/firestore';
+import { collection, getDocs, query, getFirestore, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { FaSyncAlt, FaCheck, FaEdit, FaTrashAlt } from 'react-icons/fa';  // Import icons
 import Modal from 'react-modal';
-import CreateProfessor from './CreateProfessor.jsx';
-import CreateAssignmentType from './CreateAssignmentType.jsx';
-import CreateClass from './CreateClass.jsx';
-import CreateSemester from './CreateSemester.jsx';
+import { toast } from 'react-toastify';
+
+import CreateProfessor from './CreateModals/CreateProfessor.jsx';
+import CreateAssignmentType from './CreateModals/CreateAssignmentType.jsx';
+import CreateClass from './CreateModals/CreateClass.jsx';
+import CreateSemester from './CreateModals/CreateSemester.jsx';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 import './TagsTabInterface.css';
 
@@ -27,6 +30,8 @@ const TagsTabInterface = () => {
 
     /* State for modal visibility */
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const [currentItem, setCurrentItem] = useState(null);
 
     /* Firebase services */
     const db = getFirestore();
@@ -39,7 +44,7 @@ const TagsTabInterface = () => {
             const querySnapshot = await getDocs(q);
             let data = [];
             querySnapshot.forEach((doc) => {
-                data.push(doc.data());
+                data.push({ id: doc.id, ...doc.data() });
             });
             setState(data);
         };
@@ -84,11 +89,64 @@ const TagsTabInterface = () => {
             await addDoc(collection(db, collectionName), formattedData);
             await fetchAllTags();
             setIsModalOpen(false);
-            alert(`New ${activeTab.slice(0, -1)} added successfully!`);
+            toast.success(`New ${activeTab.slice(0, -1)} added successfully!`);
         } catch (error) {
-            console.error('Error adding document: ', error);
-            alert('Error adding document. Please try again.');
+            toast.error('Error adding document: ', error);
         }
+    };
+
+    const handleDelete = async (id) => {
+        let collectionName = '';
+
+        switch (activeTab) {
+            case 'Professors':
+                collectionName = 'professors';
+                break;
+            case 'Assignment Types':
+                collectionName = 'assignment_types';
+                break;
+            case 'Class Names':
+                collectionName = 'class_names';
+                break;
+            case 'Semesters':
+                collectionName = 'semesters';
+                break;
+            default:
+                console.error('Invalid tab selected');
+                return;
+        }
+
+        console.log(`Attempting to delete document with id: ${id} from collection: ${collectionName}`);
+
+        try {
+            // Find the row element and add the animation class
+            const rowElement = document.querySelector(`tr[data-id="${id}"]`);
+            if (rowElement) {
+                rowElement.classList.add('thanos-snap');
+            }
+
+            // Wait for the animation to complete before deleting
+            setTimeout(async () => {
+                await deleteDoc(doc(db, collectionName, id));
+                console.log(`Document with id: ${id} from collection: ${collectionName} deleted successfully`);
+                toast.success('Item deleted successfully!');
+                fetchAllTags();
+            }, 500); // Match the duration of the CSS animation
+        } catch (error) {
+            console.error(`Error deleting document with id: ${id} from collection: ${collectionName}`, error);
+            toast.error('Error deleting document: ', error);
+        }
+    };
+
+    const openConfirmModal = (item) => {
+        console.log(item);
+        setCurrentItem(item);
+        setIsConfirmModalOpen(true);
+    };
+
+    const closeConfirmModal = () => {
+        setIsConfirmModalOpen(false);
+        setCurrentItem(null);
     };
 
     const closeModal = () => {
@@ -114,26 +172,54 @@ const TagsTabInterface = () => {
         setIsModalOpen(true);
     };
 
+    const updateStatus = async (id, newStatus) => {
+        const collectionName = {
+            'Professors': 'professors',
+            'Assignment Types': 'assignment_types',
+            'Class Names': 'class_names',
+            'Semesters': 'semesters'
+        }[activeTab];
+
+        if (!collectionName) {
+            console.error('Invalid tab selected');
+            return;
+        }
+
+        try {
+            const docRef = doc(db, collectionName, id);
+            await updateDoc(docRef, { status: newStatus });
+            toast.success(`Status updated to ${newStatus}!`);
+            fetchAllTags(); // Refresh the data to reflect changes
+        } catch (error) {
+            console.error('Error updating status:', error);
+            toast.error('Error updating status: ', error);
+        }
+    };
+
     /* Render the content for the active tab */
     const renderTabContent = () => {
-        const renderStatusTag = (status) => {
-            if (status === 'active') {
-                return <span className="tag green">Active</span>;
-            } else if (status === 'inactive') {
-                return <span className="tag gray">Inactive</span>;
-            } else {
-                return <span className="tag purple">Pending</span>;
+        const getStatusBackgroundColor = (status) => {
+            switch (status) {
+                case 'active':
+                    return 'green';
+                case 'inactive':
+                    return 'gray';
+                default:
+                    return 'purple';
             }
         };
 
-        const renderActions = (status) => {
-            const approveColor = status === 'pending' ? 'green' : 'gray';
+        const renderActions = (item) => {
+            const approveColor = item.status === 'pending' ? 'green' : 'gray';
             return (
                 <td className="actions-cell">
                     <div className="action-buttons">
-                        <FaCheck className={`icon ${approveColor}`} />
+                        <FaCheck
+                            className={`icon ${approveColor}`}
+                            onClick={() => item.status === 'pending' && updateStatus(item.id, 'approved')}
+                        />
                         <FaEdit className="icon blue" />
-                        <FaTrashAlt className="icon red" />
+                        <FaTrashAlt className="icon red" onClick={() => openConfirmModal(item)} />
                     </div>
                 </td>
             );
@@ -152,25 +238,22 @@ const TagsTabInterface = () => {
                                 <tr>
                                     <th>Name</th>
                                     <th>Documents For</th>
-                                    <th className="status-tag">Status</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {professors.map(prof => (
-                                    <tr key={prof.id}>
+                                    <tr key={prof.id} data-id={prof.id}>
                                         <td data-label="Name">{prof.name}</td>
                                         <td data-label="Documents For">{prof.documents_for}</td>
-                                        <td data-label="Status" className="status-tag">
-                                            {renderStatusTag(prof.status)}
+                                        <td
+                                            style={{ backgroundColor: getStatusBackgroundColor(prof.status), textAlign: 'center' }}
+                                            data-label="Status"
+                                        >
+                                            {prof.status}
                                         </td>
-                                        <td data-label="Actions" className="actions-cell">
-                                            <div className="action-buttons">
-                                                <FaCheck className={`icon ${prof.status === 'pending' ? 'green' : 'gray'}`} />
-                                                <FaEdit className="icon blue" />
-                                                <FaTrashAlt className="icon red" />
-                                            </div>
-                                        </td>
+                                        {renderActions(prof)}
                                     </tr>
                                 ))}
                             </tbody>
@@ -179,7 +262,7 @@ const TagsTabInterface = () => {
                 );
             case 'Assignment Types':
                 return (
-                    <div>
+                    <div className="table-container">
                         <table>
                             <thead>
                                 <tr>
@@ -191,11 +274,16 @@ const TagsTabInterface = () => {
                             </thead>
                             <tbody>
                                 {assignmentTypes.map(type => (
-                                    <tr key={type.id}>
-                                        <td>{type.type}</td>
-                                        <td>{type.documents_for}</td>
-                                        <td>{renderStatusTag(type.status)}</td>
-                                        {renderActions(type.status)}
+                                    <tr key={type.id} data-id={type.id}>
+                                        <td data-label="Assignment Type">{type.type}</td>
+                                        <td data-label="Documents For">{type.documents_for}</td>
+                                        <td
+                                            style={{ backgroundColor: getStatusBackgroundColor(type.status), textAlign: 'center' }}
+                                            data-label="Status"
+                                        >
+                                            {type.status}
+                                        </td>
+                                        {renderActions(type)}
                                     </tr>
                                 ))}
                             </tbody>
@@ -204,7 +292,7 @@ const TagsTabInterface = () => {
                 );
             case 'Class Names':
                 return (
-                    <div>
+                    <div className="table-container">
                         <table>
                             <thead>
                                 <tr>
@@ -217,12 +305,17 @@ const TagsTabInterface = () => {
                             </thead>
                             <tbody>
                                 {classNames.map(name => (
-                                    <tr key={name.id}>
-                                        <td>{name.department} {name.course_number}</td>
-                                        <td>{name.course_name}</td>
-                                        <td>{name.documents_for}</td>
-                                        <td>{renderStatusTag(name.status)}</td>
-                                        {renderActions(name.status)}
+                                    <tr key={name.id} data-id={name.id}>
+                                        <td data-label="Class ID">{name.department} {name.course_number}</td>
+                                        <td data-label="Course Name">{name.course_name}</td>
+                                        <td data-label="Documents For">{name.documents_for}</td>
+                                        <td
+                                            style={{ backgroundColor: getStatusBackgroundColor(name.status), textAlign: 'center' }}
+                                            data-label="Status"
+                                        >
+                                            {name.status}
+                                        </td>
+                                        {renderActions(name)}
                                     </tr>
                                 ))}
                             </tbody>
@@ -231,7 +324,7 @@ const TagsTabInterface = () => {
                 );
             case 'Semesters':
                 return (
-                    <div>
+                    <div className="table-container">
                         <table>
                             <thead>
                                 <tr>
@@ -243,11 +336,16 @@ const TagsTabInterface = () => {
                             </thead>
                             <tbody>
                                 {semesters.map(semester => (
-                                    <tr key={semester.id}>
-                                        <td>{semester.semester}</td>
-                                        <td>{semester.documents_for}</td>
-                                        <td>{renderStatusTag(semester.status)}</td>
-                                        {renderActions(semester.status)}
+                                    <tr key={semester.id} data-id={semester.id}>
+                                        <td data-label="Semester">{semester.semester}</td>
+                                        <td data-label="Documents For">{semester.documents_for}</td>
+                                        <td
+                                            style={{ backgroundColor: getStatusBackgroundColor(semester.status), textAlign: 'center' }}
+                                            data-label="Status"
+                                        >
+                                            {semester.status}
+                                        </td>
+                                        {renderActions(semester)}
                                     </tr>
                                 ))}
                             </tbody>
@@ -284,6 +382,14 @@ const TagsTabInterface = () => {
             >
                 {renderModalContent()}
             </Modal>
+            {currentItem && (
+                <ConfirmDeleteModal
+                    isOpen={isConfirmModalOpen}
+                    onRequestClose={closeConfirmModal}
+                    onConfirm={() => handleDelete(currentItem.id)}
+                    itemName={currentItem.name || currentItem.course_name || currentItem.semester || currentItem.type}
+                />
+            )}
         </div>
     );
 };
