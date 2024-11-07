@@ -6,9 +6,32 @@
     display: flex;
     justify-content: space-between;
     background-color: var(--color-light-gray);
-    height: 100vh;
+    height: calc(100vh - 60px); /* Subtract navbar height */
+    gap: 1rem; /* Add gap between panels */
+    padding: 1rem; /* Add padding around container */
 }
 
 .left-panel {
-    width: 45%;
+    width: 33.333%; /* 1/3 of the space */
+    min-width: 300px; /* Minimum width to ensure usability */
+}
+
+.right-panel {
+    width: 66.666%; /* 2/3 of the space */
+    min-width: 600px; /* Minimum width to ensure usability */
+}
+
+/* Add media queries for responsiveness */
+@media screen and (max-width: 1200px) {
+    .admin-page-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-panel,
+    .right-panel {
+        width: 100%;
+        min-width: unset;
+        margin: 0;
+    }
 }
