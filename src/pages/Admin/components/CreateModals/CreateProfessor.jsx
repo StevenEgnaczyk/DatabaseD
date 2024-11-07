@@ -29,7 +29,7 @@ const CreateProfessor = ({ onSubmit, onClose }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="create-tag-form" onSubmit={handleSubmit}>
             <h2 className="modal-title">Create New Professor</h2>
             <input 
                 name="name" 

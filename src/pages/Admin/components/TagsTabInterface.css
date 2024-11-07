@@ -389,13 +389,13 @@ table tbody tr:hover td {
 }
 
 /* Form Styling */
-form {
+.create-tag-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-form input {
+.create-tag-form input {
     padding: 8px;
     border-radius: 4px;
     border: 1px solid var(--color-gray);
@@ -403,7 +403,7 @@ form input {
     color: var(--color-white);
 }
 
-form button {
+.create-tag-form button {
     padding: 10px;
     background-color: var(--color-button-red);
     color: var(--color-white);
@@ -413,7 +413,7 @@ form button {
     transition: background-color 0.3s ease;
 }
 
-form button:hover {
+.create-tag-form button:hover {
     background-color: var(--color-button-hover);
 }
 

@@ -54,6 +54,8 @@
     height: 100vh;
     width: 100vw;
     background: linear-gradient(to right, #990033 50%, #999999 50%);
+    color: #fff;
+    text-align: center;
 }
 
 .static-text {
@@ -66,42 +68,38 @@
 
 
 .logo-login-img {
-    position: absolute;
-    top: 50%;
-    width: 250px !important;  /* Ensure this is not overridden */
-    height: auto !important;  /* Ensure proportional scaling */
-    border-radius: 0% !important;
-    object-fit: contain;
-    transform: translateY(-170%);
-
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .auth-container {
-    background-color: #282c34;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    max-width: 500px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
 }
 
 h2 {
-    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
 }
 
 .custom-input {
-    width: 100%; /* Full width */
-    padding: 12px 20px; /* Padding inside the input */
-    margin: 8px 0; /* Space above and below the input */
-    display: inline-block; /* Default display for inline form elements */
-    border: 2px solid #ccc; /* Light grey border */
-    border-radius: 4px; /* Rounded corners */
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
-    font-size: 16px; /* Larger text */
-    transition: border-color 0.3s ease; /* Smooth transition for focus */
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
 .custom-input:focus {
@@ -110,28 +108,33 @@ h2 {
 }
 
 .submit-button {
-    background-color: darkred; /* Green background */
-    color: white; /* White text */
-    padding: 12px 20px; /* Some padding */
-    border: none; /* Remove borders */
-    margin-top: 5px;
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Larger text */
-    transition: background-color 0.3s ease; /* Smooth transition */
+    background-color: #2575fc;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    margin-top: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #1a5bb8;
 }
 
 .swap-button {
     border: none;
     background: transparent;
     padding-inline: 10px;
+    cursor: pointer;
+    color: #2575fc;
+    margin-top: 15px;
+    font-size: 14px;
 }
 
-.swap-button span{ 
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: white;
+.swap-button span {
+    text-decoration: underline;
 }
 
 

@@ -28,7 +28,7 @@ const CreateAssignmentType = ({ onSubmit, onClose }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="create-tag-form" onSubmit={handleSubmit}>
             <input 
                 name="type" 
                 placeholder="Assignment Type" 
