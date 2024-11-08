@@ -15,6 +15,7 @@ const ForgotPassword = ({ setUser }) => {
       <h2>Reset Password</h2>
       <input
         type="email"
+        className="startup-input"
         placeholder="Enter your email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}

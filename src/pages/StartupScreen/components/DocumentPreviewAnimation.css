@@ -1,0 +1,38 @@
+.document-animation-container {
+    position: relative;
+    top: 0;
+    left: 48%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    max-height: 100vh;
+}
+
+
+
+.page {
+    max-height: 400px;
+    width: 20vw;
+    background-color: transparent;
+    will-change: transform; /* Helps with performance */
+}
+
+.row-one {
+    animation: moveUp 8s linear infinite; /* Smooth easing and infinite loop */
+}
+
+.row-two {
+    animation: moveUp 6s linear infinite; /* Smooth easing and infinite loop */
+}
+
+@keyframes moveUp {
+    0% {
+        transform: translateY(100%); /* Start from below the view */
+    }
+    50% {
+        transform: translateY(0); /* Reach the middle of the view */
+    }
+    100% {
+        transform: translateY(-100%); /* Move out of the view */
+    }
+}

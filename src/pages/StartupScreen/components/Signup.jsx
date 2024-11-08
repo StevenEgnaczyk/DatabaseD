@@ -72,8 +72,8 @@ const Signup = ({ setUser }) => {
   return (
     <form className={"form-container"} onSubmit={handleSignup}>
       <h2>Signup</h2>
-      <input className={"custom-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-      <input className={"custom-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+      <input className={"startup-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+      <input className={"startup-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
       <button className={"submit-button"} type="submit" disabled={loading}>Signup</button>
     </form>
   );
