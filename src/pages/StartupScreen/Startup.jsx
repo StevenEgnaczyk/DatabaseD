@@ -22,7 +22,10 @@ const Startup = ({ user, setUser }) => {
   return (
     <div>
       <div className="main-container">
-        <img className="logo-login-img" src={logo} alt="Logo" />
+        <div className="logo-container">
+          <img className="logo-login-img" src={logo} alt="Logo" />
+          <h1 className="logo-text">DataBaseD</h1>
+        </div>
         <div className="auth-container">
           {isForgotPassword ? (
             <ForgotPassword setUser={setUser} />

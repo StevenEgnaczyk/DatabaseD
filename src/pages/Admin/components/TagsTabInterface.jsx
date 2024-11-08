@@ -5,11 +5,9 @@ import { FaSyncAlt, FaCheck, FaEdit, FaTrashAlt } from 'react-icons/fa';  // Imp
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 
-import CreateProfessor from './CreateModals/CreateProfessor.jsx';
-import CreateAssignmentType from './CreateModals/CreateAssignmentType.jsx';
-import CreateClass from './CreateModals/CreateClass.jsx';
-import CreateSemester from './CreateModals/CreateSemester.jsx';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import CreateModal from './CreateModals/CreateModal.jsx';
+import UpdateModal from './CreateModals/UpdateModal.jsx';
 
 import './TagsTabInterface.css';
 
@@ -32,6 +30,7 @@ const TagsTabInterface = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
+    const [editItem, setEditItem] = useState(null); // New state for the item being edited
 
     /* Firebase services */
     const db = getFirestore();
@@ -153,22 +152,55 @@ const TagsTabInterface = () => {
         setIsModalOpen(false);
     };
 
+    const openEditModal = (item) => {
+        setEditItem(item);
+        setIsModalOpen(true);
+    };
+
     const renderModalContent = () => {
-        switch (activeTab) {
-            case 'Professors':
-                return <CreateProfessor onSubmit={handleSubmit} onClose={closeModal} />;
-            case 'Assignment Types':
-                return <CreateAssignmentType onSubmit={handleSubmit} onClose={closeModal} />;
-            case 'Class Names':
-                return <CreateClass onSubmit={handleSubmit} onClose={closeModal} />;
-            case 'Semesters':
-                return <CreateSemester onSubmit={handleSubmit} onClose={closeModal} />;
-            default:
-                return null;
+        const fieldsMap = {
+            'Professors': [
+                { name: 'name', placeholder: 'Professor Name', required: true }
+            ],
+            'Assignment Types': [
+                { name: 'type', placeholder: 'Assignment Type', required: true }
+            ],
+            'Class Names': [
+                { name: 'department', placeholder: 'Department', required: true },
+                { name: 'course_number', placeholder: 'Course Number', required: true },
+                { name: 'course_name', placeholder: 'Course Name', required: true }
+            ],
+            'Semesters': [
+                { name: 'semester', placeholder: 'Semester', required: true }
+            ]
+        };
+
+        if (editItem) {
+            return (
+                <UpdateModal
+                    db={db}
+                    collectionName={activeTab.toLowerCase().replace(' ', '_')}
+                    onSubmit={fetchAllTags}
+                    onClose={closeModal}
+                    initialData={editItem}
+                    fields={fieldsMap[activeTab]}
+                />
+            );
+        } else {
+            return (
+                <CreateModal
+                    db={db}
+                    collectionName={activeTab.toLowerCase().replace(' ', '_')}
+                    onSubmit={fetchAllTags}
+                    onClose={closeModal}
+                    fields={fieldsMap[activeTab]}
+                />
+            );
         }
     };
 
     const openModal = () => {
+        setEditItem(null); // Clear the editItem state
         setIsModalOpen(true);
     };
 
@@ -211,14 +243,16 @@ const TagsTabInterface = () => {
 
         const renderActions = (item) => {
             const approveColor = item.status === 'pending' ? 'green' : 'gray';
+            const approveClass = item.status === 'approved' ? 'approved-icon' : '';
+
             return (
                 <td className="actions-cell">
                     <div className="action-buttons">
                         <FaCheck
-                            className={`icon ${approveColor}`}
-                            onClick={() => item.status === 'pending' && updateStatus(item.id, 'approved')}
+                            className={`icon ${approveColor} ${approveClass}`}
+                            onClick={() => item.status === 'pending' && updateStatus(item.id, 'active')}
                         />
-                        <FaEdit className="icon blue" />
+                        <FaEdit className="icon blue" onClick={() => openEditModal(item)} />
                         <FaTrashAlt className="icon red" onClick={() => openConfirmModal(item)} />
                     </div>
                 </td>
@@ -237,7 +271,6 @@ const TagsTabInterface = () => {
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -246,12 +279,11 @@ const TagsTabInterface = () => {
                                 {professors.map(prof => (
                                     <tr key={prof.id} data-id={prof.id}>
                                         <td data-label="Name">{prof.name}</td>
-                                        <td data-label="Documents For">{prof.documents_for}</td>
                                         <td
                                             style={{ backgroundColor: getStatusBackgroundColor(prof.status), textAlign: 'center' }}
                                             data-label="Status"
                                         >
-                                            {prof.status}
+                                            {(prof.status).toUpperCase()}
                                         </td>
                                         {renderActions(prof)}
                                     </tr>
@@ -267,7 +299,6 @@ const TagsTabInterface = () => {
                             <thead>
                                 <tr>
                                     <th>Assignment Type</th>
-                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -276,12 +307,11 @@ const TagsTabInterface = () => {
                                 {assignmentTypes.map(type => (
                                     <tr key={type.id} data-id={type.id}>
                                         <td data-label="Assignment Type">{type.type}</td>
-                                        <td data-label="Documents For">{type.documents_for}</td>
                                         <td
-                                            style={{ backgroundColor: getStatusBackgroundColor(type.status), textAlign: 'center' }}
+                                            style={{ backgroundColor: getStatusBackgroundColor(type.status || 'unknown'), textAlign: 'center' }}
                                             data-label="Status"
                                         >
-                                            {type.status}
+                                            {(type.status || 'unknown').toUpperCase()}
                                         </td>
                                         {renderActions(type)}
                                     </tr>
@@ -298,7 +328,6 @@ const TagsTabInterface = () => {
                                 <tr>
                                     <th>Class ID</th>
                                     <th>Course Name</th>
-                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -308,12 +337,11 @@ const TagsTabInterface = () => {
                                     <tr key={name.id} data-id={name.id}>
                                         <td data-label="Class ID">{name.department} {name.course_number}</td>
                                         <td data-label="Course Name">{name.course_name}</td>
-                                        <td data-label="Documents For">{name.documents_for}</td>
                                         <td
-                                            style={{ backgroundColor: getStatusBackgroundColor(name.status), textAlign: 'center' }}
+                                            style={{ backgroundColor: getStatusBackgroundColor(name.status || 'unknown'), textAlign: 'center' }}
                                             data-label="Status"
                                         >
-                                            {name.status}
+                                            {(name.status || 'unknown').toUpperCase()}
                                         </td>
                                         {renderActions(name)}
                                     </tr>
@@ -329,7 +357,6 @@ const TagsTabInterface = () => {
                             <thead>
                                 <tr>
                                     <th>Semester</th>
-                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -338,12 +365,11 @@ const TagsTabInterface = () => {
                                 {semesters.map(semester => (
                                     <tr key={semester.id} data-id={semester.id}>
                                         <td data-label="Semester">{semester.semester}</td>
-                                        <td data-label="Documents For">{semester.documents_for}</td>
                                         <td
-                                            style={{ backgroundColor: getStatusBackgroundColor(semester.status), textAlign: 'center' }}
+                                            style={{ backgroundColor: getStatusBackgroundColor(semester.status || 'unknown'), textAlign: 'center' }}
                                             data-label="Status"
                                         >
-                                            {semester.status}
+                                            {(semester.status || 'unknown').toUpperCase()}
                                         </td>
                                         {renderActions(semester)}
                                     </tr>

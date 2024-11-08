@@ -19,18 +19,18 @@
 }
 
 .App-header {
-    background-color: #282c34;
+    background-color: var(--color-bg);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: white;
+    color: var(--color-white);
 }
 
 .App-link {
-    color: #61dafb;
+    color: var(--color-hover-blue);
 }
 
 @keyframes App-logo-spin {
@@ -53,8 +53,8 @@
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background: linear-gradient(to right, #990033 50%, #999999 50%);
-    color: #fff;
+    background: linear-gradient(to right, var(--color-button-red) 0%, var(--color-button-red) 30%, var(--color-light-gray) 70%, var(--color-light-gray) 100%);
+    color: var(--color-white);
     text-align: center;
 }
 
@@ -62,33 +62,41 @@
     position: absolute;
     top: 10%;
     font-size: 60px;
-    color: black;
+    color: var(--color-dark-gray);
     transition: transform 1s;
 }
-
 
 .logo-login-img {
     width: 150px;
     height: auto;
-    margin-bottom: 20px;
     border-radius: 10%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 5rem;
+}
+
 .auth-container {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: var(--color-dark-gray);
     border-radius: 10px;
     padding: 30px;
     max-width: 400px;
     width: 90%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #333;
+    color: var(--color-white);
 }
 
 h2 {
     margin-bottom: 20px;
     font-size: 24px;
-    color: #333;
+    color: var(--color-white);
 }
 
 .custom-input {
@@ -103,12 +111,12 @@ h2 {
 }
 
 .custom-input:focus {
-    border-color: darkred; /* Green border on focus */
+    border-color: var(--color-lite-red);
     outline: none; /* Remove default outline */
 }
 
 .submit-button {
-    background-color: #2575fc;
+    background-color: var(--color-button-red);
     color: white;
     padding: 12px 20px;
     border: none;
@@ -120,7 +128,7 @@ h2 {
 }
 
 .submit-button:hover {
-    background-color: #1a5bb8;
+    background-color: var(--color-dark-gray);
 }
 
 .swap-button {
@@ -128,7 +136,7 @@ h2 {
     background: transparent;
     padding-inline: 10px;
     cursor: pointer;
-    color: #2575fc;
+    color: var(--color-hover-blue);
     margin-top: 15px;
     font-size: 14px;
 }
@@ -136,8 +144,3 @@ h2 {
 .swap-button span {
     text-decoration: underline;
 }
-
-
-
-
-
