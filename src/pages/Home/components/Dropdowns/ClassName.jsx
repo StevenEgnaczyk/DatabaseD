@@ -34,13 +34,11 @@ const ClassNameDropdown = () => {
 
     return (
         <select value={selectedClass} onChange={handleChange}>
-            {/* Placeholder as the default option, not in the list */}
-            {selectedClass === "" && (
-                <option value="" disabled>
-                    Class Name
-                </option>
-            )}
-            {/* Render actual assignment types */}
+            {/* Display 'Class Name' as a non-selectable placeholder */}
+            <option value="" disabled hidden>
+                Class Name
+            </option>
+            {/* Render actual class names */}
             {classNames.map((type, index) => (
                 <option className={'filter-dropdown'} key={index} value={type}>
                     {type}

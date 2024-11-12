@@ -25,7 +25,7 @@ select:hover {
 option {
     padding: 10px;
     /*background-color: var(--color-white);*/
-    color: var(--color-dark-gray);
+    color: var(--color-white);
 }
 select option[disabled] {
     color: var(--color-light-gray);
