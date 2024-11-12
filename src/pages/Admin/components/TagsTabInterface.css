@@ -576,7 +576,7 @@ table tbody tr:hover td {
     }
 }
 
-.approved-icon {
+.active-icon {
     cursor: not-allowed; /* 'x' cursor */
     transform: none !important; /* Prevent enlargement */
     transition: none; /* Disable transition effects */
@@ -603,7 +603,6 @@ table tbody tr:hover td {
     width: 100%;
     color: var(--color-white);
     border: 5px solid #ff0000;
-    animation: shake 0.5s infinite;
 }
 
 .update-modal-content h2 {
@@ -611,7 +610,6 @@ table tbody tr:hover td {
     font-size: 2em;
     color: #ff0000;
     text-shadow: 2px 2px 0px #000;
-    animation: pulse 1.5s infinite;
 }
 
 .update-modal-content p {
@@ -654,7 +652,6 @@ table tbody tr:hover td {
     border: 2px solid #ff0000;
     background-color: var(--color-bg);
     color: var(--color-white);
-    animation: pulse 1.5s infinite;
 }
 
 .update-modal-actions {
@@ -662,6 +659,11 @@ table tbody tr:hover td {
     justify-content: space-between;
     gap: 1rem;
     margin-top: 1rem;
+}
+
+.rainbow-name {
+    animation: rainbow 5s linear infinite;
+
 }
 
 .update-cancel-button, .update-confirm-button {

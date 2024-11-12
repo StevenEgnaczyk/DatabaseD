@@ -57,14 +57,16 @@ const UpdateModal = ({ db, collectionName, onSubmit, onClose, initialData, field
             overlayClassName="update-modal-overlay"
         >
             <h2 className="modal-title">Edit {collectionName}</h2>
+            <p className="modal-subtitle">You are about to update the {collectionName} tag,
+                <br />
+                <span className="rainbow-name">
+                    "{initialData.name}"
+                </span>
+                <br />
+                To confirm you <i>ACTUALLY </i> want to update this tag, type the old name again. As well
+                as the new name you want to change it to twice.
+            </p>
             <form className="create-tag-form" onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={oldNameInput}
-                    onChange={(e) => setOldNameInput(e.target.value)}
-                    placeholder={`Type old name "${initialData.name}" to confirm`}
-                    required
-                />
                 {fields.map(field => (
                     <input
                         key={field.name}
@@ -75,6 +77,13 @@ const UpdateModal = ({ db, collectionName, onSubmit, onClose, initialData, field
                         required={field.required}
                     />
                 ))}
+                <input
+                    type="text"
+                    value={oldNameInput}
+                    onChange={(e) => setOldNameInput(e.target.value)}
+                    placeholder={`Type old name "${initialData.name}" to confirm`}
+                    required
+                />
                 <input
                     type="text"
                     value={newNameInput}
