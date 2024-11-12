@@ -1,134 +1,62 @@
-* {
-    padding: 0;
-    margin: 0;
-}
-
-.App {
-    text-align: center;
-}
-
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: var(--color-bg);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: var(--color-white);
-}
-
-.App-link {
-    color: var(--color-hover-blue);
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.rotate{
-    transform: rotate(360deg);
-}
 
 .main-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     height: 100vh;
     width: 100vw;
-    background: linear-gradient(to right, var(--color-button-red) 0%, var(--color-button-red) 30%, var(--color-light-gray) 70%, var(--color-light-gray) 100%);
-    color: var(--color-white);
-    text-align: center;
+    background: linear-gradient(to right, var(--color-button-red) 60%, white 50%);
 }
 
-.static-text {
-    position: absolute;
-    top: 10%;
-    font-size: 60px;
-    color: var(--color-dark-gray);
-    transition: transform 1s;
-}
-
-.logo-login-img {
-    width: 150px;
-    height: auto;
-    border-radius: 10%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.logo-text {
-    font-size: 5rem;
+.databased-title {
+    font-size: 4rem;
+    color: white;
 }
 
 .auth-container {
-    background-color: var(--color-dark-gray);
     border-radius: 10px;
-    padding: 30px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: var(--color-white);
+    padding: 20px;
+    text-align: center;
+    width: 20vw; /* this adjusts the size of the input */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
-h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: var(--color-white);
-}
-
-.custom-input {
+.form-container {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+}
+
+.startup-input {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0.8rem 1rem;
     box-sizing: border-box;
     font-size: 16px;
+    text-align: center;
     transition: border-color 0.3s ease;
 }
 
 .custom-input:focus {
-    border-color: var(--color-lite-red);
-    outline: none; /* Remove default outline */
+    border-color: darkred;
+    outline: none;
 }
 
 .submit-button {
-    background-color: var(--color-button-red);
     color: white;
     padding: 12px 20px;
-    border: none;
-    margin-top: 10px;
+    background-color: black;
+    margin-top: 5px;
+    margin-inline: 5rem;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-    background-color: var(--color-dark-gray);
 }
 
 .swap-button {
@@ -141,6 +69,10 @@ h2 {
     font-size: 14px;
 }
 
-.swap-button span {
-    text-decoration: underline;
+.scrolling-pages {
+    z-index: 0;
+    top: 0;
+    left: 60%;
+    width: 40%;
 }
+

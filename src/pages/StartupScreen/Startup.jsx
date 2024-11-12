@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import ForgotPassword from './components/ForgotPassword'; // Import ForgotPassword component
-import logo from '../../assets/Logo.jpeg';
 import './Startup.css';
+import DocumentPreviewAnimation from "./components/DocumentPreviewAnimation";
 
 const Startup = ({ user, setUser }) => {
   const [isSigningUp, setIsSigningUp] = useState(false);
@@ -21,12 +21,10 @@ const Startup = ({ user, setUser }) => {
 
   return (
     <div>
+
       <div className="main-container">
-        <div className="logo-container">
-          <img className="logo-login-img" src={logo} alt="Logo" />
-          <h1 className="logo-text">DataBaseD</h1>
-        </div>
         <div className="auth-container">
+          <h1 className={'databased-title'}>DataBaseD</h1>
           {isForgotPassword ? (
             <ForgotPassword setUser={setUser} />
           ) : isSigningUp ? (
@@ -42,6 +40,9 @@ const Startup = ({ user, setUser }) => {
           <button className="swap-button" onClick={toggleForgotPassword}>
             <span>Forgot Password? Click Here</span>
           </button>
+        </div>
+        <div className='scrolling-pages'>
+          <DocumentPreviewAnimation />
         </div>
       </div>
     </div>

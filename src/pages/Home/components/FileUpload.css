@@ -88,10 +88,6 @@
     display: none;
 }
 
-.submit-button {
-    background-color: var(--color-button-red);
-}
-
 .filter-input {
     display: flex;
     justify-content: space-between;
