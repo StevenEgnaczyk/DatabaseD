@@ -5,7 +5,7 @@ const CreateModal = ({ db, collectionName, onSubmit, onClose, fields }) => {
     const [formData, setFormData] = useState({
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-        document_count: 0,
+        documents_for: 0,
         status: 'pending'
     });
 

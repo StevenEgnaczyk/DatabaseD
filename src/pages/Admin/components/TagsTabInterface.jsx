@@ -31,6 +31,8 @@ const TagsTabInterface = () => {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
     const [editItem, setEditItem] = useState(null); // New state for the item being edited
+    const [isStatusConfirmModalOpen, setIsStatusConfirmModalOpen] = useState(false);
+    const [statusUpdateItem, setStatusUpdateItem] = useState(null);
 
     /* Firebase services */
     const db = getFirestore();
@@ -160,7 +162,7 @@ const TagsTabInterface = () => {
     const renderModalContent = () => {
         const fieldsMap = {
             'Professors': [
-                { name: 'name', placeholder: 'Professor Name', required: true }
+                { name: 'name', placeholder: 'Professor Name', required: true },
             ],
             'Assignment Types': [
                 { name: 'type', placeholder: 'Assignment Type', required: true }
@@ -204,7 +206,20 @@ const TagsTabInterface = () => {
         setIsModalOpen(true);
     };
 
-    const updateStatus = async (id, newStatus) => {
+    const openStatusConfirmModal = (item) => {
+        setStatusUpdateItem(item);
+        setIsStatusConfirmModalOpen(true);
+    };
+
+    const closeStatusConfirmModal = () => {
+        setIsStatusConfirmModalOpen(false);
+        setStatusUpdateItem(null);
+    };
+
+    const confirmStatusUpdate = async () => {
+        if (!statusUpdateItem) return;
+
+        const { id } = statusUpdateItem;
         const collectionName = {
             'Professors': 'professors',
             'Assignment Types': 'assignment_types',
@@ -219,12 +234,14 @@ const TagsTabInterface = () => {
 
         try {
             const docRef = doc(db, collectionName, id);
-            await updateDoc(docRef, { status: newStatus });
-            toast.success(`Status updated to ${newStatus}!`);
-            fetchAllTags(); // Refresh the data to reflect changes
+            await updateDoc(docRef, { status: 'active' });
+            toast.success('Status updated to active!');
+            fetchAllTags();
         } catch (error) {
             console.error('Error updating status:', error);
             toast.error('Error updating status: ', error);
+        } finally {
+            closeStatusConfirmModal();
         }
     };
 
@@ -243,14 +260,14 @@ const TagsTabInterface = () => {
 
         const renderActions = (item) => {
             const approveColor = item.status === 'pending' ? 'green' : 'gray';
-            const approveClass = item.status === 'approved' ? 'approved-icon' : '';
+            const approveClass = item.status === 'active' ? 'active-icon' : '';
 
             return (
                 <td className="actions-cell">
                     <div className="action-buttons">
                         <FaCheck
                             className={`icon ${approveColor} ${approveClass}`}
-                            onClick={() => item.status === 'pending' && updateStatus(item.id, 'active')}
+                            onClick={() => item.status === 'pending' && openStatusConfirmModal(item)}
                         />
                         <FaEdit className="icon blue" onClick={() => openEditModal(item)} />
                         <FaTrashAlt className="icon red" onClick={() => openConfirmModal(item)} />
@@ -271,6 +288,7 @@ const TagsTabInterface = () => {
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -279,6 +297,7 @@ const TagsTabInterface = () => {
                                 {professors.map(prof => (
                                     <tr key={prof.id} data-id={prof.id}>
                                         <td data-label="Name">{prof.name}</td>
+                                        <td data-label="Documents For">{prof.documents_for}</td>
                                         <td
                                             style={{ backgroundColor: getStatusBackgroundColor(prof.status), textAlign: 'center' }}
                                             data-label="Status"
@@ -299,6 +318,7 @@ const TagsTabInterface = () => {
                             <thead>
                                 <tr>
                                     <th>Assignment Type</th>
+                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -307,6 +327,7 @@ const TagsTabInterface = () => {
                                 {assignmentTypes.map(type => (
                                     <tr key={type.id} data-id={type.id}>
                                         <td data-label="Assignment Type">{type.type}</td>
+                                        <td data-label="Documents For">{type.documents_for}</td>
                                         <td
                                             style={{ backgroundColor: getStatusBackgroundColor(type.status || 'unknown'), textAlign: 'center' }}
                                             data-label="Status"
@@ -328,6 +349,7 @@ const TagsTabInterface = () => {
                                 <tr>
                                     <th>Class ID</th>
                                     <th>Course Name</th>
+                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -337,6 +359,7 @@ const TagsTabInterface = () => {
                                     <tr key={name.id} data-id={name.id}>
                                         <td data-label="Class ID">{name.department} {name.course_number}</td>
                                         <td data-label="Course Name">{name.course_name}</td>
+                                        <td data-label="Documents For">{name.documents_for}</td>
                                         <td
                                             style={{ backgroundColor: getStatusBackgroundColor(name.status || 'unknown'), textAlign: 'center' }}
                                             data-label="Status"
@@ -357,6 +380,7 @@ const TagsTabInterface = () => {
                             <thead>
                                 <tr>
                                     <th>Semester</th>
+                                    <th>Documents For</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -365,6 +389,7 @@ const TagsTabInterface = () => {
                                 {semesters.map(semester => (
                                     <tr key={semester.id} data-id={semester.id}>
                                         <td data-label="Semester">{semester.semester}</td>
+                                        <td data-label="Documents For">{semester.documents_for}</td>
                                         <td
                                             style={{ backgroundColor: getStatusBackgroundColor(semester.status || 'unknown'), textAlign: 'center' }}
                                             data-label="Status"
@@ -414,6 +439,15 @@ const TagsTabInterface = () => {
                     onRequestClose={closeConfirmModal}
                     onConfirm={() => handleDelete(currentItem.id)}
                     itemName={currentItem.name || currentItem.course_name || currentItem.semester || currentItem.type}
+                />
+            )}
+            {statusUpdateItem && (
+                <ConfirmDeleteModal
+                    isOpen={isStatusConfirmModalOpen}
+                    onRequestClose={closeStatusConfirmModal}
+                    onConfirm={confirmStatusUpdate}
+                    itemName={statusUpdateItem.name || statusUpdateItem.course_name || statusUpdateItem.semester || statusUpdateItem.type}
+                    confirmMessage="Are you sure you want to change the status to active?"
                 />
             )}
         </div>
