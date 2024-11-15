@@ -4,7 +4,6 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
-import logo from '../../../assets/Logo.jpeg';
 import './NavBar.css';
 
 /* Component for the navigation bar */
@@ -118,7 +117,7 @@ const NavBar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo" onClick={handleTextRotation}>
-                <img className="logo-img" src={logo} alt="Logo" />
+                <img className="logo-img" src={'./harry.png'} alt="Logo" />
                 <div className="logo-text" ref={textRef}>DataBaseD</div>
             </div>
             <div className="navbar-dropdown" ref={dropdownRef}>
