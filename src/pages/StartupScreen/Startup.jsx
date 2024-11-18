@@ -18,6 +18,9 @@ const Startup = ({ user, setUser }) => {
 
   const [isOpenComponent, setIsOpenComponent] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  const [audio] = useState(new Audio("./about-music.mp3"));
+  const [isPlaying, setIsPlaying] = useState(false);
   const openInfoComponent = () => {
     // Start animation phase
     setIsAnimating(true);
@@ -26,10 +29,16 @@ const Startup = ({ user, setUser }) => {
       if (isOpenComponent && landingPageRef.current) {
         // Scroll up when AboutPage is closed
         landingPageRef.current.scrollIntoView({ behavior: "smooth" });
+        audio.pause();
+        audio.currentTime = 2;
       } else if (aboutPageRef.current) {
         // Scroll down to AboutPage when it's opened
         aboutPageRef.current.scrollIntoView({ behavior: "smooth" });
+        audio.currentTime = 2;
+        audio.play()
       }
+
+
 
       // Delay toggling the component's visibility to allow smooth scroll
       setTimeout(() => {
