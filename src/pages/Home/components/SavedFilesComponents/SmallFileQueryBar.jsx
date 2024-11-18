@@ -6,6 +6,7 @@ import ProfessorNameDropdown from './../Dropdowns/ProfessorName';
 import SemesterDropdown from './../Dropdowns/Semester';
 
 import './SmallFileQueryBar.css'
+import {BsBookmarkFill, BsBookmarkPlus} from "react-icons/bs";
 
 /* Component for the search bar and filter dropdowns
     files - array of file objects
@@ -51,6 +52,13 @@ const SmallFileQueryBar = ({ files, setFilteredFiles }) => {
         setSearch(event.target.value);
     }
 
+    const [isSaved, setIsSaved] = useState(false);
+
+    const updateSavedState = (e) => {
+        e.stopPropagation();
+        setIsSaved(!isSaved);
+    }
+
     return (
         <div className={"small-filter-container"}>
             <form className={"search-bar"} onSubmit={handleSearch}>
@@ -70,6 +78,15 @@ const SmallFileQueryBar = ({ files, setFilteredFiles }) => {
 
             {/* Filter dropdowns */}
             <div className={"filter-dropdowns-small"}>
+                <select className={'saved-files-filter filter-dropdowns'} onClick={updateSavedState}>
+                    <option>
+                        Saved
+                        {isSaved ? (<BsBookmarkFill className={"bookmark-svg"} />
+                        ) : (
+                            <BsBookmarkPlus className={"bookmark-svg"} />
+                        )}
+                    </option>
+                </select>
                 <ClassNameDropdown />
                 <ProfessorNameDropdown />
                 <SemesterDropdown />
