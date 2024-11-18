@@ -16,12 +16,12 @@ const ProfessorNameDropdown = () => {
     useEffect(() => {
         const fetchProfessors = async () => {
             const professorsCollection = collection(db, 'professors');
-            const proessorsSnapshot = await getDocs(professorsCollection);
-            const assignmentTypesList = proessorsSnapshot.docs.map(doc => {
+            const professorsSnapshot = await getDocs(professorsCollection);
+            const professorNamesList = professorsSnapshot.docs.map(doc => {
                 const data = doc.data();
                 return `${data.name}`;
             });
-            setProfessors(assignmentTypesList);
+            setProfessors(professorNamesList);
         };
         fetchProfessors();
     }, []);

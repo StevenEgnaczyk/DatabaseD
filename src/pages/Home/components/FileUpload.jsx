@@ -1,7 +1,11 @@
 /* FileUpload.jsx Imports */
 import React, { useRef, useState } from "react";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../config/firebase";
+
 import './FileUpload.css';
 import './FileSearchComponents/FileQueryBar.css';
+import { toast } from 'react-toastify';
 
 import AssignmentTypeDropdown from './Dropdowns/AssignmentType';
 import ClassNameDropdown from './Dropdowns/ClassName';
@@ -13,6 +17,9 @@ import { BsXCircle } from "react-icons/bs";
 /* Component for uploading files 
     onClose - function to close the file upload modal */
 const FileUpload = ({ onClose }) => {
+
+    const [file, setFile] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     const [filePreview, setFilePreview] = useState(null);
     const [fileName, setFileName] = useState("");
@@ -31,12 +38,38 @@ const FileUpload = ({ onClose }) => {
             const fileURL = URL.createObjectURL(file);
             setFilePreview({ path: fileURL });
             setFileName(file.name);
+            setFile(file);
         }
     }
 
     /* Handle File upload */
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
+        if (!file) {
+            toast.error("Please select a file to upload");
+            console.log("No file selected for upload.");
+            return;
+        }
+
+        console.log("Starting file upload for:", file.name);
+
+        const storageRef = ref(storage, `files/${file.name}`); 
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on('state_changed', (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setUploadProgress(progress);
+            console.log(`Upload is ${progress}% done`);
+        }, (error) => {
+            toast.error("Error uploading file");
+            console.error("Upload error:", error);
+        }, () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log("File uploaded successfully. Download URL:", downloadURL);
+                toast.success("File uploaded successfully!");
+            }).catch((error) => {
+                console.error("Error getting download URL:", error);
+            });
+        });
     }
 
     /* Render the file upload modal */
