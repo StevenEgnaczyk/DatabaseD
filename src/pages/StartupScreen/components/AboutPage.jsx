@@ -11,7 +11,7 @@ function AboutPage({openInfoComponent}) {
             <div className={'about-info'}>
                 <div className={'profile-grid'}>
                     <div className={'profile-container'}>
-                        <img className={'profile-image'} src={'./harry.png'}/>
+                        <img className={'profile-image'} src={'./sir-steven.jpeg'}/>
                         <div className={'profile-text'}>
                             <h3 className={'profile-name'}>Sir Stevyn of Eldorvale</h3>
                             <p className={'profile-desc'}>A brave knight known for his valor in battle and unwavering loyalty to his kingdom, hailing from the mist-covered lands of Eldorvale.</p>
