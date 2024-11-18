@@ -1,10 +1,15 @@
+.landing-full-page {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+}
 
-.main-container {
+.landing-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
     height: 100vh;
     width: 100vw;
     background: linear-gradient(to right, var(--color-button-red) 60%, white 50%);
@@ -13,6 +18,14 @@
 .databased-title {
     font-size: 4rem;
     color: white;
+}
+
+.left-landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .auth-container {
@@ -52,7 +65,8 @@
     padding: 12px 20px;
     background-color: black;
     margin-top: 5px;
-    margin-inline: 5rem;
+    width: 10vw;
+    margin-inline: auto;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
@@ -77,5 +91,16 @@
     top: 0;
     left: 60%;
     width: 40%;
+    overflow: hidden;
 }
+
+.arrow-icon {
+    position: absolute;
+    bottom: 3%;
+    scale: 4;
+    color: black;
+    margin-inline: auto;
+    cursor: pointer;
+}
+
 
