@@ -24,6 +24,12 @@ const FileUpload = ({ onClose }) => {
     const [fileName, setFileName] = useState("");
     const fileInputRef = useRef(null);
 
+    // State for dropdown selections
+    const [selectedClassName, setSelectedClassName] = useState("");
+    const [selectedProfessorName, setSelectedProfessorName] = useState("");
+    const [selectedSemester, setSelectedSemester] = useState("");
+    const [selectedAssignmentType, setSelectedAssignmentType] = useState("");
+
     /* Open file dialog when button is clicked */
     const handleButtonClick = (e) => {
         e.preventDefault();
@@ -43,18 +49,31 @@ const FileUpload = ({ onClose }) => {
 
     /* Handle File upload */
     const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault();
 
-        if (!file) {
-            toast.error("Please select a file to upload");
-            console.log("No file selected for upload.");
+        // Collect unselected dropdowns
+        const unselectedDropdowns = [];
+        if (!selectedClassName) unselectedDropdowns.push("Class Name");
+        if (!selectedProfessorName) unselectedDropdowns.push("Professor Name");
+        if (!selectedSemester) unselectedDropdowns.push("Semester");
+        if (!selectedAssignmentType) unselectedDropdowns.push("Assignment Type");
+
+        // Validate dropdown selections
+        if (unselectedDropdowns.length > 0) {
+            toast.error(`All options not selected: ${unselectedDropdowns.join(",")}`);
             return;
         }
 
-        console.log("Starting file upload for:", file.name);
+        // Validate file selection
+        if (!file) {
+            toast.error("Please select a file to upload");
+            return;
+        }
 
         const uniqueFileName = `${file.name}`;
-        const storageRef = ref(storage, `files/${uniqueFileName}`); 
+        const filePath = `${selectedClassName}/${selectedProfessorName}/${selectedAssignmentType}/${uniqueFileName}`;
+
+        const storageRef = ref(storage, `files/${filePath}`); 
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on('state_changed', (snapshot) => {
@@ -64,13 +83,14 @@ const FileUpload = ({ onClose }) => {
             toast.error("Error uploading file");
             console.error("Upload error:", error);
         }, () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                console.log("File uploaded successfully. Download URL:", downloadURL);
-                toast.success("File uploaded successfully!");
+            getDownloadURL(uploadTask.snapshot.ref).then(() => {
 
+                toast.success("File uploaded successfully!");
                 setFile(null);
                 setFilePreview(null);
                 setFileName("");
+                onClose();
+
                 fileInputRef.current.value = "";
             }).catch((error) => {
                 console.error("Error getting download URL:", error);
@@ -83,12 +103,10 @@ const FileUpload = ({ onClose }) => {
     return (
         <div className="lightbox">
             <div className="lightbox-content">
-
                 <div className="upload-header">
                     <h2>Upload a file</h2>
                     <BsXCircle onClick={onClose}/>
                 </div>
-
                 <div className="file-attributes">
                     <form onSubmit={handleSubmit}>
                         <div className="file-selector">
@@ -110,12 +128,23 @@ const FileUpload = ({ onClose }) => {
                         </div>
                         
                         <div className="filter-input">
-                            <ClassNameDropdown />
-                            <ProfessorNameDropdown />
-                            <SemesterDropdown />
-                            <AssignmentTypeDropdown />
+                            <ClassNameDropdown 
+                                selectedClassName={selectedClassName} 
+                                setSelectedClassName={setSelectedClassName} 
+                            />
+                            <ProfessorNameDropdown 
+                                selectedProfessorName={selectedProfessorName} 
+                                setSelectedProfessorName={setSelectedProfessorName} 
+                            />
+                            <SemesterDropdown 
+                                selectedSemester={selectedSemester} 
+                                setSelectedSemester={setSelectedSemester} 
+                            />
+                            <AssignmentTypeDropdown 
+                                selectedAssignmentType={selectedAssignmentType} 
+                                setSelectedAssignmentType={setSelectedAssignmentType} 
+                            />
                         </div>
-
                         <div className="file-preview">
                             {filePreview ? (
                                 <iframe

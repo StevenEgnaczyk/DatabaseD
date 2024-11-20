@@ -8,9 +8,9 @@ import './FilterDropdowns.css';
 const db = getFirestore();
 
 /* Professor Name dropdown component */
-const ProfessorNameDropdown = () => {
+const ProfessorNameDropdown = ({ selectedProfessorName, setSelectedProfessorName }) => {
+
     const [professorNames, setProfessors] = useState([]);
-    const [selectedProfessor, setSelectedProfessor] = useState(""); // Track selected professor
 
     /* Fetch the assignment types from the Firestore database */
     useEffect(() => {
@@ -28,11 +28,11 @@ const ProfessorNameDropdown = () => {
 
     /* Handle selection change */
     const handleChange = (event) => {
-        setSelectedProfessor(event.target.value); // Update the selected professor
+        setSelectedProfessorName(event.target.value);
     };
 
     return (
-        <select value={selectedProfessor} onChange={handleChange}>
+        <select value={selectedProfessorName} onChange={handleChange}>
             {/* Display 'Professor Name' as a non-selectable placeholder */}
             <option value="" disabled hidden>
                 Professor Name

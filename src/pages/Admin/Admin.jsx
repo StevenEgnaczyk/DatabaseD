@@ -5,7 +5,7 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 import './Admin.css';
 
-import NavBar from './components/NavBar';
+import NavBar from '../Home/components/NavBar';
 import UnapprovedUsers from './components/UnapprovedUsers';
 import TagsTabInterface from './components/TagsTabInterface';
 

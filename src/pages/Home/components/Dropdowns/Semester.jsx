@@ -7,9 +7,8 @@ import './FilterDropdowns.css';
 const db = getFirestore();
 
 /* Semester dropdown component */
-const SemesterDropdown = () => {
+const SemesterDropdown = ({ selectedSemester, setSelectedSemester }) => {
     const [semesters, setSemesters] = useState([]);
-    const [selectedSemester, setSelectedSemester] = useState(""); // Track selected semester
 
     /* Fetch the semesters from the Firestore database */
     useEffect(() => {
@@ -27,7 +26,7 @@ const SemesterDropdown = () => {
 
     /* Handle selection change */
     const handleChange = (event) => {
-        setSelectedSemester(event.target.value); // Update the selected semester
+        setSelectedSemester(event.target.value);
     }
                         
     return (
