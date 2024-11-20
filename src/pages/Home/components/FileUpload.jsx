@@ -71,7 +71,9 @@ const FileUpload = ({ onClose }) => {
         }
 
         const uniqueFileName = `${file.name}`;
-        const filePath = `${selectedClassName}/${selectedProfessorName}/${selectedAssignmentType}/${uniqueFileName}`;
+        const [department, courseID] = selectedClassName.split(" ");
+
+        const filePath = `${department}/${courseID}/${selectedProfessorName}/${selectedAssignmentType}/${uniqueFileName}`;
 
         const storageRef = ref(storage, `files/${filePath}`); 
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -90,8 +92,8 @@ const FileUpload = ({ onClose }) => {
                 setFilePreview(null);
                 setFileName("");
                 onClose();
-
                 fileInputRef.current.value = "";
+                
             }).catch((error) => {
                 console.error("Error getting download URL:", error);
                 toast.error("Error retrieving download URL");

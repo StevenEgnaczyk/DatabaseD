@@ -1,6 +1,6 @@
 /* Admin.jsx imports */
 import React, { useState, useEffect, useCallback } from 'react';
-import { collection, getDocs, doc, getFirestore, getDoc } from 'firebase/firestore';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 import './Admin.css';
@@ -8,13 +8,14 @@ import './Admin.css';
 import NavBar from '../Home/components/NavBar';
 import UnapprovedUsers from './components/UnapprovedUsers';
 import TagsTabInterface from './components/TagsTabInterface';
+import { useUserRole } from '../../config/adminContext';
 
 /* Admin page component */
 const Admin = () => {
 
     /* State variables */
     const [unapprovedUsers, setUnapprovedUsers] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const userRole = useUserRole();
 
     /* Firebase services */
     const db = getFirestore();
@@ -36,40 +37,22 @@ const Admin = () => {
 
     /* Fetch the user's role and unapproved users */
     useEffect(() => {
-        const fetchUserRole = async () => {
-            const user = auth.currentUser;
-            if (user) {
-                try {
-                    const docRef = doc(db, "users", user.uid);
-                    const docSnap = await getDoc(docRef);
-
-                    if (docSnap.exists() && docSnap.data().role === "admin") {
-                        setIsAdmin(true);
-                    }
-                } catch (e) {
-                    console.error("Error getting document:", e);
-                }
-            }
-        };
-        fetchUserRole();
-
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                fetchUserRole();
-            } else {
-                setIsAdmin(false);
+            if (!user) {
+                return;
             }
         });
         return () => unsubscribe();
-    }, [auth, db]);
+    }, [auth]);
+
     useEffect(() => {
-        if (isAdmin) {
+        if (userRole === "admin") {
             fetchUnapprovedUsers();
         }
-    }, [isAdmin, fetchUnapprovedUsers]);
+    }, [userRole, fetchUnapprovedUsers]);
 
     /* Render the admin page */
-    if (!isAdmin) {
+    if (userRole !== "admin") {
         return <p>You do not have access to this page.</p>;
     }
     return (
