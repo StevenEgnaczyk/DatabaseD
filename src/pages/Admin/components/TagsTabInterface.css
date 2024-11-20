@@ -389,13 +389,13 @@ table tbody tr:hover td {
 }
 
 /* Form Styling */
-form {
+.create-tag-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-form input {
+.create-tag-form input {
     padding: 8px;
     border-radius: 4px;
     border: 1px solid var(--color-gray);
@@ -403,7 +403,7 @@ form input {
     color: var(--color-white);
 }
 
-form button {
+.create-tag-form button {
     padding: 10px;
     background-color: var(--color-button-red);
     color: var(--color-white);
@@ -413,7 +413,7 @@ form button {
     transition: background-color 0.3s ease;
 }
 
-form button:hover {
+.create-tag-form button:hover {
     background-color: var(--color-button-hover);
 }
 
@@ -574,6 +574,139 @@ form button:hover {
         opacity: 0;
         transform: scale(0.5);
     }
+}
+
+.active-icon {
+    cursor: not-allowed; /* 'x' cursor */
+    transform: none !important; /* Prevent enlargement */
+    transition: none; /* Disable transition effects */
+}
+
+/* Add obnoxious styling for UpdateModal */
+.update-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-modal-content {
+    background-color: var(--color-dark-gray);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    color: var(--color-white);
+    border: 5px solid #ff0000;
+}
+
+.update-modal-content h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #ff0000;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.update-modal-content p {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ff0000;
+    text-shadow: 2px 2px 0px #000;
+    padding: 1rem;
+    animation: pulse 1.5s infinite;
+    letter-spacing: 2px;
+}
+
+.update-modal-content .item-name {
+    font-weight: 900;
+    color: #ff0000;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #000;
+    border: 3px solid #ff0000;
+    text-align: center;
+    animation: shake 0.5s infinite;
+    text-shadow: 
+        2px 2px 0 #fff,
+        -2px -2px 0 #fff,
+        2px -2px 0 #fff,
+        -2px 2px 0 #fff;
+    letter-spacing: 3px;
+}
+
+.update-modal-content input {
+    margin-bottom: 1rem;
+    width: 90%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 2px solid #ff0000;
+    background-color: var(--color-bg);
+    color: var(--color-white);
+}
+
+.update-modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.rainbow-name {
+    animation: rainbow 5s linear infinite;
+
+}
+
+.update-cancel-button, .update-confirm-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.update-cancel-button {
+    background-color: var(--color-gray);
+    color: var(--color-white);
+}
+
+.update-cancel-button:hover {
+    background-color: #666;
+    transform: translateY(-2px);
+}
+
+.update-confirm-button {
+    background-color: var(--color-button-red);
+    color: var(--color-white);
+}
+
+.update-confirm-button:hover {
+    background-color: var(--color-button-hover);
+    transform: translateY(-2px);
+}
+
+/* Reuse existing animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-1deg); }
+    75% { transform: translateX(5px) rotate(1deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 

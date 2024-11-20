@@ -78,13 +78,10 @@
     border: none;
     background: transparent;
     padding-inline: 10px;
-}
-
-.swap-button span{ 
-    border: none;
-    background: transparent;
     cursor: pointer;
-    color: white;
+    color: var(--color-hover-blue);
+    margin-top: 15px;
+    font-size: 14px;
 }
 
 .scrolling-pages {

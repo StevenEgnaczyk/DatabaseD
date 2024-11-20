@@ -16,12 +16,12 @@ const ProfessorNameDropdown = () => {
     useEffect(() => {
         const fetchProfessors = async () => {
             const professorsCollection = collection(db, 'professors');
-            const proessorsSnapshot = await getDocs(professorsCollection);
-            const assignmentTypesList = proessorsSnapshot.docs.map(doc => {
+            const professorsSnapshot = await getDocs(professorsCollection);
+            const professorNamesList = professorsSnapshot.docs.map(doc => {
                 const data = doc.data();
                 return `${data.name}`;
             });
-            setProfessors(assignmentTypesList);
+            setProfessors(professorNamesList);
         };
         fetchProfessors();
     }, []);
@@ -33,12 +33,10 @@ const ProfessorNameDropdown = () => {
 
     return (
         <select value={selectedProfessor} onChange={handleChange}>
-            {/* Static placeholder that is not part of the actual dropdown options */}
-            {selectedProfessor === "" && (
-                <option value="" disabled>
-                    Professor Name
-                </option>
-            )}
+            {/* Display 'Professor Name' as a non-selectable placeholder */}
+            <option value="" disabled hidden>
+                Professor Name
+            </option>
             {/* Render professor names */}
             {professorNames.map((name, index) => (
                 <option className={'filter-dropdown'} key={index} value={name}>

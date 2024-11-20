@@ -32,7 +32,7 @@ const SavedFilesPage = () => {
     ]);
 
     const [filesPerPage, setFilesPerPage] = useState(8);
-    const [filteredFiles, setFilteredFiles] = useState(files);
+    const [filteredFiles] = useState(files);
     const [currentPage, setCurrentPage] = useState(1);
 
     const totalPages = Math.ceil(filteredFiles.length / filesPerPage)
@@ -52,17 +52,7 @@ const SavedFilesPage = () => {
         }
     };
 
-    const handleFilesPerPageChange = (e) => {
-        setFilesPerPage(Number(e.target.value));
-        setCurrentPage(1);
-    };
-
-    const [layoutButtonsOpen, setButtonsOpen] = useState(false);
     const [isGridView, setGridView] = useState(true);
-
-    const showLayoutButtons = () => {
-        setButtonsOpen(!layoutButtonsOpen);
-    }
 
     const setFileView = () => {
         setGridView(!isGridView);

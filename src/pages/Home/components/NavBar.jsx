@@ -1,5 +1,5 @@
 /* NavBar.jsx Imports */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -22,26 +22,27 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     /* Fetch the user's role from the database */
-    useEffect(() => {
-        const fetchUserRole = async () => {
-            const user = auth.currentUser;
-            if (user) {
-                try {
-                    const docRef = doc(db, "users", user.uid);
-                    const docSnap = await getDoc(docRef);
+    const fetchUserRole = useCallback(async () => {
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
 
-                    if (docSnap.exists()) {
-                        setUserRole(docSnap.data().role);
-                    } else {
-                        console.log("No such document!");
-                    }
-                } catch (e) {
-                    console.error("Error getting document:", e);
+                if (docSnap.exists()) {
+                    setUserRole(docSnap.data().role);
+                } else {
+                    console.log("No such document!");
                 }
+            } catch (e) {
+                console.error("Error getting document:", e);
             }
-        };
-        fetchUserRole();
+        }
     }, [auth, db]);
+
+    useEffect(() => {
+        fetchUserRole();
+    }, [fetchUserRole]);
 
     /* Toggle the dropdown menu */
     const toggleDropdown = () => {
@@ -57,7 +58,7 @@ const NavBar = () => {
     };
 
     /* Close the dropdown menu */
-    const closeDropdown = () => {
+    const closeDropdown = useCallback(() => {
         if (dropdownOpen) {
             setClosing(true);
             setTimeout(() => {
@@ -65,14 +66,14 @@ const NavBar = () => {
                 setClosing(false);
             }, 500);
         }
-    };
+    }, [dropdownOpen]);
 
     /* Handle clicks outside of the dropdown menu */
-    const handleClickOutside = (event) => {
+    const handleClickOutside = useCallback((event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             closeDropdown();
         }
-    };
+    }, [dropdownRef, closeDropdown]);
 
     /* Add event listener for clicks outside of the dropdown menu */
     useEffect(() => {
@@ -85,7 +86,7 @@ const NavBar = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [dropdownOpen]);
+    }, [dropdownOpen, handleClickOutside]);
 
     /* Navigate to the login page */
     function returnToLogin() {

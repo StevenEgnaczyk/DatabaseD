@@ -32,12 +32,10 @@ const AssignmentTypeDropdown = () => {
 
     return (
         <select value={selectedType} onChange={handleChange}>
-            {/* Placeholder as the default option, not in the list */}
-            {selectedType === "" && (
-                <option value="" disabled>
-                    Assignment Type
-                </option>
-            )}
+            {/* Display 'Assignment Type' as a non-selectable placeholder */}
+            <option value="" disabled hidden>
+                Assignment Type
+            </option>
             {/* Render actual assignment types */}
             {assignmentTypes.map((type, index) => (
                 <option className={'filter-dropdown'} key={index} value={type}>

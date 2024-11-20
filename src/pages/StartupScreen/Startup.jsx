@@ -20,7 +20,6 @@ const Startup = ({ user, setUser }) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const [audio] = useState(new Audio("./about-music.mp3"));
-  const [isPlaying, setIsPlaying] = useState(false);
   const openInfoComponent = () => {
     // Start animation phase
     setIsAnimating(true);
@@ -37,8 +36,6 @@ const Startup = ({ user, setUser }) => {
         audio.currentTime = 2;
         audio.play()
       }
-
-
 
       // Delay toggling the component's visibility to allow smooth scroll
       setTimeout(() => {

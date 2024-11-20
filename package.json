@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "firebase": "^10.14.0",
+    "firebase": "^10.14.1",
     "papaparse": "^5.4.1",
     "pdfjs-dist": "^3.4.120",
     "react": "^18.3.1",
@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "husky": "^9.1.6"
   }
 }
