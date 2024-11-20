@@ -1,7 +1,6 @@
 /* ClassNameDropdown.jsx imports */
 import React, { useEffect, useState } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import Papa from 'papaparse';
 
 import './FilterDropdowns.css';
 

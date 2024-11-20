@@ -52,23 +52,12 @@ const FileSearchPage = () => {
         }
     };
 
-    const handleFilesPerPageChange = (e) => {
-        setFilesPerPage(Number(e.target.value));
-        setCurrentPage(1);
-    };
-
-    const [layoutButtonsOpen, setButtonsOpen] = useState(false);
     const [isGridView, setGridView] = useState(true);
-
-    const showLayoutButtons = () => {
-        setButtonsOpen(!layoutButtonsOpen);
-    }
 
     const setFileView = () => {
         setGridView(!isGridView);
         isGridView ? setFilesPerPage(20) : setFilesPerPage(16);
     }
-
 
     return (
         <div>
@@ -85,17 +74,6 @@ const FileSearchPage = () => {
 
             <div className={"file-query"}>
                 <FileQueryBar files={files} setFilteredFiles={setFilteredFiles} />
-                {/* Dropdown to select files per page */}
-                {/*<div className="files-per-page-dropdown">*/}
-                {/*    <label htmlFor="files-per-page">Files per page:</label>*/}
-                {/*    <select id="files-per-page" value={filesPerPage} onChange={handleFilesPerPageChange}>*/}
-                {/*        <option value="4">4</option>*/}
-                {/*        <option value="6">6</option>*/}
-                {/*        <option value="8">8</option>*/}
-                {/*        <option value="12">12</option>*/}
-                {/*        <option value="16">16</option>*/}
-                {/*    </select>*/}
-                {/*</div>*/}
             </div>
             <div className={"file-display-container"}>
                 <div className={`file-display ${isGridView ? 'grid-layout' : 'stacked-layout'}`}>

@@ -1,11 +1,11 @@
 /* Admin.jsx imports */
-import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where, doc, getFirestore, getDoc } from 'firebase/firestore';
+import React, { useState, useEffect, useCallback } from 'react';
+import { collection, getDocs, doc, getFirestore, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 import './Admin.css';
 
-import NavBar from './../Home/components/NavBar';
+import NavBar from './components/NavBar';
 import UnapprovedUsers from './components/UnapprovedUsers';
 import TagsTabInterface from './components/TagsTabInterface';
 
@@ -19,6 +19,20 @@ const Admin = () => {
     /* Firebase services */
     const db = getFirestore();
     const auth = getAuth();
+
+    /* Fetch the unapproved users */
+    const fetchUnapprovedUsers = useCallback(async () => {
+        try {
+            const usersCollection = collection(db, 'users');
+            const usersSnapshot = await getDocs(usersCollection);
+            const unapprovedList = usersSnapshot.docs
+                .filter(doc => !doc.data().approved)
+                .map(doc => ({ id: doc.id, ...doc.data() }));
+            setUnapprovedUsers(unapprovedList);
+        } catch (error) {
+            console.error("Error fetching unapproved users:", error);
+        }
+    }, [db]);
 
     /* Fetch the user's role and unapproved users */
     useEffect(() => {
@@ -47,20 +61,12 @@ const Admin = () => {
             }
         });
         return () => unsubscribe();
-    }, []);
+    }, [auth, db]);
     useEffect(() => {
         if (isAdmin) {
             fetchUnapprovedUsers();
         }
-    }, [isAdmin]);
-
-    /* Fetch the unapproved users */
-    const fetchUnapprovedUsers = async () => {
-        const q = query(collection(db, "users"), where("approved", "==", false));
-        const querySnapshot = await getDocs(q);
-        const users = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setUnapprovedUsers(users);
-    };
+    }, [isAdmin, fetchUnapprovedUsers]);
 
     /* Render the admin page */
     if (!isAdmin) {

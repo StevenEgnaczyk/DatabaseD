@@ -1,5 +1,5 @@
 import React from "react";
-import {BsBookmarkFill, BsBookmarkPlus} from "react-icons/bs";
+import {BsBookmarkFill } from "react-icons/bs";
 
 const TableHeader = () => {
 

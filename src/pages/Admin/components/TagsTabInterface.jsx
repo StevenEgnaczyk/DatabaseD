@@ -31,8 +31,6 @@ const TagsTabInterface = () => {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
     const [editItem, setEditItem] = useState(null); // New state for the item being edited
-    const [isStatusConfirmModalOpen, setIsStatusConfirmModalOpen] = useState(false);
-    const [statusUpdateItem, setStatusUpdateItem] = useState(null);
 
     /* Firebase services */
     const db = getFirestore();
@@ -63,38 +61,6 @@ const TagsTabInterface = () => {
     useEffect(() => {
         fetchAllTags();
     }, []);
-
-    const handleSubmit = async (data) => {
-        try {
-            let collectionName = '';
-            let formattedData = { ...data, status: 'pending' };
-
-            switch (activeTab) {
-                case 'Professors':
-                    collectionName = 'professors';
-                    break;
-                case 'Assignment Types':
-                    collectionName = 'assignment_types';
-                    break;
-                case 'Class Names':
-                    collectionName = 'class_names';
-                    break;
-                case 'Semesters':
-                    collectionName = 'semesters';
-                    break;
-                default:
-                    console.error('Invalid tab selected');
-                    return;
-            }
-
-            await addDoc(collection(db, collectionName), formattedData);
-            await fetchAllTags();
-            setIsModalOpen(false);
-            toast.success(`New ${activeTab.slice(0, -1)} added successfully!`);
-        } catch (error) {
-            toast.error('Error adding document: ', error);
-        }
-    };
 
     const handleDelete = async (id) => {
         let collectionName = '';
@@ -206,20 +172,10 @@ const TagsTabInterface = () => {
         setIsModalOpen(true);
     };
 
-    const openStatusConfirmModal = (item) => {
-        setStatusUpdateItem(item);
-        setIsStatusConfirmModalOpen(true);
-    };
+    const confirmStatusUpdate = async (item) => {
+        if (!item) return;
 
-    const closeStatusConfirmModal = () => {
-        setIsStatusConfirmModalOpen(false);
-        setStatusUpdateItem(null);
-    };
-
-    const confirmStatusUpdate = async () => {
-        if (!statusUpdateItem) return;
-
-        const { id } = statusUpdateItem;
+        const { id } = item;
         const collectionName = {
             'Professors': 'professors',
             'Assignment Types': 'assignment_types',
@@ -240,8 +196,6 @@ const TagsTabInterface = () => {
         } catch (error) {
             console.error('Error updating status:', error);
             toast.error('Error updating status: ', error);
-        } finally {
-            closeStatusConfirmModal();
         }
     };
 
@@ -267,7 +221,7 @@ const TagsTabInterface = () => {
                     <div className="action-buttons">
                         <FaCheck
                             className={`icon ${approveColor} ${approveClass}`}
-                            onClick={() => item.status === 'pending' && openStatusConfirmModal(item)}
+                            onClick={() => item.status === 'pending' && confirmStatusUpdate(item)}
                         />
                         <FaEdit className="icon blue" onClick={() => openEditModal(item)} />
                         <FaTrashAlt className="icon red" onClick={() => openConfirmModal(item)} />
@@ -439,15 +393,6 @@ const TagsTabInterface = () => {
                     onRequestClose={closeConfirmModal}
                     onConfirm={() => handleDelete(currentItem.id)}
                     itemName={currentItem.name || currentItem.course_name || currentItem.semester || currentItem.type}
-                />
-            )}
-            {statusUpdateItem && (
-                <ConfirmDeleteModal
-                    isOpen={isStatusConfirmModalOpen}
-                    onRequestClose={closeStatusConfirmModal}
-                    onConfirm={confirmStatusUpdate}
-                    itemName={statusUpdateItem.name || statusUpdateItem.course_name || statusUpdateItem.semester || statusUpdateItem.type}
-                    confirmMessage="Are you sure you want to change the status to active?"
                 />
             )}
         </div>

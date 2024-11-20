@@ -19,7 +19,6 @@ import { BsXCircle } from "react-icons/bs";
 const FileUpload = ({ onClose }) => {
 
     const [file, setFile] = useState(null);
-    const [uploadProgress, setUploadProgress] = useState(0);
 
     const [filePreview, setFilePreview] = useState(null);
     const [fileName, setFileName] = useState("");
@@ -43,7 +42,9 @@ const FileUpload = ({ onClose }) => {
     }
 
     /* Handle File upload */
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault(); // Prevent form submission
+
         if (!file) {
             toast.error("Please select a file to upload");
             console.log("No file selected for upload.");
@@ -52,12 +53,12 @@ const FileUpload = ({ onClose }) => {
 
         console.log("Starting file upload for:", file.name);
 
-        const storageRef = ref(storage, `files/${file.name}`); 
+        const uniqueFileName = `${file.name}`;
+        const storageRef = ref(storage, `files/${uniqueFileName}`); 
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on('state_changed', (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setUploadProgress(progress);
             console.log(`Upload is ${progress}% done`);
         }, (error) => {
             toast.error("Error uploading file");
@@ -66,8 +67,14 @@ const FileUpload = ({ onClose }) => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                 console.log("File uploaded successfully. Download URL:", downloadURL);
                 toast.success("File uploaded successfully!");
+
+                setFile(null);
+                setFilePreview(null);
+                setFileName("");
+                fileInputRef.current.value = "";
             }).catch((error) => {
                 console.error("Error getting download URL:", error);
+                toast.error("Error retrieving download URL");
             });
         });
     }

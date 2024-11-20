@@ -11,14 +11,14 @@ function AboutPage({openInfoComponent}) {
             <div className={'about-info'}>
                 <div className={'profile-grid'}>
                     <div className={'profile-container'}>
-                        <img className={'profile-image'} src={'./sir-steven.jpeg'}/>
+                        <img className={'profile-image'} src={'./sir-steven.jpeg'} alt=""/>
                         <div className={'profile-text'}>
                             <h3 className={'profile-name'}>Sir Stevyn of Eldorvale</h3>
                             <p className={'profile-desc'}>A brave knight known for his valor in battle and unwavering loyalty to his kingdom, hailing from the mist-covered lands of Eldorvale.</p>
                         </div>
                     </div>
                     <div className={'profile-container'}>
-                        <img className={'profile-image'} src={'./harry.png'}/>
+                        <img className={'profile-image'} src={'./harry.png'} alt=""/>
                         <div className={'profile-text'}>
                             <h3 className={'profile-name'}>Adamus Haikalon, the Steelhand</h3>
                             <p className={'profile-desc'}>A legendary warrior whose unmatched strength and mastery of the blade have earned him the title "Steelhand," protector of the realm’s borders.</p>
@@ -29,31 +29,31 @@ function AboutPage({openInfoComponent}) {
                         <p>DataBaseD is a tool for students to download and share documents for all assignments Ohio State related.
                             DataBaseD makes it easy to upload documents with the proper tags needed to help users find what they are looking for.
                         </p>
-                        <img className={'preview-img'} src={'./preview.png'}/>
+                        <img className={'preview-img'} src={'./preview.png'} alt=""/>
                     </div>
                     <div className={'profile-container'}>
-                        <img className={'profile-image'} src={'./harry.png'}/>
+                        <img className={'profile-image'} src={'./harry.png'} alt=""/>
                         <div className={'profile-text'}>
                             <h3 className={'profile-name'}>Kellan Garithorne, Warden of the Wilds</h3>
                             <p className={'profile-desc'}>Protector of the untamed forests, Kellan Garithorne is a fierce defender of nature’s balance and a skilled hunter of shadowed creatures.</p>
                         </div>
                     </div>
                     <div className={'profile-container'}>
-                        <img className={'profile-image'} src={'./harry.png'}/>
+                        <img className={'profile-image'} src={'./harry.png'} alt=""/>
                         <div className={'profile-text'}>
                             <h3 className={'profile-name'}>Jakob Myrwyn of the Northreach</h3>
                             <p className={'profile-desc'}>A master tactician from the icy Northern lands, Jakob Myrwyn is known for his fearsome prowess in both war and diplomacy.</p>
                         </div>
                     </div>
                     <div className={'profile-container'}>
-                        <img className={'profile-image'} src={'./harry.png'}/>
+                        <img className={'profile-image'} src={'./harry.png'} alt=""/>
                         <div className={'profile-text'}>
                             <h3 className={'profile-name'}>Wilhelm LeMont, the Golden</h3>
                             <p className={'profile-desc'}>A charismatic noble whose golden-hearted nature and sharp wit earned him a revered place in the royal court and the affection of many allies.</p>
                         </div>
                     </div>
                     <div className={'profile-container'}>
-                        <img className={'profile-image'} src={'./harry.png'}/>
+                        <img className={'profile-image'} src={'./harry.png'} alt=""/>
                         <div className={'profile-text'}>
                             <h3 className={'profile-name'}>Matheus Blumenthorne, the Verdant Knight</h3>
                             <p className={'profile-desc'}>A noble defender of the realm, Matheus is celebrated for his deep connection to the forests and his commitment to preserving the land’s natural beauty.</p>
