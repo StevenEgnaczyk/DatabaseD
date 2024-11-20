@@ -22,123 +22,16 @@
 .main-bar {
     display: flex;
     flex-direction: column;
-    width: 85%;
+    width: 87vw;
     background-color: var(--color-dark-gray);
     border-radius: 10px;
     margin-right: 1rem;
     overflow-y: auto;
-    height: 86vh;
-}
-
-
-.file-query {
-    display: flex;
-    flex-direction: column;
-    max-height: 15vh;
-    padding: 1rem;
-}
-
-.file-display-container {
-    padding-inline: 2.5rem;
-    padding-bottom: 1rem;
-}
-
-.grid-layout {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 15px;
-    border-radius: 5%;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    color: white;
-    font-size: 14px;
-}
-
-.pagination button {
-    background-color: var(--color-button-red);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.pagination button:disabled {
-    background-color: var(--color-gray);
-    cursor: not-allowed;
-}
-
-.dropdown{
-    position: absolute;
-    display:  inline-block;
-}
-
-.dropdown-button{
-    background-color: var(--color-button-red);
-    color: var(--color-white);
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: var(--color-bg);
-    min-width: 160px;
-    box-shadow: 0 8px 16px 0 var(--color-lightbox);
-    z-index: 1;
-    border-radius: 5px;
-  }
-
-  .dropdown-content a {
-    color: var(--color-gray);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-  }
-
-  .dropdown-content a:hover {
-    background-color: var(--color-dark-gray);
-  }
-
-
-  .dropdown-button:focus {
-    background-color: var(--color-lite-red);
-  }
-
-  .files-per-page-dropdown {
-      padding: 1rem 1.5rem 1rem 1rem;
-      margin-bottom: -1rem;
-      margin-left: auto;
-}
-
-.files-per-page-dropdown label {
-    margin-right: 10px;
-    font-size: 14px;
-    color: var(--color-white);
-}
-
-.files-per-page-dropdown select {
-    padding: 5px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid var(--color-gray);
-    background-color: var(--color-bg);
-    color: var(--color-white);
+    height: 87vh;
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
-    height: 10px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -150,74 +43,5 @@
     border-radius: 10px;
 }
 
-.layout-buttons {
-    bottom: 1%;
-    left: 96%;
-    padding-right: 2px;
-    padding-bottom: 2px;
-    position: absolute;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    scale: 1.2;
-    cursor: pointer;
-}
 
-.layout-toggle-button {
-    position: relative;
-    color: white;
-    padding: 1rem;
-    border-radius: 9999px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease-in-out;
-    border: none;
-    cursor: pointer;
-}
-
-.layout-toggle-icon {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    cursor: pointer;
-    transition: transform 0.5s ease-in-out;
-}
-
-.icon-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.5s ease-in-out;
-    border-radius: 50%;
-    color: white;
-}
-
-.grid-icon {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-}
-
-.list-icon {
-    opacity: 0;
-    transform: scale(0.5) rotate(-180deg);
-}
-
-.layout-toggle-icon.list .grid-icon {
-    opacity: 0;
-    transform: scale(0.5) rotate(180deg);
-}
-
-.layout-toggle-icon.list .list-icon {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-}
-
-.icon {
-    width: 24px;
-    height: 24px;
-}
 

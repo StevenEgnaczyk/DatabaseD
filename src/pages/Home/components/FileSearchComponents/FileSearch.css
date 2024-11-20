@@ -103,20 +103,6 @@
     color: var(--color-white);
 }
 
-::-webkit-scrollbar {
-    width: 12px;
-    height: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-radius: 10px;
-}
-
 .layout-buttons {
     bottom: 1%;
     left: 96%;
@@ -184,6 +170,6 @@
 }
 
 .icon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
