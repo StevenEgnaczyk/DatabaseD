@@ -8,9 +8,8 @@ import './FilterDropdowns.css';
 const db = getFirestore();
 
 /* Class Name dropdown component */
-const ClassNameDropdown = () => {
+const ClassNameDropdown = ({ selectedClassName, setSelectedClassName }) => {
     const [classNames, setClassNames] = useState([]);
-    const [selectedClass, setSelectedClass] = useState("");
 
     /* Fetch the assignment types from the Firestore database */
     useEffect(() => {
@@ -19,7 +18,7 @@ const ClassNameDropdown = () => {
             const classNamesSnapshot = await getDocs(classNamesCollection);
             const classNamesList = classNamesSnapshot.docs.map(doc => {
                 const data = doc.data();
-                return `${data.department} ${data.course_number}`; // Assuming 'type' holds the data to display
+                return `${data.department} ${data.course_number}`;
             });
             setClassNames(classNamesList);
         };
@@ -28,11 +27,11 @@ const ClassNameDropdown = () => {
 
     /* Handle selection change */
     const handleChange = (event) => {
-        setSelectedClass(event.target.value);
+        setSelectedClassName(event.target.value);
     }
 
     return (
-        <select value={selectedClass} onChange={handleChange}>
+        <select value={selectedClassName} onChange={handleChange}>
             {/* Display 'Class Name' as a non-selectable placeholder */}
             <option value="" disabled hidden>
                 Class Name

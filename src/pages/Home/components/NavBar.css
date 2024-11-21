@@ -36,6 +36,13 @@
     transition: transform 1s;
 }
 
+.logo-text-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
 /* Dropdown section */
 .navbar-dropdown {
     position: relative;
@@ -117,4 +124,17 @@
 
 .dropdown-menu button:hover {
     background-color: #f0f0f0;
+}
+
+.rotate {
+    animation: rotateAnimation 2s ease-in-out;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

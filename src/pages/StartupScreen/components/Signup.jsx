@@ -10,6 +10,7 @@ import { auth, db } from '../../../config/firebase';
   setUser - Function to set the user state */
 const Signup = ({ setUser }) => {
 
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -31,6 +32,7 @@ const Signup = ({ setUser }) => {
       /* Add user to the database */
       await setDoc(doc(db, "users", userCredential.user.uid), {
         email,
+        fullName,
         approved: false,
         timeStamp: serverTimestamp(),
         role: "user",
@@ -72,6 +74,7 @@ const Signup = ({ setUser }) => {
   return (
     <form className={"form-container"} onSubmit={handleSignup}>
       <h2>Signup</h2>
+      <input className={"startup-input"} type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Name" required />
       <input className={"startup-input"} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
       <input className={"startup-input"} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
       <button className={"submit-button"} type="submit" disabled={loading}>Signup</button>

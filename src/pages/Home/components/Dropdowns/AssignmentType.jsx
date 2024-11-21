@@ -7,9 +7,8 @@ import './FilterDropdowns.css';
 const db = getFirestore();
 
 /* Assignment Type dropdown component */
-const AssignmentTypeDropdown = () => {
+const AssignmentTypeDropdown = ({ selectedAssignmentType, setSelectedAssignmentType }) => {
     const [assignmentTypes, setAssignmentTypes] = useState([]);
-    const [selectedType, setSelectedType] = useState(""); // Track the selected value
 
     /* Fetch the assignment types from the Firestore database */
     useEffect(() => {
@@ -18,7 +17,7 @@ const AssignmentTypeDropdown = () => {
             const assignmentTypesSnapshot = await getDocs(assignmentTypesCollection);
             const assignmentTypesList = assignmentTypesSnapshot.docs.map(doc => {
                 const data = doc.data();
-                return `${data.type}`; // Assuming 'type' holds the data to display
+                return `${data.type}`;
             });
             setAssignmentTypes(assignmentTypesList);
         };
@@ -27,11 +26,11 @@ const AssignmentTypeDropdown = () => {
 
     /* Handle selection change */
     const handleChange = (event) => {
-        setSelectedType(event.target.value); // Update the selected value
+        setSelectedAssignmentType(event.target.value);
     };
 
     return (
-        <select value={selectedType} onChange={handleChange}>
+        <select value={selectedAssignmentType} onChange={handleChange}>
             {/* Display 'Assignment Type' as a non-selectable placeholder */}
             <option value="" disabled hidden>
                 Assignment Type

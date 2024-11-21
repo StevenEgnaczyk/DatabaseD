@@ -1,50 +1,20 @@
 /* NavBar.jsx Imports */
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useUser } from '../../../config/userContext';
+    
 import './NavBar.css';
 
 /* Component for the navigation bar */
 const NavBar = () => {
-
-    /* State variables */
-    const [userRole, setUserRole] = useState(null);
+    const user = useUser();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [closing, setClosing] = useState(false);
 
-    /* Refs */
     const dropdownRef = useRef(null);
-    const db = getFirestore();
-    const auth = getAuth();
     const textRef = useRef(null);
     const navigate = useNavigate();
 
-    /* Fetch the user's role from the database */
-    const fetchUserRole = useCallback(async () => {
-        const user = auth.currentUser;
-        if (user) {
-            try {
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    setUserRole(docSnap.data().role);
-                } else {
-                    console.log("No such document!");
-                }
-            } catch (e) {
-                console.error("Error getting document:", e);
-            }
-        }
-    }, [auth, db]);
-
-    useEffect(() => {
-        fetchUserRole();
-    }, [fetchUserRole]);
-
-    /* Toggle the dropdown menu */
     const toggleDropdown = () => {
         if (dropdownOpen) {
             setClosing(true);
@@ -57,7 +27,6 @@ const NavBar = () => {
         }
     };
 
-    /* Close the dropdown menu */
     const closeDropdown = useCallback(() => {
         if (dropdownOpen) {
             setClosing(true);
@@ -68,14 +37,12 @@ const NavBar = () => {
         }
     }, [dropdownOpen]);
 
-    /* Handle clicks outside of the dropdown menu */
     const handleClickOutside = useCallback((event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             closeDropdown();
         }
     }, [dropdownRef, closeDropdown]);
 
-    /* Add event listener for clicks outside of the dropdown menu */
     useEffect(() => {
         if (dropdownOpen) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -88,22 +55,18 @@ const NavBar = () => {
         };
     }, [dropdownOpen, handleClickOutside]);
 
-    /* Navigate to the login page */
     function returnToLogin() {
         navigate('/');
     }
 
-    /* Navigate to the admin panel */
     function returnToHome() {
         navigate('/home');
     }
 
-    /* Navigate to the admin panel */
     function navigateToAdmin() {
         navigate('/admin');
     }
 
-    /* Handle the text rotation animation */
     const handleTextRotation = () => {
         const textElement = textRef.current;
         if (textElement) {
@@ -114,12 +77,14 @@ const NavBar = () => {
         }
     };
 
-    /* Render the navigation bar */
     return (
         <nav className="navbar">
-            <div className="navbar-logo" onClick={handleTextRotation}>
-                <img className="logo-img" src={'./harry.png'} alt="Logo" />
-                <div className="logo-text" ref={textRef}>DataBaseD</div>
+            <div className="navbar-logo">
+                <img className="logo-img" src={'./harry.png'} alt="Logo" onClick={handleTextRotation}/>
+                <div className="logo-text-container">   
+                    <div className="logo-text" ref={textRef} onClick={handleTextRotation}>DataBaseD</div>
+                    <div className="logo-text" ref={textRef} onClick={handleTextRotation}>{user.fullName}</div>
+                </div>
             </div>
             <div className="navbar-dropdown" ref={dropdownRef}>
                 <button className="dropdown-toggle" onClick={toggleDropdown}>
@@ -129,7 +94,7 @@ const NavBar = () => {
                 {dropdownOpen && (
                     <div className={`dropdown-menu ${closing ? 'closing' : 'open'}`}>
                         <button onClick={returnToHome}>Home</button>
-                        {userRole === "admin" && (
+                        {user.role === "admin" && (
                             <button onClick={navigateToAdmin}>Admin Panel</button>
                         )}
                         <button onClick={returnToLogin}>Log out</button>
