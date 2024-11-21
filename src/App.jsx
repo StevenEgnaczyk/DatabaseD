@@ -26,7 +26,7 @@ const App = () => {
         />
         <Route 
           path="/admin" 
-          element={<Admin />} // Render the Admin component
+          element={<Admin />} 
         />
       </Routes>
       <ToastContainer />

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 const UserRoleContext = createContext();
@@ -11,8 +11,7 @@ export const UserRoleProvider = ({ children }) => {
     const db = getFirestore();
     const auth = getAuth();
 
-    const fetchUserRole = useCallback(async () => {
-        const user = auth.currentUser;
+    const fetchUserRole = useCallback(async (user) => {
         if (user) {
             try {
                 const docRef = doc(db, "users", user.uid);
@@ -26,12 +25,20 @@ export const UserRoleProvider = ({ children }) => {
             } catch (e) {
                 console.error("Error getting document:", e);
             }
+        } else {
+            setUserRole(null); // Reset role if no user is logged in
         }
-    }, [auth, db]);
+    }, [db]);
 
     useEffect(() => {
-        fetchUserRole();
-    }, [fetchUserRole]);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            fetchUserRole(user);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [fetchUserRole, auth]);
 
     return (
         <UserRoleContext.Provider value={userRole}>
