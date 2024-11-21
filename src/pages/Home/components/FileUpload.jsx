@@ -1,7 +1,11 @@
 /* FileUpload.jsx Imports */
 import React, { useRef, useState } from "react";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../config/firebase";
+import { db } from "../../../config/firebase";
+import { collection, addDoc, updateDoc, increment, doc, getDocs } from "firebase/firestore";
+import { useUser } from "../../../config/userContext";
+import { query, where } from 'firebase/firestore';
 
 import './FileUpload.css';
 import './FileSearchComponents/FileQueryBar.css';
@@ -17,6 +21,8 @@ import { BsXCircle } from "react-icons/bs";
 /* Component for uploading files 
     onClose - function to close the file upload modal */
 const FileUpload = ({ onClose }) => {
+
+    const user = useUser();
 
     const [file, setFile] = useState(null);
 
@@ -48,7 +54,7 @@ const FileUpload = ({ onClose }) => {
     }
 
     /* Handle File upload */
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         // Collect unselected dropdowns
@@ -70,35 +76,106 @@ const FileUpload = ({ onClose }) => {
             return;
         }
 
-        const uniqueFileName = `${file.name}`;
-        const [department, courseID] = selectedClassName.split(" ");
+        // Upload file to Firebase Storage and Firestore
+        try {
 
-        const filePath = `${department}/${courseID}/${selectedProfessorName}/${selectedAssignmentType}/${uniqueFileName}`;
+            const [department, courseID] = selectedClassName.split(" ");
 
-        const storageRef = ref(storage, `files/${filePath}`); 
-        const uploadTask = uploadBytesResumable(storageRef, file);
+            // Query Firestore to get the professor document by name
+            const professorQuery = query(collection(db, "professors"), where("name", "==", selectedProfessorName));
+            const professorSnapshot = await getDocs(professorQuery);
+            if (professorSnapshot.empty) {
+                throw new Error("Professor not found");
+            }
+            const professorDoc = professorSnapshot.docs[0];
+            const professorId = professorDoc.id;
 
-        uploadTask.on('state_changed', (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(`Upload is ${progress}% done`);
-        }, (error) => {
-            toast.error("Error uploading file");
-            console.error("Upload error:", error);
-        }, () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(() => {
+            // Query Firestore to get the assignment type document by name
+            const assignmentTypeQuery = query(collection(db, "assignment_types"), where("type", "==", selectedAssignmentType));
+            const assignmentTypeSnapshot = await getDocs(assignmentTypeQuery);
+            if (assignmentTypeSnapshot.empty) {
+                throw new Error("Assignment type not found");
+            }
+            const assignmentTypeDoc = assignmentTypeSnapshot.docs[0];
+            const assignmentTypeId = assignmentTypeDoc.id;
 
-                toast.success("File uploaded successfully!");
-                setFile(null);
-                setFilePreview(null);
-                setFileName("");
-                onClose();
-                fileInputRef.current.value = "";
-                
-            }).catch((error) => {
-                console.error("Error getting download URL:", error);
-                toast.error("Error retrieving download URL");
+            // Query Firestore to get the semester document by name
+            const semesterQuery = query(collection(db, "semesters"), where("semester", "==", selectedSemester));
+            const semesterSnapshot = await getDocs(semesterQuery);
+            if (semesterSnapshot.empty) {
+                throw new Error("Semester not found");
+            }
+            const semesterDoc = semesterSnapshot.docs[0];
+            const semesterId = semesterDoc.id;
+
+            // Query Firestore to get the class name document by name   
+            const classNameQuery = query(collection(db, "class_names"), where("department", "==", department), where("course_number", "==", courseID));
+            const classNameSnapshot = await getDocs(classNameQuery);
+            if (classNameSnapshot.empty) {
+                throw new Error("Class name not found");
+            }
+            const classNameDoc = classNameSnapshot.docs[0];
+            const classNameId = classNameDoc.id;
+
+            const uniqueFileName = `${file.name}`;
+            const filePath = `${department}/${courseID}/${selectedProfessorName}/${selectedAssignmentType}/${uniqueFileName}`;
+
+            const storageRef = ref(storage, `files/${filePath}`); 
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on('state_changed', (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Upload is ${progress}% done`);
+            }, (error) => {
+                toast.error("Error uploading file");
+                console.error("Upload error:", error);
+            }, async () => {
+                try {
+
+                    // Add file reference to Firestore
+                    await addDoc(collection(db, "files"), {
+                        fileName: uniqueFileName,
+                        filePath: filePath,
+                        className: selectedClassName,
+                        professorName: selectedProfessorName,
+                        semester: selectedSemester,
+                        assignmentType: selectedAssignmentType,
+                        uploadedBy: user.fullName,
+                        uploadedAt: new Date(),
+                        professorId,
+                        assignmentTypeId,
+                        semesterId,
+                        classNameId
+                    });
+
+                    // Update "documents for" property
+                    await updateDoc(doc(db, "professors", professorId), {
+                        documents_for: increment(1)
+                    });
+                    await updateDoc(doc(db, "assignment_types", assignmentTypeId), {
+                        documents_for: increment(1)
+                    });
+                    await updateDoc(doc(db, "semesters", semesterId), {
+                        documents_for: increment(1)
+                    });
+                    await updateDoc(doc(db, "class_names", classNameId), {
+                        documents_for: increment(1)
+                    });
+                    toast.success("File uploaded and reference added to Firestore successfully!");
+                } catch (error) {
+                    toast.error("Error updating documents count: " + error);
+                }
             });
-        });
+        } catch (error) {
+            console.error("Error getting document:", error);
+            toast.error("Error getting professor document");
+        }
+
+        setFile(null);
+        setFilePreview(null);
+        setFileName("");
+        onClose();
+        fileInputRef.current.value = "";
     }
 
     /* Render the file upload modal */

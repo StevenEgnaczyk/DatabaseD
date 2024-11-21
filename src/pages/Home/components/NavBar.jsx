@@ -1,13 +1,13 @@
 /* NavBar.jsx Imports */
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUserRole } from '../../../config/adminContext';
+import { useUser } from '../../../config/userContext';
     
 import './NavBar.css';
 
 /* Component for the navigation bar */
 const NavBar = () => {
-    const userRole = useUserRole();
+    const user = useUser();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [closing, setClosing] = useState(false);
 
@@ -79,9 +79,12 @@ const NavBar = () => {
 
     return (
         <nav className="navbar">
-            <div className="navbar-logo" onClick={handleTextRotation}>
-                <img className="logo-img" src={'./harry.png'} alt="Logo" />
-                <div className="logo-text" ref={textRef}>DataBaseD</div>
+            <div className="navbar-logo">
+                <img className="logo-img" src={'./harry.png'} alt="Logo" onClick={handleTextRotation}/>
+                <div className="logo-text-container">   
+                    <div className="logo-text" ref={textRef} onClick={handleTextRotation}>DataBaseD</div>
+                    <div className="logo-text" ref={textRef} onClick={handleTextRotation}>{user.fullName}</div>
+                </div>
             </div>
             <div className="navbar-dropdown" ref={dropdownRef}>
                 <button className="dropdown-toggle" onClick={toggleDropdown}>
@@ -91,7 +94,7 @@ const NavBar = () => {
                 {dropdownOpen && (
                     <div className={`dropdown-menu ${closing ? 'closing' : 'open'}`}>
                         <button onClick={returnToHome}>Home</button>
-                        {userRole === "admin" && (
+                        {user.role === "admin" && (
                             <button onClick={navigateToAdmin}>Admin Panel</button>
                         )}
                         <button onClick={returnToLogin}>Log out</button>

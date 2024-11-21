@@ -1,48 +1,49 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
-const UserRoleContext = createContext();
+const UserContext = createContext();
 
-export const useUserRole = () => useContext(UserRoleContext);
+export const useUser = () => useContext(UserContext);
 
-export const UserRoleProvider = ({ children }) => {
-    const [userRole, setUserRole] = useState(null);
+export const UserProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
     const db = getFirestore();
     const auth = getAuth();
 
-    const fetchUserRole = useCallback(async (user) => {
+    const fetchUser = useCallback(async (user) => {
         if (user) {
             try {
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
-                    setUserRole(docSnap.data().role);
+                    setUser(docSnap.data());
                 } else {
-                    console.log("No such document!");
+                    toast.error("User not found");
                 }
             } catch (e) {
-                console.error("Error getting document:", e);
+                toast.error("Error fetching user", e);
             }
         } else {
-            setUserRole(null); // Reset role if no user is logged in
+            setUser(null); // Reset user if no user is logged in
         }
     }, [db]);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            fetchUserRole(user);
+            fetchUser(user);
         });
 
         return () => {
             unsubscribe();
         };
-    }, [fetchUserRole, auth]);
+    }, [fetchUser, auth]);
 
     return (
-        <UserRoleContext.Provider value={userRole}>
+        <UserContext.Provider value={user}>
             {children}
-        </UserRoleContext.Provider>
+        </UserContext.Provider>
     );
 };

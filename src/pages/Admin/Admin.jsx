@@ -8,14 +8,14 @@ import './Admin.css';
 import NavBar from '../Home/components/NavBar';
 import UnapprovedUsers from './components/UnapprovedUsers';
 import TagsTabInterface from './components/TagsTabInterface';
-import { useUserRole } from '../../config/adminContext';
+import { useUser } from '../../config/userContext';
 
 /* Admin page component */
 const Admin = () => {
 
     /* State variables */
     const [unapprovedUsers, setUnapprovedUsers] = useState([]);
-    const userRole = useUserRole();
+    const user = useUser();
 
     /* Firebase services */
     const db = getFirestore();
@@ -46,13 +46,13 @@ const Admin = () => {
     }, [auth]);
 
     useEffect(() => {
-        if (userRole === "admin") {
+        if (user.role === "admin") {
             fetchUnapprovedUsers();
         }
-    }, [userRole, fetchUnapprovedUsers]);
+    }, [user, fetchUnapprovedUsers]);
 
     /* Render the admin page */
-    if (userRole !== "admin") {
+    if (user.role !== "admin") {
         return <p>You do not have access to this page.</p>;
     }
     return (

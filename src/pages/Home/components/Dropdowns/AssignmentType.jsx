@@ -17,7 +17,7 @@ const AssignmentTypeDropdown = ({ selectedAssignmentType, setSelectedAssignmentT
             const assignmentTypesSnapshot = await getDocs(assignmentTypesCollection);
             const assignmentTypesList = assignmentTypesSnapshot.docs.map(doc => {
                 const data = doc.data();
-                return `${data.type}`; // Assuming 'type' holds the data to display
+                return `${data.type}`;
             });
             setAssignmentTypes(assignmentTypesList);
         };

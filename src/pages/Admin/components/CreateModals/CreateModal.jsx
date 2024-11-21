@@ -29,9 +29,22 @@ const CreateModal = ({ db, collectionName, onSubmit, onClose, fields }) => {
         }
     };
 
+    const returnCollectionName = () => {
+        if (collectionName === 'professors') {
+            return 'Professor';
+        } else if (collectionName === 'assignment_types') {
+            return 'Assignment Type';
+        } else if (collectionName === 'class_names') {
+            return 'Class Name';
+        } else if (collectionName === 'semesters') {
+            return 'Semester';
+        }
+        return collectionName;
+    }
+
     return (
         <form className="create-tag-form" onSubmit={handleSubmit}>
-            <h2 className="modal-title">Create New {collectionName}</h2>
+            <h2 className="modal-title">Create New {returnCollectionName()}</h2>
             {fields.map(field => (
                 <input
                     key={field.name}
@@ -42,7 +55,7 @@ const CreateModal = ({ db, collectionName, onSubmit, onClose, fields }) => {
                     required={field.required}
                 />
             ))}
-            <button type="submit">Add {collectionName}</button>
+            <button type="submit">Add {returnCollectionName()}</button>
         </form>
     );
 };
