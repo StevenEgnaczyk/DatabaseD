@@ -51,7 +51,7 @@ const Startup = ({ user, setUser }) => {
   };
 
   const toggleForgotPassword = () => {
-    setIsForgotPassword(true); // Show Forgot Password view
+    setIsForgotPassword((prevState) => !prevState); // Show Forgot Password view
     setIsSigningUp(false); // Reset Signup/Login view
   };
 
@@ -74,7 +74,7 @@ const Startup = ({ user, setUser }) => {
                   </button>
               )}
               <button className="swap-button" onClick={toggleForgotPassword}>
-                <span>Forgot Password? Click Here</span>
+                <span>{!isForgotPassword ? "Forgot Password? Click Here" : "Click to return to Home Screen"}</span>
               </button>
             </div>
             <BsChevronCompactDown onClick={openInfoComponent} className={'arrow-icon'}/>
