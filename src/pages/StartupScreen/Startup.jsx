@@ -75,7 +75,6 @@ const Startup = ({ user, setUser }) => {
                     <span>{isSigningUp ? "Already have an account? Login" : "Need an account? Sign up"}</span>
                   </button>
               )}
-
               {(!isForgotPassword && !isSigningUp) ? (
                   <button className="swap-button" onClick={toggleForgotPassword}>
                     <span>Forgot Password? Click Here</span>
