@@ -16,6 +16,8 @@
 }
 
 .databased-title {
+    position: absolute;
+    top: 25%;
     font-size: 4rem;
     color: white;
 }
@@ -39,11 +41,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
 }
 
 .form-container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .startup-input {
@@ -53,6 +57,8 @@
     box-sizing: border-box;
     font-size: 16px;
     text-align: center;
+    border-radius: 4px;
+    border: none;
     transition: border-color 0.3s ease;
 }
 
@@ -66,7 +72,9 @@
     padding: 12px 20px;
     background-color: black;
     margin-top: 5px;
-    width: 10vw;
+    max-width: 15vw;
+    width: auto;
+    border:none;
     margin-inline: auto;
     border-radius: 4px;
     cursor: pointer;
@@ -79,9 +87,13 @@
     background: transparent;
     padding-inline: 10px;
     cursor: pointer;
-    color: var(--color-hover-blue);
+    color: var(--color-white);
     margin-top: 15px;
     font-size: 14px;
+}
+
+.swap-button:hover {
+    color: var(--color-hover-blue);
 }
 
 .scrolling-pages {
