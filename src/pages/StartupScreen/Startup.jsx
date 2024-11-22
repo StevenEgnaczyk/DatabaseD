@@ -10,10 +10,9 @@ import AboutPage from "./components/AboutPage";
 
 const Startup = ({ user, setUser }) => {
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [isForgotPassword, setIsForgotPassword] = useState(false); // New state for Forgot Password
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
-
-  const aboutPageRef = useRef(null); // Create ref for AboutPage
+  const aboutPageRef = useRef(null);
   const landingPageRef = useRef(null)
 
   const [isOpenComponent, setIsOpenComponent] = useState(false);
@@ -47,12 +46,14 @@ const Startup = ({ user, setUser }) => {
 
   const toggleAuthMode = () => {
     setIsSigningUp((prevState) => !prevState);
-    setIsForgotPassword(false); // Reset Forgot Password view
+    if (!isSigningUp) {
+      setIsForgotPassword(false);
+    }
   };
 
   const toggleForgotPassword = () => {
-    setIsForgotPassword((prevState) => !prevState); // Show Forgot Password view
-    setIsSigningUp(false); // Reset Signup/Login view
+    setIsForgotPassword((prevState) => !prevState);
+    setIsSigningUp(false);
   };
 
   return (
@@ -68,14 +69,21 @@ const Startup = ({ user, setUser }) => {
               ) : (
                   <Login setUser={setUser} />
               )}
+
               {!isForgotPassword && (
                   <button className="swap-button" onClick={toggleAuthMode}>
                     <span>{isSigningUp ? "Already have an account? Login" : "Need an account? Sign up"}</span>
                   </button>
               )}
-              <button className="swap-button" onClick={toggleForgotPassword}>
-                <span>{!isForgotPassword ? "Forgot Password? Click Here" : "Click to return to Home Screen"}</span>
-              </button>
+              {(!isForgotPassword && !isSigningUp) ? (
+                  <button className="swap-button" onClick={toggleForgotPassword}>
+                    <span>Forgot Password? Click Here</span>
+                  </button>
+              ) : !isSigningUp && (
+                  <button className="swap-button" onClick={toggleForgotPassword}>
+                    <span>Return to login? Click Here</span>
+                  </button>
+              )}
             </div>
             <BsChevronCompactDown onClick={openInfoComponent} className={'arrow-icon'}/>
           </div>
