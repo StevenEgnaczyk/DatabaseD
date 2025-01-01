@@ -21,10 +21,10 @@
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
-    max-width: 40vw; /* Optional: limit the width of the lightbox */
-    width: 100%; /* Ensure it takes full width up to the max width */
+    max-width: 40vw;
+    width: 100%;
     height: 80vh;
-    box-sizing: border-box; /* Include padding in width calculation */
+    box-sizing: border-box;
     user-focus: none;
 }
 
@@ -54,6 +54,10 @@
     cursor: pointer;
     color: var(--color-white);
     font-size: 1.5rem;
+}
+
+.file-attributes {
+    padding-top: 4px;
 }
 
 .file-selector {
@@ -91,8 +95,8 @@
 .filter-input {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
-    margin-inline: 10%;
+    padding: 0.5rem;
+    margin-inline: auto;
 }
 
 .filter-input .input {

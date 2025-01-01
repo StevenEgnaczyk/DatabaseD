@@ -7,6 +7,7 @@ import DocumentPreviewAnimation from "./components/DocumentPreviewAnimation";
 
 import { BsChevronCompactDown } from "react-icons/bs";
 import AboutPage from "./components/AboutPage";
+import DropdownParent from "../Home/components/Dropdowns/DropdownParent";
 
 const Startup = ({ user, setUser }) => {
   const [isSigningUp, setIsSigningUp] = useState(false);

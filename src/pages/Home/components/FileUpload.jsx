@@ -17,6 +17,7 @@ import ProfessorNameDropdown from './Dropdowns/ProfessorName';
 import SemesterDropdown from './Dropdowns/Semester';
 
 import { BsXCircle } from "react-icons/bs";
+import DropdownParent from "./Dropdowns/DropdownParent";
 
 /* Component for uploading files 
     onClose - function to close the file upload modal */
@@ -205,13 +206,20 @@ const FileUpload = ({ onClose }) => {
                                 {fileName ? fileName : "File name"}
                             </p>
                         </div>
-                        
+
+                        {/*These dropdowns need the type of 'submit'*/}
                         <div className="filter-input">
+                            <DropdownParent
+                                collectionName={'class_name'}
+                                type={'submit'}
+                                setSelected={setSelectedClassName}
+                            />
+
                             <ClassNameDropdown 
                                 selectedClassName={selectedClassName} 
                                 setSelectedClassName={setSelectedClassName} 
                             />
-                            <ProfessorNameDropdown 
+                            <ProfessorNameDropdown
                                 selectedProfessorName={selectedProfessorName} 
                                 setSelectedProfessorName={setSelectedProfessorName} 
                             />
