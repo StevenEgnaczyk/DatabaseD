@@ -9,8 +9,8 @@ function FilterDropdown({data, handleChange}) {
             <option value="" disabled hidden>
                 {title}
             </option>
-            {data.map((type, index) => (
-                <option key={index} value={type} {type === 'add' && (onclick())} >
+            {data.slice(1).map((type, index) => (
+                <option key={index} value={type} >
                     {type}
                 </option>
             ))}
