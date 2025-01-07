@@ -210,15 +210,11 @@ const FileUpload = ({ onClose }) => {
                         {/*These dropdowns need the type of 'submit'*/}
                         <div className="filter-input">
                             <DropdownParent
-                                collectionName={'class_name'}
+                                collectionName={'class_names'}
                                 type={'submit'}
                                 setSelected={setSelectedClassName}
                             />
 
-                            <ClassNameDropdown 
-                                selectedClassName={selectedClassName} 
-                                setSelectedClassName={setSelectedClassName} 
-                            />
                             <ProfessorNameDropdown
                                 selectedProfessorName={selectedProfessorName} 
                                 setSelectedProfessorName={setSelectedProfessorName} 

@@ -1,0 +1,10 @@
+
+
+.add-filter-page {
+    position: absolute;
+    background-color: var(--color-dark-gray);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}

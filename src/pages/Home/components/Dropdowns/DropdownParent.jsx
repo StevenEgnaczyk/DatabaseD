@@ -1,62 +1,81 @@
-import React, {useEffect, useState} from "react";
-import {addDoc, collection, getDocs, getFirestore} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import FilterDropdown from "./FilterDropdown";
-import {validateElement} from "react-modal/lib/helpers/ariaAppHider";
 
 const db = getFirestore();
 
-
 // Parses the filter and type passed as props then creates an array to pass to child
-function DropdownParent({collectionName, type, setSelected}) {
-    const collectionNames = useState([
-        'class_name', 'assignment_types', 'professors', 'semesters',
-    ])
-    const [dropdownData, setDropdownData] = useState([])
+function DropdownParent({ collectionName, type, setSelected }) {
+    const collectionsNames = ["assignment_types", "class_names", "professors", "semesters"];
+    const [dropdownData, setDropdownData] = useState([collectionName]);
 
-    /* Fetch the assignment types from the Firestore database */
+    /* Fetch the dropdown data from the Firestore database */
     useEffect(() => {
         const fetchDropdownData = async () => {
-            //Fetch specific data from DB
-            const dataCollection = collection(db, collectionName);
-            const dataSnapshot = await getDocs(dataCollection);
-            const dataList = dataSnapshot.docs.map(doc => {
-                const data = doc.data();
-                return `${data.type}`;
-            });
+            try {
+                const dataCollection = collection(db, collectionName);
+                const dataSnapshot = await getDocs(dataCollection);
 
-            //Append add option if needed
-            if (type === 'submit') {
-                dataList.push('add')
+                let dataList = dataSnapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    switch (collectionName) {
+                        case "assignment_types":
+                            return data.type;
+                        case "class_names":
+                            return `${data.department} ${data.course_number}`;
+                        case "professors":
+                            return data.name;
+                        case "semesters":
+                            return data.semester;
+                        default:
+                            return null;
+                    }
+                }).filter(Boolean); // Remove undefined/null values
+
+                setDropdownData([collectionName, ...dataList]);
+            } catch (error) {
+                console.error("Error fetching data:", error);
             }
-            setDropdownData(dataList);
         };
+
         fetchDropdownData();
-    }, []);
+    }, [collectionName]); // Removed `type` since it is not used
 
     const handleChange = (event) => {
-        let value = event.target.value;
+        const value = event.target.value;
         if (!dropdownData.includes(value)) {
             addFilter(value);
         }
         setSelected(value);
-    }
+    };
 
+    // This needs moved to when onSubmit in fileupload page
     const addFilter = async (value) => {
         try {
-            await addDoc(collection(db, collectionName), {
-                value
-            })
+            if (value !== "Add") {
+                // Dynamically set the field key based on collectionName
+                const fieldKey = {
+                    assignment_types: "type",
+                    class_names: "department", // Add relevant field here
+                    professors: "name",
+                    semesters: "semester",
+                }[collectionName];
+
+                if (fieldKey) {
+                    await addDoc(collection(db, collectionName), {
+                        [fieldKey]: value,
+                    });
+                }
+            }
         } catch (e) {
-            console.error("Error adding new Filter: ", e);
+            console.error("Error adding new filter:", e);
             alert("Failed to add data.");
         }
     };
 
     return (
-        <>
-            <FilterDropdown data={dropdownData} handleChange={handleChange} />
-        </>
-    )
+        <FilterDropdown data={dropdownData} handleChange={handleChange} />
+    );
 }
 
 export default DropdownParent;
