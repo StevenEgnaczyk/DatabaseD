@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './AddFilterPopup.css';
 import { BsXCircle } from "react-icons/bs";
 
-function AddFilterPopup({ closePopup, handleAddFilter }) {
+function AddFilterPopup({ closePopup, handleAddValue }) {
     const [inputValue, setInputValue] = useState(""); // State to track input value
 
     const handleInputChange = (event) => {
@@ -10,13 +10,15 @@ function AddFilterPopup({ closePopup, handleAddFilter }) {
     };
 
     const handleFormSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
+
         if (inputValue.trim() !== "") {
-            handleAddFilter(inputValue);
+            handleAddValue(inputValue);
             setInputValue("");
         } else {
             alert("Please enter a valid value.");
         }
+
     };
 
     return (
@@ -34,7 +36,7 @@ function AddFilterPopup({ closePopup, handleAddFilter }) {
                         placeholder="Enter filter name"
                         className="filter-input"
                     />
-                    <button className="submit-button" type="submit">
+                    <button type="submit">
                         Submit
                     </button>
                 </form>

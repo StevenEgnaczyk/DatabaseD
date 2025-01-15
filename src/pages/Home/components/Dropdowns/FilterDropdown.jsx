@@ -15,6 +15,12 @@ function FilterDropdown({ data, handleChange }) {
         }
     };
 
+    const handleAddValue = (val) => {
+        if (!data.containsKey(val)) {
+            data.append(val)
+        }
+    }
+
     const closePopup = () => {
         setPopupOpen(false);
     };
@@ -39,15 +45,15 @@ function FilterDropdown({ data, handleChange }) {
                         {type}
                     </option>
                 ))}
-                <option value="Add">
-                    Add
-                </option>
+                {/*<option value="Add">*/}
+                {/*    Add*/}
+                {/*</option>*/}
             </select>
 
             {popupOpen && (
                 <AddFilterPopup
                     closePopup={closePopup}
-                    handleSelectChange={handleSelectChange}
+                    handleAddValue={handleSelectChange}
                 />
             )}
         </>
