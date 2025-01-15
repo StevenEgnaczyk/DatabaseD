@@ -83,7 +83,7 @@ const NavBar = () => {
                 <img className="logo-img" src={'./harry.png'} alt="Logo" onClick={handleTextRotation}/>
                 <div className="logo-text-container">   
                     <div className="logo-text" ref={textRef} onClick={handleTextRotation}>DataBaseD</div>
-                    <div className="logo-text" ref={textRef} onClick={handleTextRotation}>{user.fullName}</div>
+                    <div className="logo-text" ref={textRef} onClick={handleTextRotation}>name</div>
                 </div>
             </div>
             <div className="navbar-dropdown" ref={dropdownRef}>
