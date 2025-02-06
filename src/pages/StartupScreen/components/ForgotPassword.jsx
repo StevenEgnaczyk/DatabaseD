@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="forgot-password-container">
+    <div className="form-container">
       <h2>Reset Password</h2>
       <input
         type="email"
@@ -19,7 +19,7 @@ const ForgotPassword = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button onClick={handleResetPassword}>Send Reset Instructions</button>
+      <button className={"submit-button"} onClick={handleResetPassword}>Send Reset Instructions</button>
     </div>
   );
 };
