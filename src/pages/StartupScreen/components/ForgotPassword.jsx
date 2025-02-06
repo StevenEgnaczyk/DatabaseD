@@ -1,13 +1,12 @@
 // components/ForgotPassword.js
 import React, { useState } from 'react';
 
-const ForgotPassword = ({ setUser }) => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState('');
 
   const handleResetPassword = () => {
     // Implement password reset functionality here
     alert(`Password reset instructions have been sent to ${email}`);
-    setUser(null); // This line can be adjusted based on actual functionality
   };
 
   return (

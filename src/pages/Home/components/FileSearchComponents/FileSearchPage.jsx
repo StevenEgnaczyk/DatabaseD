@@ -1,35 +1,76 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {BsGrid, BsViewStacked} from "react-icons/bs";
 import FileQueryBar from "./FileQueryBar";
 import TableHeader from "./TableHeader";
 import File from "./File";
 import FileLine from "./FileLine";
 import NoFilesFound from "./../NoFilesFound";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../../config/firebase";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 import './FileSearch.css'
 const FileSearchPage = () => {
 
-    const [files] = useState([
-        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2221 Study Guide', className: 'Math 101', year: '2021', fileType: 'PDF', professor: 'Dr. Smith', preview: './Anime.pdf' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' },
-        { name: 'CSE 2222 Assignment', className: 'Math 102', year: '2022', fileType: 'DOCX', professor: 'Dr. Johnson', preview: './Assignment.docx' }
-        // Add more file objects as needed
-    ]);
+    const [files, setFiles] = useState([]);
+
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const allFiles = [];
+                const storage = getStorage();
+                
+                /* Get all files from the files collection */
+                const filesRef = collection(db, 'files');
+                const filesSnapshot = await getDocs(filesRef);
+                
+                /* Process each file */
+                for (const doc of filesSnapshot.docs) {
+                    const fileData = doc.data();
+                    const filePath = "files/" + fileData.filePath;      
+                    
+                    /* Create a reference to the file in Storage - using the full path directly */
+                    const fileRef = ref(storage, filePath);
+
+                    try {
+                        /* Get the download URL */
+                        const downloadURL = await getDownloadURL(fileRef);
+                        
+                        allFiles.push({
+                            name: fileData.fileName,
+                            type: fileData.assignmentType,
+                            professor: fileData.professorName,
+                            className: fileData.className,
+                            department: fileData.className.split(' ')[0],
+                            year: new Date(fileData.uploadedAt.seconds * 1000).getFullYear(),
+                            preview: downloadURL,
+                            fileType: 'PDF'
+                        });
+                    } catch (urlError) {
+                        console.error(`Error getting download URL for ${fileData.fileName}:`, urlError);
+                        /* Still add the file even if we can't get the preview URL */
+                        allFiles.push({
+                            name: fileData.fileName,
+                            type: fileData.assignmentType,
+                            professor: fileData.professorName,
+                            className: fileData.className,
+                            department: fileData.className.split(' ')[0],
+                            year: new Date(fileData.uploadedAt.seconds * 1000).getFullYear(),
+                            preview: '',
+                            fileType: 'PDF'
+                        });
+                    }
+                }
+                
+                setFiles(allFiles);
+                setFilteredFiles(allFiles);
+            } catch (error) {
+                console.error("Error fetching files: ", error);
+            }
+        };
+
+        fetchFiles();
+    }, []);
 
     const [filesPerPage, setFilesPerPage] = useState(8);
     const [filteredFiles, setFilteredFiles] = useState(files);
