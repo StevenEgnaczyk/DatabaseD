@@ -14,9 +14,6 @@ const Startup = () => {
   const aboutPageRef = useRef(null);
   const landingPageRef = useRef(null);
 
-  const aboutPageRef = useRef(null);
-  const landingPageRef = useRef(null)
-
   const [isOpenComponent, setIsOpenComponent] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [audio] = useState(new Audio("./about-music.mp3"));
