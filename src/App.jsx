@@ -1,35 +1,52 @@
 // src/App.jsx
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Startup from './pages/StartupScreen/Startup';
 import Home from './pages/Home/Home';
 import Admin from './pages/Admin/Admin';
-import { UserProvider } from './config/userContext';
-
+import { UserProvider, useUser, useAuthLoading } from './config/userContext';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const App = () => {
-  const [user, setUser] = useState(null);
+const ProtectedRoute = ({ children }) => {
+  const user = useUser();
+  const loading = useAuthLoading();
+  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
+  if (user === null) {
+    return <Navigate to="/" />;
+  }
+  
+  return children;
+};
 
+const App = () => {
   return (
     <UserProvider>
       <div>
         <Routes>
-        <Route 
-          path="/" 
-          element={<Startup user={user} setUser={setUser} />} 
-        />
-        <Route 
-          path="/home" 
-          element={<Home user={user} setUser={setUser} />} 
-        />
-        <Route 
-          path="/admin" 
-          element={<Admin />} 
-        />
-      </Routes>
-      <ToastContainer />
+          <Route path="/" element={<Startup />} />
+          <Route 
+            path="/home" 
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin" 
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+        <ToastContainer />
       </div>
     </UserProvider>
   );

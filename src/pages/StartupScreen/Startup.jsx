@@ -1,96 +1,84 @@
 import React, {useRef, useState} from 'react';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import ForgotPassword from './components/ForgotPassword'; // Import ForgotPassword component
+import ForgotPassword from './components/ForgotPassword';
 import './Startup.css';
-import DocumentPreviewAnimation from "./components/DocumentPreviewAnimation";
-
 import { BsChevronCompactDown } from "react-icons/bs";
 import AboutPage from "./components/AboutPage";
+import DocumentPreviewAnimation from "./components/DocumentPreviewAnimation";
 
-const Startup = ({ user, setUser }) => {
+const Startup = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [isForgotPassword, setIsForgotPassword] = useState(false); // New state for Forgot Password
-
-
-  const aboutPageRef = useRef(null); // Create ref for AboutPage
-  const landingPageRef = useRef(null)
-
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const aboutPageRef = useRef(null);
+  const landingPageRef = useRef(null);
   const [isOpenComponent, setIsOpenComponent] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-
   const [audio] = useState(new Audio("./about-music.mp3"));
-  const openInfoComponent = () => {
-    // Start animation phase
-    setIsAnimating(true);
 
+  const toggleAuthMode = () => {
+    setIsSigningUp((prevState) => !prevState);
+    setIsForgotPassword(false);
+  };
+
+  const toggleForgotPassword = () => {
+    setIsForgotPassword((prevState) => !prevState);
+    setIsSigningUp(false);
+  };
+
+  const openInfoComponent = () => {
+    setIsAnimating(true);
     setTimeout(() => {
       if (isOpenComponent && landingPageRef.current) {
-        // Scroll up when AboutPage is closed
         landingPageRef.current.scrollIntoView({ behavior: "smooth" });
         audio.pause();
         audio.currentTime = 2;
       } else if (aboutPageRef.current) {
-        // Scroll down to AboutPage when it's opened
         aboutPageRef.current.scrollIntoView({ behavior: "smooth" });
         audio.currentTime = 2;
-        audio.play()
+        audio.play();
       }
-
-      // Delay toggling the component's visibility to allow smooth scroll
       setTimeout(() => {
         setIsOpenComponent((prevState) => !prevState);
-        setIsAnimating(false); // End animation phase
-      }, 650); // Adjust the delay as needed for the scroll duration
+        setIsAnimating(false);
+      }, 650);
     }, 0);
   };
 
-  const toggleAuthMode = () => {
-    setIsSigningUp((prevState) => !prevState);
-    setIsForgotPassword(false); // Reset Forgot Password view
-  };
-
-  const toggleForgotPassword = () => {
-    setIsForgotPassword((prevState) => !prevState); // Show Forgot Password view
-    setIsSigningUp(false); // Reset Signup/Login view
-  };
-
   return (
-      <div className={'landing-full-page'}>
-        <div className="landing-container" ref={landingPageRef}>
-          <div className={'left-landing'}>
-            <div className="auth-container">
-              <h1 className={'databased-title'}>DataBaseD</h1>
-              {isForgotPassword ? (
-                  <ForgotPassword setUser={setUser} />
-              ) : isSigningUp ? (
-                  <Signup setUser={setUser} />
-              ) : (
-                  <Login setUser={setUser} />
-              )}
-              {!isForgotPassword && (
-                  <button className="swap-button" onClick={toggleAuthMode}>
-                    <span>{isSigningUp ? "Already have an account? Login" : "Need an account? Sign up"}</span>
-                  </button>
-              )}
-              <button className="swap-button" onClick={toggleForgotPassword}>
-                <span>{!isForgotPassword ? "Forgot Password? Click Here" : "Click to return to Home Screen"}</span>
+    <div className={'landing-full-page'}>
+      <div className="landing-container" ref={landingPageRef}>
+        <div className={'left-landing'}>
+          <div className="auth-container">
+            <h1 className={'databased-title'}>DataBaseD</h1>
+            {isForgotPassword ? (
+              <ForgotPassword />
+            ) : isSigningUp ? (
+              <Signup />
+            ) : (
+              <Login />
+            )}
+            {!isForgotPassword && (
+              <button className="swap-button" onClick={toggleAuthMode}>
+                <span>{isSigningUp ? "Already have an account? Login" : "Need an account? Sign up"}</span>
               </button>
-            </div>
-            <BsChevronCompactDown onClick={openInfoComponent} className={'arrow-icon'}/>
+            )}
+            <button className="swap-button" onClick={toggleForgotPassword}>
+              <span>{!isForgotPassword ? "Forgot Password? Click Here" : "Click to return to Home Screen"}</span>
+            </button>
           </div>
-
-          <div className='scrolling-pages'>
-            <DocumentPreviewAnimation />
-          </div>
+          <BsChevronCompactDown onClick={openInfoComponent} className={'arrow-icon'}/>
         </div>
-
-        {(isOpenComponent || isAnimating) && (
-            <div className={'about-page'} ref={aboutPageRef}>
-              <AboutPage openInfoComponent={openInfoComponent}/>
-            </div>
-        )}
+        <div className='scrolling-pages'>
+          <DocumentPreviewAnimation />
+        </div>
       </div>
+      {(isOpenComponent || isAnimating) && (
+        <div className={'about-page'} ref={aboutPageRef}>
+          <AboutPage openInfoComponent={openInfoComponent}/>
+        </div>
+      )}
+    </div>
   );
 };
 
