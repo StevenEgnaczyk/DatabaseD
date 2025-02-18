@@ -3,7 +3,7 @@
 /* Styling for the entire search and filter container */
 .filter-container {
     background-color: var(--color-bg);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -20,21 +20,21 @@
     flex-direction: row;
 }
 .search-bar input {
-    padding: 10px 40px 10px 10px;
-    border: 1px solid var(--color-white);
-    border-radius: 4px;
-    font-size: 16px;
-    width: 300px;
+    padding: 0.625rem 2.5rem 0.625rem 0.625rem;
+    border: 0.0625rem solid var(--color-white);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    width: 18.75rem;
 }
 
 /* Styling for the search button */
 .search-button {
     background-color: transparent; /* Bootstrap primary color */
-    border: 1px solid var(--color-white);
+    border: 0.0625rem solid var(--color-white);
     color: var(--color-white); /* Text color */
-    border-radius: 4px; /* Rounded corners */
-    padding: 8px 12px; /* Padding for button */
-    margin-left: 5px; /* Space between input and button */
+    border-radius: 0.25rem; /* Rounded corners */
+    padding: 0.5rem 0.75rem; /* Padding for button */
+    margin-left: 0.3125rem; /* Space between input and button */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
 }
@@ -52,4 +52,31 @@
 .filter-dropdowns button {
     margin: 10px;
     padding: 0.5rem;
+}
+
+.reset-button {
+    background-color: var(--color-button-red);
+    border: 0.0625rem solid var(--color-white);
+    color: var(--color-white);
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    margin-left: 0.625rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+    background-color: var(--color-lite-red);
+}
+
+/* Responsive adjustments */
+@media (max-width: 50rem) {
+    .search-bar input {
+        width: 15rem;
+        font-size: 0.875rem;
+    }
+    
+    .filter-container {
+        padding: 0.5rem;
+    }
 }

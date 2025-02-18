@@ -33,10 +33,8 @@ const ProfessorNameDropdown = ({ selectedProfessorName, setSelectedProfessorName
 
     return (
         <select value={selectedProfessorName} onChange={handleChange}>
-            {/* Display 'Professor Name' as a non-selectable placeholder */}
-            <option value="" disabled hidden>
-                Professor Name
-            </option>
+            {/* Make 'Professor Name' a selectable first option */}
+            <option value="">Professor Name</option>
             {/* Render professor names */}
             {professorNames.map((name, index) => (
                 <option className={'filter-dropdown'} key={index} value={name}>

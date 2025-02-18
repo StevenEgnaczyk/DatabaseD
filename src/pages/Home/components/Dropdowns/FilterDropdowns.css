@@ -2,31 +2,83 @@
 
 @import url("../../../../Global.css");
 
-/* Main button styling */
+/* Container for all dropdowns */
+.filter-dropdowns {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Main dropdown styling */
 select {
-    max-width: 300px;
-    padding: 10px;
-    font-size: 12px;
-    /*border: 1px solid var(--color-white);*/
-    border-radius: 5px;
+    width: 15rem; /* Instead of 200px */
+    height: 2.5rem; /* Instead of 40px */
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border: 0.0625rem solid var(--color-white);
+    border-radius: 0.3125rem;
     background-color: var(--color-button-red);
     color: var(--color-white);
     cursor: pointer;
     outline: none;
-    transition: border-color 0.3s ease-in-out;
-    transition: box-shadow 0.3s ease-in-out;
-}
-select:hover {
-    border-color: var(--color-hover-blue);
-    box-shadow: 0 0 5px var(--color-hover-blue);
+    transition: all 0.3s ease-in-out;
+    /* Prevent text overflow */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    /* Consistent text alignment */
+    text-align: left;
+    /* Remove default arrow */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Add custom arrow */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1.25rem;
+    padding-right: 2rem;
 }
 
-/* Dropdown elements styling */
-option {
-    padding: 10px;
-    /*background-color: var(--color-white);*/
-    color: var(--color-white);
+/* Hover state */
+select:hover {
+    border-color: var(--color-hover-blue);
+    box-shadow: 0 0 0.3125rem var(--color-hover-blue);
+    background-color: var(--color-lite-red);
 }
+
+/* Focus state */
+select:focus {
+    border-color: var(--color-hover-blue);
+    box-shadow: 0 0 0.3125rem var(--color-hover-blue);
+}
+
+/* Dropdown options styling */
+option {
+    padding: 0.5rem;
+    background-color: var(--color-bg);
+    color: var(--color-white);
+    font-size: 0.875rem;
+}
+
+/* First option (placeholder) styling */
+option:first-child {
+    font-style: italic;
+}
+
+/* Disabled option styling */
 select option[disabled] {
     color: var(--color-light-gray);
+}
+
+/* Responsive adjustments */
+@media (max-width: 50rem) { /* 800px */
+    select {
+        width: 12rem;
+        font-size: 0.75rem;
+    }
+    
+    .filter-dropdowns {
+        gap: 0.5rem;
+    }
 }

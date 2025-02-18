@@ -32,10 +32,8 @@ const ClassNameDropdown = ({ selectedClassName, setSelectedClassName }) => {
 
     return (
         <select value={selectedClassName} onChange={handleChange}>
-            {/* Display 'Class Name' as a non-selectable placeholder */}
-            <option value="" disabled hidden>
-                Class Name
-            </option>
+            {/* Make 'Class Name' a selectable first option */}
+            <option value="">Class Name</option>
             {/* Render actual class names */}
             {classNames.map((type, index) => (
                 <option className={'filter-dropdown'} key={index} value={type}>

@@ -31,10 +31,8 @@ const SemesterDropdown = ({ selectedSemester, setSelectedSemester }) => {
                         
     return (
         <select value={selectedSemester} onChange={handleChange}>
-            {/* Display 'Semester' as a non-selectable placeholder */}
-            <option value="" disabled hidden>
-                Semester
-            </option>
+            {/* Make 'Semester' a selectable first option */}
+            <option value="">Semester</option>
             {/* Render semester options */}
             {semesters.map((type, index) => (
                 <option className={'filter-dropdown'} key={index} value={type}>
